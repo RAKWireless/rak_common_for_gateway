@@ -1,0 +1,1 @@
+# rak_common_for_gateway
