@@ -1,0 +1,12 @@
+[Unit]
+Description=The Things Network Gateway
+
+[Service]
+WorkingDirectory=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/
+ExecStart=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/start.sh
+SyslogIdentifier=ttn-gateway
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

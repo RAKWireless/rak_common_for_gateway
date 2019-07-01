@@ -1,0 +1,38 @@
+#!/bin/bash
+
+SCRIPT_COMMON_FILE=/usr/local/rak/shell_script/rak_common.sh
+source $SCRIPT_COMMON_FILE
+
+systemctl stop serial-getty@ttyAMA0.service
+
+# first boot, add gateway_id to loraserver
+if [ -f "/usr/local/rak/first_boot/init_loraserver_db" ]; then
+        cd /usr/local/rak/first_boot
+        sudo ./init_loraserver_db
+        mv /usr/local/rak/first_boot/init_loraserver_db /usr/local/rak/first_boot/init_loraserver_db_bak
+fi
+
+# first boot, set ssid
+if [ -f "/usr/local/rak/first_boot/set_ssid" ]; then
+        cd /usr/local/rak/first_boot
+        sudo ./set_ssid
+        mv /usr/local/rak/first_boot/set_ssid /usr/local/rak/first_boot/set_ssid_bak
+fi
+
+# first boot, expand sd card
+if [ -f "/usr/local/rak/first_boot/expand_rootfs.sh" ]; then
+        /usr/local/rak/first_boot/expand_rootfs.sh
+        mv /usr/local/rak/first_boot/expand_rootfs.sh /usr/local/rak/first_boot/expand_rootfs_bak.sh
+        reboot
+fi
+
+GW_MODEL=`do_get_gw_model`
+# active lte
+if [ "$GW_MODEL" = "RAK7243" ]; then
+    pushd /usr/local/rak/bin
+    ./active_lte_module.sh
+    ./ppp.sh &
+    popd
+fi
+
+

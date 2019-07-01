@@ -1,0 +1,30 @@
+{
+	"lora_server":
+	{
+		"server_plan":"2",
+		"lora_server_ip":"127.0.0.1",
+		"up_port":"1700",
+		"down_port":"1700",
+		"freq":"5"
+	},
+	"wifi":
+	{
+		"wifi_mode":"1",
+		"wifi_ip":"",
+		"wifi_gw":"",
+		"ap_ssid":"rakwireless_xxxx",
+		"ap_pwd":"rakwireless"
+	},
+	"lan":
+	{
+		"lan_ip":"192.168.10.10",
+		"lan_gw":"192.168.10.1"
+	},
+	"apn":
+	{
+		"apn_name":"HOLOGRAM",
+		"apn_baud":"115200"
+	},
+	"active_lora_server":"2",
+	"lte_mode":"2"
+}

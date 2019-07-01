@@ -1,0 +1,12 @@
+[Unit]
+Description=Rak pppd for LTE Module
+
+[Service]
+WorkingDirectory=/usr/sbin/
+ExecStart=/usr/sbin/pppd call gprs
+SyslogIdentifier=rak-pppd
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

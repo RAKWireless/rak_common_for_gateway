@@ -1,0 +1,12 @@
+#!/bin/bash
+
+SCRIPT_COMMON_FILE=/usr/local/rak/shell_script/rak_common.sh
+
+source $SCRIPT_COMMON_FILE
+
+GW_MODEL=`do_get_gw_model`
+GW_VERSION=`do_get_gw_version`
+GW_ID=`do_get_gw_id`
+
+echo "Gateway ID:$GW_ID"
+echo "RAKWireless gateway $GW_MODEL version $GW_VERSION"
