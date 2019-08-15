@@ -57,4 +57,4 @@ dtparam=i2c_arm_baudrate=10000
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
 dtoverlay=pi3-disable-bt
-#dtoverlay=dwc2
+dtoverlay=dwc2

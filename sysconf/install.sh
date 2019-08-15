@@ -22,8 +22,8 @@ fi
 
 cp config.txt /boot/config.txt
 
-#CMD_STR=`cat /boot/cmdline.txt`
-#echo "$CMD_STR modules-load=dwc2,g_ether" > /boot/cmdline.txt
+CMD_STR=`cat /boot/cmdline.txt`
+echo "$CMD_STR modules-load=dwc2,g_ether" > /boot/cmdline.txt
 
 ./set_ip.sh
 

@@ -67,7 +67,7 @@ net_id="000000"
 
   # LoRaWAN network related settings.
   [network_server.network_settings]
-
+  enabled_uplink_channels=[0, 1, 2, 3, 4, 5, 6, 7]
     # Extra channel configuration.
     #
     # Use this for LoRaWAN regions where it is possible to extend the by default
