@@ -5,7 +5,7 @@ if [ ! -e "/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json" ]; th
         if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
             GATEWAY_EUI_NIC="wlan0"
         fi
-        
+
         if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
             GATEWAY_EUI_NIC="usb0"
         fi
