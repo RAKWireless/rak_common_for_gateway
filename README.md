@@ -14,6 +14,8 @@ This project currently provides support for the below platforms.
 * RAK7243
 
 ##	Changelog
+2019-09-19 V4.0.0
+* Use lan0's mac address when eth0 does not exist.
 
 2019-05-24 V2.9
 
