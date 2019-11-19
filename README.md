@@ -20,6 +20,7 @@ This project currently provides support for the below platforms.
 * 3.Unconfigure the ip of eth0 to 192.168.10.10.
 * 4.Users can change the gateway_id in local_conf.json.
 * 5.Increase i2c rate for rak7243.
+* 6.Install chirpstack only on Raspberry Pi 3 and Raspberry Pi 4.
 
 2019-09-19 V4.0.0
 * Use lan0's mac address when eth0 does not exist.
