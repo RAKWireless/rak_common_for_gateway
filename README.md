@@ -14,6 +14,13 @@ This project currently provides support for the below platforms.
 * RAK7243
 
 ##	Changelog
+2019-11-19 V4.1.0
+* 1.LoRaServer changed its name to ChirpStack.
+* 2.ChirpStack turns off ADR by default.
+* 3.Unconfigure the ip of eth0 to 192.168.10.10.
+* 4.Users can change the gateway_id in local_conf.json.
+* 5.Increase i2c rate for rak7243.
+
 2019-09-19 V4.0.0
 * Use lan0's mac address when eth0 does not exist.
 
