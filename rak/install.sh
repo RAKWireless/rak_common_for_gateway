@@ -5,20 +5,6 @@ set -e
 
 SCRIPT_COMMON_FILE=$(pwd)/../rak/rak/shell_script/rak_common.sh
 
-do_get_gw_id()
-{
-    GATEWAY_EUI_NIC="eth0"
-    if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
-        GATEWAY_EUI_NIC="wlan0"
-    fi
-
-    if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
-       echo ""
-    fi
-    GATEWAY_EUI=$(ip link show $GATEWAY_EUI_NIC | awk '/ether/ {print $2}' | awk -F\: '{print $1$2$3"FFFE"$4$5$6}')
-    GATEWAY_EUI=${GATEWAY_EUI^^}
-    echo $GATEWAY_EUI
-}
 
 source $SCRIPT_COMMON_FILE
 
@@ -34,6 +20,13 @@ apt install git ppp dialog jq minicom monit -y
 cp gateway-config /usr/bin/
 cp gateway-version /usr/bin/
 cp rak /usr/local/ -rf
+
+if [ "$1" = "create_img" ]; then
+    write_json_gateway_info "install_img" 1
+    sed -i "s/^.*install_img.*$/\"    install_img\":\"1\",/" /usr/local/rak/gateway-config-info.json
+else
+    rm -rf /usr/local/rak/first_boot
+fi
 
 #JSON_FILE=/usr/local/rak/rak_gw_model.json
 #GW_ID=`do_get_gw_id`

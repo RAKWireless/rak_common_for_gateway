@@ -5,6 +5,7 @@
 		"lora_server_ip":"127.0.0.1",
 		"up_port":"1700",
 		"down_port":"1700",
+		"loraserver_adr":"2",
 		"freq":"5"
 	},
 	"wifi":
@@ -26,5 +27,6 @@
 		"apn_baud":"115200"
 	},
 	"active_lora_server":"2",
+	"install_img":"0",
 	"lte_mode":"2"
 }

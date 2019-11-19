@@ -1,0 +1,26 @@
+#!/bin/bash
+
+SCRIPT_COMMON_FILE=/usr/local/rak/shell_script/rak_common.sh
+source $SCRIPT_COMMON_FILE
+
+GW_MODEL=`do_get_gw_model`
+
+if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
+    if [ "$GW_MODEL" = "RAK7243" ]; then
+        cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+    elif [ "$GW_MODEL" = "RAK2247" ]; then
+        cp /usr/local/rak/lora/rak2247/* /opt/ttn-gateway/ -rf
+    else
+        cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
+    fi
+    cp /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf/global_conf.eu_863_870.json \
+	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
+
+
+    rpi_model=`do_get_rpi_model`
+    if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+        exit 0
+    fi
+    sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" \
+	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
+fi

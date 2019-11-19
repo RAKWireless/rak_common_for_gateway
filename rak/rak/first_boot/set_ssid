@@ -1,0 +1,18 @@
+#!/bin/bash
+
+GATEWAY_EUI_NIC="wlan0"
+if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
+    GATEWAY_EUI_NIC="eth0"
+fi
+if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
+    echo "ERROR: No network interface found. Cannot set gateway ID."
+    exit
+fi
+GATEWAY_EUI=$(ip link show $GATEWAY_EUI_NIC | awk '/ether/ {print $2}' | awk -F\: '{print $5$6}')
+GATEWAY_EUI=${GATEWAY_EUI^^}
+
+sed -i "26c SSID=Rakwireless_$GATEWAY_EUI" /usr/local/rak/ap/create_ap.conf
+
+sed -i "s/^.*ap_ssid.*$/\"ap_ssid\":\"Rakwireless_$GATEWAY_EUI\",/" /usr/local/rak/gateway-config-info.json
+sed -i "s/^.*ap_pwd.*$/\"ap_pwd\":\"rakwireless\"/" /usr/local/rak/gateway-config-info.json
+

@@ -22,8 +22,11 @@ popd
 cp create_ap.service /lib/systemd/system/
 cp create_ap.conf /usr/local/rak/ap
 
-./set_ssid
-#systemctl enable create_ap
-#mv /sbin/wpa_supplicant /sbin/wpa_supplicant_bak
+if [ "$1" = "create_img" ]; then
+    cp set_ssid /usr/local/rak/first_boot/
+    systemctl enable create_ap
+else
+    ./set_ssid
+fi
 
 echo_success "Install ap success!"

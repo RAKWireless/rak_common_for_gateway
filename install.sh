@@ -8,30 +8,32 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
+#$1=create_img
+
 SCRIPT_COMMON_FILE=$(pwd)/rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
 # select gw model
-./choose_model.sh
+./choose_model.sh $1
 
 apt update
 pushd rak
-./install.sh
+./install.sh $1
 sleep 1
 popd
 
 pushd ap
-./install.sh
+./install.sh $1
 sleep 1
 popd
 
 pushd sysconf
-./install.sh
+./install.sh $1
 sleep 1
 popd
 
-pushd loraserver
-./install.sh
+pushd chirpstack
+./install.sh $1
 sleep 1
 popd
 
@@ -41,12 +43,12 @@ popd
 #popd
 
 pushd lte
-./install.sh
+./install.sh $1
 sleep 1
 popd
 
 pushd lora
-./install.sh
+./install.sh $1
 sleep 1
 
 echo_success "*********************************************************"

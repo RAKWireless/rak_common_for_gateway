@@ -12,7 +12,7 @@ if [ $UID != 0 ]; then
 fi
 
 RAK_GW_MODEL=`do_get_gw_model`
-if [ "${RAK_GW_MODEL}" = "RAK7243" ]; then
+if [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "$1" = "create_img" ]; then
     if [ ! -d "/usr/local/rak/lte" ]; then mkdir "/usr/local/rak/lte" -p ; fi
 
     cp ppp-creator.sh /usr/local/rak/lte/

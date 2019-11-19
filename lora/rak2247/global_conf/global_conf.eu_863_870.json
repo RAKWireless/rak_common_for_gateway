@@ -188,6 +188,6 @@
 		"forward_crc_valid": true,
 		"forward_crc_error": false,
 		"forward_crc_disabled": false,
-		"autoquit_threshold": 6
+		"autoquit_threshold": 20
 	}
 }

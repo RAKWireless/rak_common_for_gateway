@@ -73,4 +73,28 @@ do_check_variable_type(){
     return 3
 }
 
+do_get_rpi_model()
+{
+    model=255
+    text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi 3'`
+    if [ ! -z "$text" ]; then
+        model=3
+    fi
+
+    if [ $model -eq 255 ]; then
+        text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi 4'`
+        if [ ! -z "$text" ]; then
+            model=4
+        fi
+    fi
+
+    if [ $model -eq 255 ]; then
+        text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi Z'`
+        if [ ! -z "$text" ]; then
+            model=0
+        fi
+    fi
+    echo $model
+}
+
 

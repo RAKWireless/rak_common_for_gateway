@@ -211,7 +211,7 @@
 		"ref_latitude": 10,
 		"ref_longitude": 20,
 		"ref_altitude": -1,
-		"autoquit_threshold": 6
+		"autoquit_threshold": 20
 	}
 }
 
