@@ -269,7 +269,7 @@ do_set_lora_server_ip()
                 do_ChirpStack enable
                 do_ChirpStack restart
             else
-                do_ChirpStack diable
+                do_ChirpStack disable
                 do_ChirpStack stop
             fi
         fi
