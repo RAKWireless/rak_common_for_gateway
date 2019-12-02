@@ -71,6 +71,7 @@ rm -f /tmp/init_sql.sql
 #apt install chirpstack-gateway-bridge
 #apt install chirpstack-application-server
 
+rm *.deb -f
 #3.2 download chirpstack packages
 wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-application-server/chirpstack-application-server_3.5.1_linux_armv7.deb
 wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-gateway-bridge/chirpstack-gateway-bridge_3.4.1_linux_armv7.deb

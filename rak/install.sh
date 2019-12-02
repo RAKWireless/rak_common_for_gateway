@@ -15,15 +15,17 @@ fi
 
 systemctl disable hciuart
 
-apt install git ppp dialog jq minicom monit -y
+apt install git ppp dialog jq minicom monit i2c-tools -y
 
 cp gateway-config /usr/bin/
 cp gateway-version /usr/bin/
 cp rak /usr/local/ -rf
 
 if [ "$1" = "create_img" ]; then
-    write_json_gateway_info "install_img" 1
-    sed -i "s/^.*install_img.*$/\"    install_img\":\"1\",/" /usr/local/rak/gateway-config-info.json
+    sed -i "s/^.*install_img.*$/\"install_img\":\"1\",/" /usr/local/rak/gateway-config-info.json
+    pushd /usr/local/rak
+    mv bin bin_bak
+    popd
 else
     rm -rf /usr/local/rak/first_boot
 fi

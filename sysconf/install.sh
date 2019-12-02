@@ -3,6 +3,8 @@
 # Stop on the first sign of trouble
 set -e
 
+img=$1
+
 SCRIPT_COMMON_FILE=$(pwd)/../rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
@@ -25,6 +27,6 @@ cp config.txt /boot/config.txt
 CMD_STR=`cat /boot/cmdline.txt`
 echo "$CMD_STR modules-load=dwc2,g_ether" > /boot/cmdline.txt
 
-./set_ip.sh $1
+./set_ip.sh $img
 
 echo_success "Copy sys_config file success!"

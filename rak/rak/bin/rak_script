@@ -19,6 +19,12 @@ if [ -f "/usr/local/rak/first_boot/set_ssid" ]; then
         mv /usr/local/rak/first_boot/set_ssid /usr/local/rak/first_boot/set_ssid_bak
 fi
 
+if [ -f "/usr/local/rak/first_boot/copy_pkt_fwd" ]; then
+        cd /usr/local/rak/first_boot
+        sudo ./copy_pkt_fwd
+        mv /usr/local/rak/first_boot/copy_pkt_fwd /usr/local/rak/first_boot/copy_pkt_fwd_bak
+fi
+
 # first boot, expand sd card
 if [ -f "/usr/local/rak/first_boot/expand_rootfs.sh" ]; then
         /usr/local/rak/first_boot/expand_rootfs.sh
@@ -32,6 +38,9 @@ if [ "$GW_MODEL" = "RAK7243" ]; then
     pushd /usr/local/rak/bin
     ./active_lte_module.sh
     ./ppp.sh &
+    if [ -f "/usr/local/rak/bin/quectel.sh" ]; then
+        ./quectel.sh &
+    fi
     popd
 fi
 

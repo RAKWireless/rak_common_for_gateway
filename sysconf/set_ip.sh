@@ -11,64 +11,6 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
-write_json_gateway_info_no_comma()
-{
-    # $1 key; $2 value
-    do_check_variable_type  $1
-    RET=$?
-    if [ $RET -eq 3 ]; then
-        sed -i "s/^.*$1.*$/\"$1\":\"$2\"/" /usr/local/rak/gateway-config-info.json
-    fi
-}
-
-write_json_gateway_info()
-{
-    # $1 key; $2 value
-    do_check_variable_type  $1
-    RET=$?
-    if [ $RET -eq 3 ]; then
-        sed -i "s/^.*$1.*$/\"$1\":\"$2\",/" /usr/local/rak/gateway-config-info.json
-    fi
-}
-
-write_json_lan_ip()
-{
-    # 数字 . 校验下是否为有效IP
-    write_json_gateway_info "lan_ip" $1
-}
-
-write_json_lan_gw()
-{
-    # 数字 . 校验下是否为有效IP
-    write_json_gateway_info_no_comma "lan_gw" $1
-}
-
-write_json_wlan_ip()
-{
-    # 数字 . 校验下是否为有效IP
-    write_json_gateway_info "wifi_ip" $1
-}
-
-write_json_wlan_gw()
-{
-    # 数字 . 校验下是否为有效IP
-    write_json_gateway_info "wifi_gw" $1
-}
-
-get_inte_ip()
-{
-    IP_ADDR=`ifconfig $1|grep inet|grep -v 127.0.0.1|grep -v inet6|awk '{print $2}'|tr -d "addr:"`
-    echo $IP_ADDR
-}
-
-get_gw_by_ip()
-{
-    newip=$(echo $1 |cut -f 1-3 -d .)
-    echo $newip
-}
-
-get_inte_ip wlan0
-
 if [ "$1" = "create_img" ]; then
     echo "
 # WARNING:Do not delete or modify the following 5 lines!!!
