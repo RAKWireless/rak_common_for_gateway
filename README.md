@@ -59,7 +59,9 @@ step5 : Wait a moment and the installation is complete.If your gateway uses a wi
 step6 : For more other features, please use "sudo gateway-config".
 
 
-Note: The following content is contributed by @x893:
+
+
+#Note: The following content is contributed by @x893:
 For DietPi OS need add
 apt install build-essential net-tools -y
 in rak/install.sh (for example before apt install git ppp dialog jq minicom monit -y)
