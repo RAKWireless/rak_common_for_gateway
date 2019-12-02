@@ -14,6 +14,9 @@ This project currently provides support for the below platforms.
 * RAK7243
 
 ##	Changelog
+2019-12-02
+* Fix a bug. There is a mistake word "diable" in rak/gateway-config script, line 272, it should be do_ChirpStack disable.
+
 2019-11-19 V4.1.0
 * 1.LoRaServer changed its name to ChirpStack.
 * 2.ChirpStack turns off ADR by default.
