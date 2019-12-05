@@ -7,8 +7,15 @@ systemctl stop serial-getty@ttyAMA0.service
 
 # first boot, add gateway_id to loraserver
 if [ -f "/usr/local/rak/first_boot/init_loraserver_db" ]; then
-        cd /usr/local/rak/first_boot
-        sudo ./init_loraserver_db
+        rpi_model=`do_get_rpi_model`
+        if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+            echo_warn "ChirpStack is not support for this rpi model."
+            #exit 0
+        else
+            cd /usr/local/rak/first_boot
+            sudo ./init_loraserver_db
+        fi
+
         mv /usr/local/rak/first_boot/init_loraserver_db /usr/local/rak/first_boot/init_loraserver_db_bak
 fi
 

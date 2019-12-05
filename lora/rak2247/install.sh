@@ -32,7 +32,7 @@ if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
     exit 1
 fi
 
-if [ ! -d "/usr/local/rak/bin" ]; then mkdir "/usr/local/rak/bin" -p ; fi
+#if [ ! -d "/usr/local/rak/bin" ]; then mkdir "/usr/local/rak/bin" -p ; fi
 
 GATEWAY_EUI=$(ip link show $GATEWAY_EUI_NIC | awk '/ether/ {print $2}' | awk -F\: '{print $1$2$3"FFFE"$4$5$6}')
 GATEWAY_EUI=${GATEWAY_EUI^^} # toupper
@@ -100,3 +100,5 @@ popd
 #echo -e "{\n\t\"gateway_conf\": {\n\t\t\"gateway_ID\": \"$GATEWAY_EUI\" \n\t}\n}" >$LOCAL_CONFIG_FILE
 cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
 cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+rm -f $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/local_conf.json
