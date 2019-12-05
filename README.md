@@ -36,7 +36,7 @@ This project currently provides support for the below platforms.
 
 ##	Installation procedure
 
-step1 : Download and install [Raspbian Stretch LITE](https://www.raspberrypi.org/downloads/raspbian/) 
+step1 : Download and install [Raspbian Stretch or Buster LITE](https://www.raspberrypi.org/downloads/raspbian/) 
 
 step2 : Use "sudo raspi-config" command, enable spi and i2c interface.
 
