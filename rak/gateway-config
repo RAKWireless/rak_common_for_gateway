@@ -198,9 +198,9 @@ do_copy_global_conf() {
         do_ChirpStack disable
     elif [ "$1" = "chirpstack" ]; then
         write_json_server_plan 2
-        do_set_LoRaServer_adr_disable
         do_set_lora_server_ip
-        if [ $rpi_model -ne 3 ] || [ $rpi_model -ne 4 ]; then
+        if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+            do_set_LoRaServer_adr_disable
             cp /etc/chirpstack-network-server/chirpstack-network-server.$2.toml /etc/chirpstack-network-server/chirpstack-network-server.toml
 #            do_if_proc_is_run "chirpstack-network-server"
 #            RET=$?
@@ -253,7 +253,7 @@ do_set_lora_server_ip()
     rm /tmp/gate_server_ip -rf
     mkfifo /tmp/gate_server_ip
     default_item=`do_get_gateway_info lora_server.lora_server_ip`
-    dialog --title "lora server IP" --nocancel --inputbox "SERVER_IP:" 10 40 "$default_item" 2> /tmp/gate_server_ip & 
+    dialog --title "server IP" --nocancel --inputbox "SERVER_IP:" 10 40 "$default_item" 2> /tmp/gate_server_ip & 
     RET=$?
     if [ $RET -eq 1 ]; then
         echo "error"
@@ -262,7 +262,7 @@ do_set_lora_server_ip()
         rm /tmp/gate_server_ip
         write_json_lora_server_ip "$gate_server_ip"
         sed -i "s/^.*server_address.*$/\t\"server_address\": \"$gate_server_ip\",/" $LORA_PKT_PATH/global_conf.json
-        if [ $rpi_model -ne 3 ] || [ $rpi_model -ne 4 ]; then
+        if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
             do_check_ip_is_localhost $gate_server_ip
             RET=$?
             if  [ $RET -eq 0 ]; then
@@ -278,7 +278,7 @@ do_set_lora_server_ip()
 
 do_setup_LoRaServer_channel_plan() {
     default_item=1
-    FUN=$(dialog --title "ChirpStack Channel-plan configuration" --default-item $default_item --menu "Server the Channel-plan:" 18 60 12 \
+    FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
         1 "AS_923" \
         2 "AU_915_928" \
         3 "CN_470_510" \
@@ -337,47 +337,77 @@ do_set_LoRaServer_adr()
 
 do_setup_LoRaServer_config()
 {
-    default_item=1
-    FUN=$(dialog --title "ChirpStack Channel-plan configuration" --default-item $default_item --menu "Server the Channel-plan:" 10 60 12 \
-        1 "ChirpStack Channel-plan configuration" \
-        2 "ChirpStack ADR configure" \
-        3>&1 1>&2 2>&3)
-    RET=$?
-    if [ $RET -eq 0 ]; then
-        case "$FUN" in
-            1) do_setup_LoRaServer_channel_plan;;
-            2) do_set_LoRaServer_adr;;
-        esac
+    if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+        default_item=1
+        FUN=$(dialog --title "ChirpStack Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 10 60 12 \
+            1 "ChirpStack Channel-plan configuration" \
+            2 "ChirpStack ADR configure" \
+            3>&1 1>&2 2>&3)
+        RET=$?
+        if [ $RET -eq 0 ]; then
+            case "$FUN" in
+                1) do_setup_LoRaServer_channel_plan;;
+                2) do_set_LoRaServer_adr;;
+            esac
+        fi
+    else
+        default_item=1
+        FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 10 60 12 \
+            1 "Server Channel-plan configuration" \
+            3>&1 1>&2 2>&3)
+        RET=$?
+        if [ $RET -eq 0 ]; then
+            case "$FUN" in
+                1) do_setup_LoRaServer_channel_plan;;
+            esac
+        fi
     fi
 }
 
 do_setup_channel_plan() {
-    # $1: concentrator type
-    # $2: config suffix, eg ".gps"
-    default_item=`do_get_gateway_info lora_server.server_plan`
+    if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+        default_item=`do_get_gateway_info lora_server.server_plan`
 
-    FUN=$(dialog --title "Server-plan configuration" --default-item $default_item --menu "Select the Server-plan:" 15 60 3 \
-        1 "Server is TTN" \
-        2 "Server is ChirpStack" \
-        3>&1 1>&2 2>&3)
-    RET=$?
+        FUN=$(dialog --title "Server-plan configuration" --default-item $default_item --menu "Select the Server-plan:" 15 60 3 \
+            1 "Server is TTN" \
+            2 "Server is ChirpStack" \
+            3>&1 1>&2 2>&3)
+        RET=$?
 
-    if [ $RET -eq 1 ]; then
-        :
-    elif [ $RET -eq 0 ]; then
-        case "$FUN" in
-            1) do_setup_ttn_channel_plan;;
-            2) do_setup_LoRaServer_config ;;
-        esac
+        if [ $RET -eq 1 ]; then
+            :
+        elif [ $RET -eq 0 ]; then
+            case "$FUN" in
+                1) do_setup_ttn_channel_plan;;
+                2) do_setup_LoRaServer_config ;;
+            esac
+        fi
+    else
+        FUN=$(dialog --title "Server-plan configuration" --default-item 1 --menu "Select the Server-plan:" 15 60 3 \
+            1 "Server is TTN" \
+            2 "Server is Other server" \
+            3>&1 1>&2 2>&3)
+        RET=$?
+
+        if [ $RET -eq 1 ]; then
+            :
+        elif [ $RET -eq 0 ]; then
+            case "$FUN" in
+                1) do_setup_ttn_channel_plan;;
+                2) do_setup_LoRaServer_config ;;
+            esac
+        fi
     fi
     do_main_menu
 }
 
 do_ChirpStack()
 {
-    systemctl $1 chirpstack-network-server
-    systemctl $1 chirpstack-application-server
-    systemctl $1 chirpstack-gateway-bridge
+    if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+        systemctl $1 chirpstack-network-server
+        systemctl $1 chirpstack-application-server
+        systemctl $1 chirpstack-gateway-bridge
+    fi
 }
 
 
