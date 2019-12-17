@@ -14,7 +14,7 @@ This project currently provides support for the below platforms.
 * RAK7243
 
 ##	Changelog
-2019-12-17
+2019-12-17 V4.1.1
 * Added support for rak2247/rak833 spi version.
 
 2019-12-02
