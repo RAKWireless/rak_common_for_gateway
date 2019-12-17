@@ -41,7 +41,7 @@ function echo_model_info()
     echo_yellow "*\t5.RAK2247(USB)"
     echo_yellow "*\t6.RAK833(SPI)"
     echo_yellow "*\t7.RAK2247(SPI)"
-    echo_yellow  "Please enter 1-5 to select the model:\c"
+    echo_yellow  "Please enter 1-7 to select the model:\c"
 }
 
 function do_set_model_to_json()
