@@ -1,4 +1,5 @@
 {
 	"gw_model": "RAK7243",
-	"gw_version": "4.1.0R"
+	"gw_version": "4.1.1R",
+	"spi":0
 }

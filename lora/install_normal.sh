@@ -15,6 +15,7 @@ source $SCRIPT_COMMON_FILE
 mkdir -p /usr/local/rak/lora
 
 RAK_GW_MODEL=`do_get_gw_model`
+LORA_SPI=`do_get_lora_spi`
 
 mkdir /opt/ttn-gateway -p
 
@@ -29,9 +30,15 @@ elif [ "${RAK_GW_MODEL}" = "RAK2245" ] || [ "${RAK_GW_MODEL}" = "RAK831" ]; then
     LORA_DIR_TMP=rak2245
     popd
 elif [ "${RAK_GW_MODEL}" = "RAK2247" ] || [ "${RAK_GW_MODEL}" = "RAK833" ]; then
-    pushd rak2247
-    ./install.sh
-    LORA_DIR_TMP=rak2247
+    if [ "${LORA_SPI}" = "1" ]; then
+        pushd rak2247_spi
+        ./install.sh
+        LORA_DIR_TMP=rak2247_spi
+    else
+        pushd rak2247_usb
+        ./install.sh
+        LORA_DIR_TMP=rak2247_usb
+    fi
     popd
 else
     :

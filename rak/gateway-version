@@ -7,6 +7,17 @@ source $SCRIPT_COMMON_FILE
 GW_MODEL=`do_get_gw_model`
 GW_VERSION=`do_get_gw_version`
 GW_ID=`do_get_gw_id`
+LORA_SPI=`do_get_lora_spi`
+
+if [ "${RAK_GW_MODEL}" = "RAK2247" ] || [ "${RAK_GW_MODEL}" = "RAK833" ]; then
+    if [ "${LORA_SPI}" = "1" ]; then
+        GW_MODEL_STR="${RAK_GW_MODEL} for SPI"
+    else
+        GW_MODEL_STR="${RAK_GW_MODEL} for USB"
+    fi
+else
+    GW_MODEL_STR=$GW_MODEL
+fi
 
 echo "Gateway ID:$GW_ID"
-echo "RAKWireless gateway $GW_MODEL version $GW_VERSION"
+echo "RAKWireless gateway $GW_MODEL_STR version $GW_VERSION"

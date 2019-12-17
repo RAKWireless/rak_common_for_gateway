@@ -35,10 +35,12 @@ function echo_model_info()
 {
     echo_yellow "Please select your gateway model:"
     echo_yellow "*\t1.RAK831"
-    echo_yellow "*\t2.RAK833"
-    echo_yellow "*\t3.RAK2245"
-    echo_yellow "*\t4.RAK2247"
-    echo_yellow "*\t5.RAK7243"
+    echo_yellow "*\t2.RAK2245"
+    echo_yellow "*\t3.RAK7243"
+    echo_yellow "*\t4.RAK833(USB)"
+    echo_yellow "*\t5.RAK2247(USB)"
+    echo_yellow "*\t6.RAK833(SPI)"
+    echo_yellow "*\t7.RAK2247(SPI)"
     echo_yellow  "Please enter 1-5 to select the model:\c"
 }
 
@@ -47,14 +49,25 @@ function do_set_model_to_json()
     JSON_FILE=./rak/rak/rak_gw_model.json
     if [ $1 -eq 1 ]; then
         GW_MODEL=RAK831
+        do_set_spi_to_json 1
     elif [ $1 -eq 2 ]; then
-        GW_MODEL=RAK833
-    elif [ $1 -eq 3 ]; then
         GW_MODEL=RAK2245
-    elif [ $1 -eq 4 ]; then
-        GW_MODEL=RAK2247
-    elif [ $1 -eq 5 ]; then
+        do_set_spi_to_json 1
+    elif [ $1 -eq 3 ]; then
         GW_MODEL=RAK7243
+        do_set_spi_to_json 1
+    elif [ $1 -eq 4 ]; then
+        GW_MODEL=RAK833
+        do_set_spi_to_json 0
+    elif [ $1 -eq 5 ]; then
+        GW_MODEL=RAK2247
+        do_set_spi_to_json 0
+    elif [ $1 -eq 6 ]; then
+        GW_MODEL=RAK833
+        do_set_spi_to_json 1
+    elif [ $1 -eq 7 ]; then
+        GW_MODEL=RAK2247
+        do_set_spi_to_json 1
     else
         # Never come here
         echo "error"
@@ -64,6 +77,14 @@ function do_set_model_to_json()
     sed -i "${linenum}c\\\\t\"gw_model\": \"$GW_MODEL\"," $JSON_FILE
 }
 
+function do_set_spi_to_json()
+{
+    JSON_FILE=./rak/rak/rak_gw_model.json
+    
+    linenum=`sed -n "/spi/=" $JSON_FILE`
+    sed -i "${linenum}c\\\\t\"spi\": \"$1\"" $JSON_FILE
+}
+
 function do_set_model()
 {
     echo_model_info
@@ -71,7 +92,7 @@ function do_set_model()
     do
         read RAK_MODEL
         if [ -z "$RAK_MODEL" ]; then
-            echo_yellow "IF Please enter 1-5 to select the model:\c"
+            echo_yellow "IF Please enter 1-7 to select the model:\c"
             continue
         fi
 
@@ -79,15 +100,15 @@ function do_set_model()
         RET=$?
 
         if [ $RET -eq 0 ]; then
-            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 5 ]; then
-                echo_yellow "IF Please enter 1-5 to select the model:\c"
+            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 7 ]; then
+                echo_yellow "IF Please enter 1-7 to select the model:\c"
                 continue
             else
                 do_set_model_to_json $RAK_MODEL
                 return 0
             fi
         else
-            echo_yellow "IF Please enter 1-5 to select the model:\c"
+            echo_yellow "IF Please enter 1-7 to select the model:\c"
             continue
 
         fi

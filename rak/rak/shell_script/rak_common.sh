@@ -36,6 +36,11 @@ do_get_gateway_info()
     do_get_json_value gw_model $GATEWAY_CONFIG_INFO
 }
 
+do_get_lora_spi()
+{
+    do_get_json_value spi $RAK_GW_INFO_JSON_FILE
+}
+
 do_get_gw_model()
 {
     do_get_json_value gw_model $RAK_GW_INFO_JSON_FILE

@@ -4,12 +4,17 @@ SCRIPT_COMMON_FILE=/usr/local/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
 GW_MODEL=`do_get_gw_model`
+LORA_SPI=`do_get_lora_spi`
 
 if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
     if [ "$GW_MODEL" = "RAK7243" ]; then
         cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
     elif [ "$GW_MODEL" = "RAK2247" ]; then
-        cp /usr/local/rak/lora/rak2247/* /opt/ttn-gateway/ -rf
+        if [ "$LORA_SPI" = "1" ]; then
+            cp /usr/local/rak/lora/rak2247_spi/* /opt/ttn-gateway/ -rf
+        else
+            cp /usr/local/rak/lora/rak2247_usb/* /opt/ttn-gateway/ -rf
+        fi
     else
         cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
     fi
