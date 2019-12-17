@@ -54,11 +54,13 @@ step4 : Next you will see some messages as follow. Please select the correspondi
 
       Please select your gateway model:
       *	1.RAK831
-      *	2.RAK833
-      *	3.RAK2245
-      *	4.RAK2247
-      *	5.RAK7243
-      Please enter 1-5 to select the model:
+      *	2.RAK2245
+      *	3.RAK7243
+      *	4.RAK833(USB)
+      *	5.RAK2247(USB)
+      *	6.RAK2247(SPI)
+      *	7.RAK833(SPI)
+      Please enter 1-7 to select the model:
 
 step5 : Wait a moment and the installation is complete.If your gateway uses a wired connection, please reconfigure the LAN's IP address using "sudo gateway-config" after the installation is complete.
 
