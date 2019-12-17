@@ -8,12 +8,15 @@ The aim of this project is to help users set up a LoRa network easily. The User 
 
 This project currently provides support for the below platforms.
 * RAK831
-* RAK833
+* RAK833(USB/SPI)
 * RAK2245
-* RAK2247
+* RAK2247(USB/SPI)
 * RAK7243
 
 ##	Changelog
+2019-12-17
+* Added support for rak2247/rak833 spi version.
+
 2019-12-02
 * Fix a bug. There is a mistake word "diable" in rak/gateway-config script, line 272, it should be do_ChirpStack disable.
 
