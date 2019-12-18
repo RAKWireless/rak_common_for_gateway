@@ -80,7 +80,7 @@ wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-net
 #3.3 install chirpstack packages
 dpkg -i chirpstack-application-server_3.5.1_linux_armv7.deb
 dpkg -i chirpstack-gateway-bridge_3.4.1_linux_armv7.deb
-dpkg -i chirpstack-network-server_3.4.1_linux_armv7.deb
+dpkg -i chirpstack-network-server_3.6.0_linux_armv7.deb
 
 #4. configure lora
 # configure chirpstack Server
