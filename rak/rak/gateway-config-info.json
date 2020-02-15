@@ -28,5 +28,7 @@
 	},
 	"active_lora_server":"2",
 	"install_img":"0",
+	"install_chirpstack":"1",
+	"install_lte":"0",
 	"lte_mode":"2"
 }

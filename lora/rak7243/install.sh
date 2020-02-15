@@ -37,25 +37,6 @@ GATEWAY_EUI=${GATEWAY_EUI^^} # toupper
 
 echo "Detected EUI $GATEWAY_EUI from $GATEWAY_EUI_NIC"
 
-if [[ $NEW_HOSTNAME == "" ]]; then NEW_HOSTNAME="rak-gateway"; fi
-
-if [[ $GATEWAY_LAT == "" ]]; then GATEWAY_LAT=0; fi
-
-if [[ $GATEWAY_LON == "" ]]; then GATEWAY_LON=0; fi
-
-if [[ $GATEWAY_ALT == "" ]]; then GATEWAY_ALT=0; fi
-
-
-# Change hostname if needed
-CURRENT_HOSTNAME=$(hostname)
-
-if [[ $NEW_HOSTNAME != $CURRENT_HOSTNAME ]]; then
-    echo "Updating hostname to '$NEW_HOSTNAME'..."
-    hostname $NEW_HOSTNAME
-    echo $NEW_HOSTNAME > /etc/hostname
-    sed -i "s/$CURRENT_HOSTNAME/$NEW_HOSTNAME/" /etc/hosts
-fi
-
 # Install LoRaWAN packet forwarder repositories
 INSTALL_DIR="./"
 if [ ! -d "$INSTALL_DIR" ]; then mkdir $INSTALL_DIR; fi

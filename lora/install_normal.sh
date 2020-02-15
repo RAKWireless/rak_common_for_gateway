@@ -24,7 +24,7 @@ if [ "${RAK_GW_MODEL}" = "RAK7243" ]; then
     ./install.sh
     LORA_DIR_TMP=rak7243
     popd
-elif [ "${RAK_GW_MODEL}" = "RAK2245" ] || [ "${RAK_GW_MODEL}" = "RAK831" ]; then
+elif [ "${RAK_GW_MODEL}" = "RAK2245" ] || [ "${RAK_GW_MODEL}" = "RAK831" ] || [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
     pushd rak2245
     ./install.sh
     LORA_DIR_TMP=rak2245

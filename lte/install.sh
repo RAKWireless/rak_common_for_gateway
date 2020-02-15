@@ -11,12 +11,14 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
-RAK_GW_MODEL=`do_get_gw_model`
-if [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "$1" = "create_img" ]; then
+INSTALL_LTE=`do_get_gw_install_lte`
+if [ "${INSTALL_LTE}" = "1" ] || [ "$1" = "create_img" ]; then
     if [ ! -d "/usr/local/rak/lte" ]; then mkdir "/usr/local/rak/lte" -p ; fi
 
     cp ppp-creator.sh /usr/local/rak/lte/
     cp rak-pppd.service /lib/systemd/system
+    cp pppd.sh /usr/local/rak/bin/
+    cp ppp.sh /usr/local/rak/bin/
 
     echo_success "Install LTE module success!\n"
     sleep 2

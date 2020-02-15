@@ -13,6 +13,17 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
+if [[ $NEW_HOSTNAME == "" ]]; then NEW_HOSTNAME="rak-gateway"; fi
+# Change hostname if needed
+CURRENT_HOSTNAME=$(hostname)
+
+if [[ $NEW_HOSTNAME != $CURRENT_HOSTNAME ]]; then
+    echo "Updating hostname to '$NEW_HOSTNAME'..."
+    hostname $NEW_HOSTNAME
+    echo $NEW_HOSTNAME > /etc/hostname
+    sed -i "s/$CURRENT_HOSTNAME/$NEW_HOSTNAME/" /etc/hosts
+fi
+
 # add rak_script to rc.local
 linenum=`sed -n '/rak_script/=' /etc/rc.local`
 if [ ! -n "$linenum" ]; then
@@ -23,6 +34,7 @@ if [ ! -n "$linenum" ]; then
 fi
 
 cp config.txt /boot/config.txt
+cp motd /etc/motd -f
 
 CMD_STR=`cat /boot/cmdline.txt`
 echo "$CMD_STR modules-load=dwc2,g_ether" > /boot/cmdline.txt

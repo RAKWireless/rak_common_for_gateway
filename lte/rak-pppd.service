@@ -2,8 +2,8 @@
 Description=Rak pppd for LTE Module
 
 [Service]
-WorkingDirectory=/usr/sbin/
-ExecStart=/usr/sbin/pppd call gprs
+WorkingDirectory=/usr/local/rak/bin/
+ExecStart=/usr/local/rak/bin/pppd.sh
 SyslogIdentifier=rak-pppd
 Restart=on-failure
 RestartSec=5
