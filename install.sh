@@ -23,6 +23,8 @@ print_help()
     exit
 }
 
+rpi_model=`do_get_rpi_model`
+
 ARGS=`getopt -o "" -l "help,img,chirpstack:" -- "$@"`
 
 eval set -- "${ARGS}"
@@ -44,7 +46,6 @@ while true; do
         --chirpstack)
         shift;
         if [[ -n "${1}" ]]; then
-        	echo "van [${1}]"
             if [ "not_install" = "${1}" ]; then
                 INSTALL_CHIRPSTACK=0
             elif [ "install" = "${1}" ]; then
@@ -52,6 +53,10 @@ while true; do
             else
                 echo "invalid value"
                 exit
+            fi
+
+            if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+                INSTALL_CHIRPSTACK=0
             fi
             shift;
         fi
@@ -88,6 +93,7 @@ pushd sysconf
 ./install.sh $1
 sleep 1
 popd
+
 
 if [ "$INSTALL_CHIRPSTACK" = 1 ]; then
     pushd chirpstack

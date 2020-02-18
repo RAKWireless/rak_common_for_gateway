@@ -174,7 +174,6 @@ write_json_chirpstack_install()
     write_json_gateway_info "install_chirpstack" $1
 }
 
-
 do_get_lora_spi()
 {
     do_get_json_value spi $RAK_GW_INFO_JSON_FILE
@@ -202,7 +201,12 @@ do_get_gw_version()
 
 do_get_gw_install_lte()
 {
-   do_get_json_value install_lte $RAK_GW_INFO_JSON_FILE
+   do_get_json_value install_lte $GATEWAY_CONFIG_INFO
+}
+
+do_get_gw_install_chirpstack()
+{
+   do_get_json_value install_chirpstack $GATEWAY_CONFIG_INFO
 }
 
 do_get_gw_id()
@@ -220,6 +224,16 @@ do_get_gw_id()
     fi
     GATEWAY_EUI=$(ip link show $GATEWAY_EUI_NIC | awk '/ether/ {print $2}' | awk -F\: '{print $1$2$3"FFFE"$4$5$6}')
     GATEWAY_EUI=${GATEWAY_EUI^^}
+    echo $GATEWAY_EUI
+}
+
+do_get_gw_id_from_json()
+{
+    if [ -f /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json ];then
+        GATEWAY_EUI=`do_get_json_value gateway_conf.gateway_ID /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json`
+    else
+        GATEWAY_EUI=`do_get_json_value gateway_conf.gateway_ID /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json`
+    fi
     echo $GATEWAY_EUI
 }
 

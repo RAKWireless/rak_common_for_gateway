@@ -11,9 +11,18 @@ This project currently provides support for the below platforms.
 * RAK833(USB/SPI)
 * RAK2245
 * RAK2247(USB/SPI)
-* RAK7243
+* RAK7243/RAK7244
+* RAK2246
 
 ##	Changelog
+2020-02-14 V4.2.0
+* 1.Added support for RAK2246 spi version.
+* 2.Fix the bug that the internet cannot be accessed after ppp0 redial.
+* 3.install.sh can pass --help parameter to see more installation information.
+* 4.Install the latest version of chirpstack by default.
+* 5.gateway-version print more information.
+* 6.gateway-config and gateway-version show the actual gateway_id.
+
 2019-12-17 V4.1.1
 * Added support for rak2247/rak833 spi version.
 

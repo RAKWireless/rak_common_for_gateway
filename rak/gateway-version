@@ -6,8 +6,10 @@ source $SCRIPT_COMMON_FILE
 
 RAK_MODEL=`do_get_gw_model`
 GW_VERSION=`do_get_gw_version`
-GW_ID=`do_get_gw_id`
+GW_ID=`do_get_gw_id_from_json`
 LORA_SPI=`do_get_lora_spi`
+INSTALL_LTE=`do_get_gw_install_lte`
+INSTALL_FROM_IMG=`do_get_gateway_info install_img`
 
 if [ "${RAK_MODEL}" = "RAK2247" ] || [ "${RAK_MODEL}" = "RAK833" ]; then
     if [ "${LORA_SPI}" = "1" ]; then
@@ -15,9 +17,34 @@ if [ "${RAK_MODEL}" = "RAK2247" ] || [ "${RAK_MODEL}" = "RAK833" ]; then
     else
         GW_MODEL_STR="${RAK_MODEL} for USB"
     fi
+elif [ "${RAK_MODEL}" = "RAK7243" ]; then
+	if [ "$INSTALL_LTE" = "1" ]; then
+		GW_MODEL_STR="${RAK_MODEL} with LTE"
+	else
+		GW_MODEL_STR="${RAK_MODEL} no LTE"
+	fi
 else
     GW_MODEL_STR=$RAK_MODEL
 fi
 
-echo "Gateway ID:$GW_ID"
-echo "RAKWireless gateway $GW_MODEL_STR version $GW_VERSION"
+if [ "$INSTALL_FROM_IMG" = "1" ]; then
+	EXTRA_STR="install from firmware"
+else
+	EXTRA_STR="install from source code"
+fi
+
+KERNEL_VERSION=`uname -r`
+RPI_MODEL=`cat -v /proc/device-tree/model`
+RPI_MODEL=${RPI_MODEL%%^*}
+RPI_OS=`cat /etc/os-release | grep "VERSION="`
+RPI_OS=${RPI_OS#*=}
+
+
+
+echo "$RPI_MODEL, OS $RPI_OS, $KERNEL_VERSION."
+echo "RAKWireless gateway $GW_MODEL_STR version $GW_VERSION $EXTRA_STR."
+echo "Gateway ID: $GW_ID."
+
+
+
+

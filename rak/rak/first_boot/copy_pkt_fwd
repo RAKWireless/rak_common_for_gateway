@@ -5,25 +5,29 @@ source $SCRIPT_COMMON_FILE
 
 GW_MODEL=`do_get_gw_model`
 LORA_SPI=`do_get_lora_spi`
+INSTALL_LTE=`do_get_gw_install_lte`
+INSTALL_CHIRPSTACK=`write_json_chirpstack_install`
 
 if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
-    if [ "$GW_MODEL" = "RAK7243" ]; then
+
+    if [ "$INSTALL_LTE" = "1" ]; then
         cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
-    elif [ "$GW_MODEL" = "RAK2247" ]; then
-        if [ "$LORA_SPI" = "1" ]; then
-            cp /usr/local/rak/lora/rak2247_spi/* /opt/ttn-gateway/ -rf
-        else
-            cp /usr/local/rak/lora/rak2247_usb/* /opt/ttn-gateway/ -rf
-        fi
     else
-        cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
+        if [ "$GW_MODEL" = "RAK2247" ]; then
+            if [ "$LORA_SPI" = "1" ]; then
+                cp /usr/local/rak/lora/rak2247_spi/* /opt/ttn-gateway/ -rf
+            else
+                cp /usr/local/rak/lora/rak2247_usb/* /opt/ttn-gateway/ -rf
+            fi
+        else
+            cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
+        fi
     fi
+
     cp /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf/global_conf.eu_863_870.json \
 	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
 
-
-    rpi_model=`do_get_rpi_model`
-    if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+    if [ $INSTALL_CHIRPSTACK -ne 1 ]; then
         exit 0
     fi
     sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" \
