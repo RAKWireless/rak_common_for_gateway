@@ -31,6 +31,8 @@ eval set -- "${ARGS}"
 
 INSTALL_CHIRPSTACK=1
 
+CREATE_IMG=""
+
 while true; do
     case "${1}" in
         --help)
@@ -40,7 +42,7 @@ while true; do
 
         --img)
         shift;
-        $1=create_img
+        CREATE_IMG=create_img
         ;;
 
         --chirpstack)
@@ -73,11 +75,11 @@ while true; do
 done
 
 # select gw model
-./choose_model.sh $1
+./choose_model.sh $CREATE_IMG
 
 apt update
 pushd rak
-./install.sh $1
+./install.sh $CREATE_IMG
 sleep 1
 popd
 set +e
@@ -85,31 +87,37 @@ write_json_chirpstack_install $INSTALL_CHIRPSTACK
 set -e
 
 pushd ap
-./install.sh $1
+./install.sh $CREATE_IMG
 sleep 1
 popd
 
 pushd sysconf
-./install.sh $1
+./install.sh $CREATE_IMG
 sleep 1
 popd
 
 
 if [ "$INSTALL_CHIRPSTACK" = 1 ]; then
     pushd chirpstack
-    ./install.sh $1
+    ./install.sh $CREATE_IMG
     sleep 1
     popd
 fi
 
 pushd lte
-./install.sh $1
+./install.sh $CREATE_IMG
 sleep 1
 popd
 
 pushd lora
-./install.sh $1
+./install.sh $CREATE_IMG
 sleep 1
+
+if [ "$CREATE_IMG" = "create_img" ]; then
+    pushd /usr/local/rak
+    mv bin bin_bak
+    popd
+else
 
 echo_success "*********************************************************"
 echo_success "*  The RAKwireless gateway is successfully installed!   *"

@@ -27,7 +27,8 @@ if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
     cp /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf/global_conf.eu_863_870.json \
 	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
 
-    if [ $INSTALL_CHIRPSTACK -ne 1 ]; then
+    if [ $INSTALL_CHIRPSTACK -eq 0 ]; then
+        
         exit 0
     fi
     sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" \

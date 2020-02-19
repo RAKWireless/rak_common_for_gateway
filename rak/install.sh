@@ -24,7 +24,6 @@ cp rak /usr/local/ -rf
 if [ "$1" = "create_img" ]; then
     sed -i "s/^.*install_img.*$/\"install_img\":\"1\",/" /usr/local/rak/gateway-config-info.json
     pushd /usr/local/rak
-    mv bin bin_bak
     popd
 else
     rm -rf /usr/local/rak/first_boot

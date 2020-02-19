@@ -1,23 +1,15 @@
 #!/bin/bash
+SCRIPT_COMMON_FILE=/usr/local/rak/shell_script/rak_common.sh
 
+source $SCRIPT_COMMON_FILE
 # Try to get gateway ID from MAC address
 # First try eth0, if that does not exist, try wlan0 (for RPi Zero)
-GATEWAY_EUI_NIC="eth0"
-if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
-    GATEWAY_EUI_NIC="wlan0"
-fi
+INSTALL_CHIRPSTACK=`do_get_gw_install_chirpstack`
+GATEWAY_EUI=`do_get_gw_id`
 
-if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
-    GATEWAY_EUI_NIC="usb0"
+if [ "$INSTALL_CHIRPSTACK" = "0" ]; then
+    exit
 fi
-
-if [[ `grep "$GATEWAY_EUI_NIC" /proc/net/dev` == "" ]]; then
-    echo "ERROR: No network interface found. Cannot set gateway ID."
-    exit 1
-fi
-
-GATEWAY_EUI=$(ip link show $GATEWAY_EUI_NIC | awk '/ether/ {print $2}' | awk -F\: '{print $1$2$3"FFFE"$4$5$6}')
-GATEWAY_EUI=${GATEWAY_EUI^^} 
 
 while [ true=true  ]
 do
