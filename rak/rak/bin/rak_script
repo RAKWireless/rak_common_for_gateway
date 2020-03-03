@@ -7,6 +7,15 @@ systemctl stop serial-getty@ttyAMA0.service
 
 /usr/local/rak/bin/rak_for_ttn.sh
 
+if [ -f "/boot/rak_ap" ]; then
+        echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+update_config=1" > /etc/wpa_supplicant/wpa_supplicant.conf
+        rm -rf /boot/rak_ap
+        systemctl enable create_ap.service
+        write_json_wifi_mode 1
+        reboot
+fi
+
 # first boot, add gateway_id to loraserver
 if [ -f "/usr/local/rak/first_boot/init_loraserver_db" ]; then
         rpi_model=`do_get_rpi_model`
@@ -49,14 +58,15 @@ if [ -f "/usr/local/rak/first_boot/expand_rootfs.sh" ]; then
 fi
 
 GW_MODEL=`do_get_gw_model`
+INSTALL_LTE=`do_get_gw_install_lte`
 # active lte
-if [ "$GW_MODEL" = "RAK7243" ]; then
+if [ "$INSTALL_LTE" = "1" ]; then
     pushd /usr/local/rak/bin
     ./active_lte_module.sh
-    ./ppp.sh &
-    if [ -f "/usr/local/rak/bin/quectel.sh" ]; then
-        ./quectel.sh &
-    fi
+#    ./ppp.sh &
+#    if [ -f "/usr/local/rak/bin/quectel.sh" ]; then
+#        ./quectel.sh &
+#    fi
     popd
 fi
 
