@@ -53,7 +53,7 @@ step1 : Download and install [Raspbian Stretch or Buster LITE](https://www.raspb
 
 step2 : Use "sudo raspi-config" command, enable spi and i2c interface.
 
-step3 : Clone the installer and start the installation.
+step3 : Clone the installer and start the installation (More installation options can be found in "sudo ./install.sh --help").
 
       $ sudo apt update; sudo apt install git -y
       $ git clone https://github.com/RAKWireless/rak_common_for_gateway.git ~/rak_common_for_gateway
@@ -65,12 +65,14 @@ step4 : Next you will see some messages as follow. Please select the correspondi
       Please select your gateway model:
       *	1.RAK831
       *	2.RAK2245
-      *	3.RAK7243
-      *	4.RAK833(USB)
-      *	5.RAK2247(USB)
-      *	6.RAK2247(SPI)
+      *	3.RAK7243/RAK7244 no LTE
+      *	4.RAK7243/RAK7244 with LTE
+      *	5.RAK833(USB)
+      *	6.RAK2247(USB)
       *	7.RAK833(SPI)
-      Please enter 1-7 to select the model:
+      * 8.RAK2247(SPI)
+      * 9.RAK2246
+      Please enter 1-9 to select the model:
 
 step5 : Wait a moment and the installation is complete.If your gateway uses a wired connection, please reconfigure the LAN's IP address using "sudo gateway-config" after the installation is complete.
 
