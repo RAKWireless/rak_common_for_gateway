@@ -38,9 +38,15 @@ else
         fi
         popd
     else
-        pushd rak2245
-        ./install.sh
-        LORA_DIR_TMP=rak2245
+        if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
+            pushd rak2246
+            ./install.sh
+            LORA_DIR_TMP=rak2246
+        else
+            pushd rak2245
+            ./install.sh
+            LORA_DIR_TMP=rak2245
+        fi
         popd
     fi
 fi

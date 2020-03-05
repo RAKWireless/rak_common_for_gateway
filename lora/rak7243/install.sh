@@ -22,8 +22,10 @@ pushd $INSTALL_DIR
 
 # Build LoRa gateway app
 
-if [ ! -d lora_gateway ]; then
+if [ ! -d $SCRIPT_DIR/../lora_gateway ]; then
     git clone https://github.com/Lora-net/lora_gateway.git
+else
+    cp $SCRIPT_DIR/../lora_gateway . -rf
 fi
 
 pushd lora_gateway
@@ -38,8 +40,10 @@ popd
 
 # Build packet forwarder
 
-if [ ! -d packet_forwarder ]; then
+if [ ! -d $SCRIPT_DIR/../packet_forwarder ]; then
     git clone https://github.com/Lora-net/packet_forwarder.git
+else
+    cp $SCRIPT_DIR/../packet_forwarder . -rf
 fi
 pushd packet_forwarder
 
