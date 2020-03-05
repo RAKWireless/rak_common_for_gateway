@@ -23,6 +23,7 @@ This project currently provides support for the below platforms.
 * 5.gateway-version print more information.
 * 6.gateway-config and gateway-version show the actual gateway_id.
 * 7.Create a rak_ap file in the / boot directory to restore to ap mode.
+* 8.Modify the global_conf.json file of 7246 to make the transmit power more accurate.
 
 2019-12-17 V4.1.1
 * Added support for rak2247/rak833 spi version.
