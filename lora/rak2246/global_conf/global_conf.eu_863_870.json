@@ -88,7 +88,7 @@
         "tx_lut_2": {
             "pa_gain": 0,
             "mix_gain": 10,
-            "rf_power": 16,
+            "rf_power": 17,
             "dig_gain": 0
         },
         "tx_lut_3": {
