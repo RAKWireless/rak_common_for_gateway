@@ -2515,15 +2515,34 @@ void thread_down(void) {
             }
             if (jit_result == JIT_ERROR_OK) {
                 for (i=0; i<txlut.size; i++) {
-                    if (txlut.lut[i].rf_power == txpkt.rf_power) {
+                    if (txlut.lut[i].rf_power == txpkt.rf_power)
+                    {
                         /* this RF power is supported, we can continue */
+                        txpkt.rf_power = txlut.lut[i].rf_power;
+                        MSG("INFO: == used txlut index:%d\n", i);
+                        break;
+                    }
+                    else if (txlut.lut[i].rf_power > txpkt.rf_power) {
+                        if (0 != i)
+                        {
+                            txpkt.rf_power = txlut.lut[i - 1].rf_power;
+                            MSG("INFO: >= used txlut index:%d. __1\n", i - 1);
+                            MSG("WARNING: network-server wants to use powe = %d, and actually uses powd = %d\n", txpkt.rf_power, txlut.lut[i - 1].rf_power);
+                        }
+                        else
+                        {
+                            txpkt.rf_power = txlut.lut[0].rf_power;
+                            MSG("INFO: >= used txlut index:%d. __2\n", i);
+                            MSG("WARNING: network-server wants to use powe = %d, and actually uses powd = %d\n", txpkt.rf_power, txlut.lut[0].rf_power);
+                        }
                         break;
                     }
                 }
                 if (i == txlut.size) {
-                    /* this RF power is not supported */
-                    jit_result = JIT_ERROR_TX_POWER;
-                    MSG("ERROR: Packet REJECTED, unsupported RF power for TX - %d\n", txpkt.rf_power);
+                    /* Exceeding maximum power, use maximum power */
+                    MSG("WARNING: power for TX - %d exceeding maximum power - , use maximum power - %d\n", txpkt.rf_power, txlut.lut[txlut.size - 1].rf_power, txlut.lut[txlut.size - 1].rf_power);
+                    txpkt.rf_power = txlut.lut[txlut.size - 1].rf_power;
+                    MSG("INFO: >= used txlut index:%d. __3\n", txlut.size - 1);
                 }
             }
 

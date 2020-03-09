@@ -71,6 +71,7 @@ fi
 pushd packet_forwarder
 
 cp $SCRIPT_DIR/Makefile-pk ./lora_pkt_fwd/Makefile
+cp $SCRIPT_DIR/lora_pkt_fwd.c ./lora_pkt_fwd/src/lora_pkt_fwd.c
 
 make
 
