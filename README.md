@@ -24,7 +24,7 @@ This project currently provides support for the below platforms.
 * 6.gateway-config and gateway-version show the actual gateway_id.
 * 7.Create a rak_ap file in the /boot directory to restore to ap mode.
 * 8.Modify the global_conf.json file of 7246 to make the transmit power more accurate.
-* 9.When there is no match for tx power, the nearest smaller power will be used.
+* 9.When there is no match for tx power, the nearest smaller power will be used.[Semtech UDP (legacy) packet forwarder](https://github.com/Lora-net/packet_forwarder/blob/master/lora_pkt_fwd/src/lora_pkt_fwd.c#L2517-L2527) 
 * 10.Delete default DNS(8.8.8.8, 223.5.5.5), the gateway will use the DNS assigned by the router to which it is connected.
 
 2019-12-17 V4.1.1
