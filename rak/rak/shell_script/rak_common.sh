@@ -157,6 +157,12 @@ write_json_lte_mode()
     write_json_gateway_info_no_comma "lte_mode" $1
 }
 
+write_json_sync_time_mode()
+{
+    # 数字
+    write_json_gateway_info_no_comma "sync_time" $1
+}
+
 write_json_active_lora_server()
 {
     write_json_gateway_info "active_lora_server" $1

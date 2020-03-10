@@ -26,6 +26,10 @@
 		"apn_name":"HOLOGRAM",
 		"apn_baud":"115200"
 	},
+	"time":
+	{
+		"sync_time":0
+	}
 	"active_lora_server":"2",
 	"install_img":"0",
 	"install_chirpstack":"1",

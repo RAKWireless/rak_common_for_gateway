@@ -2673,6 +2673,50 @@ void thread_jit(void) {
     }
 }
 
+static void modify_os_time(const uint32_t ppm_tstamp)
+{
+    struct timespec y;
+    struct timeval tv;
+    static bool time_already_set = false;
+    struct timeval stamp;
+    gettimeofday(&stamp, NULL);
+    int time_diff = 0;
+    lgw_cnt2utc(time_reference_gps, ppm_tstamp, &y);
+	if ((!gps_enabled) || time_already_set)
+    {
+        return;
+    }
+    if (y.tv_sec < 1583402711) // time less than '2020-03-05 18:00:00'
+    {
+        return;
+    }
+
+    MSG("INFO: [modify_os_time] local_time=%ld, gps_time=%ld\n", stamp.tv_sec, y.tv_sec);
+    time_diff = abs(y.tv_sec - stamp.tv_sec);
+
+    if (time_diff < 60)
+    {
+        time_already_set = true;
+        return;
+    }
+
+    tv.tv_sec = y.tv_sec;
+    tv.tv_usec = 0;
+    int ret = settimeofday(&tv, NULL);
+    if (0 == ret)
+    {
+        time_already_set = true;
+        time_t t;
+        struct tm* local;
+        char buf[128] = {0};
+        t = time(NULL);
+        local = localtime(&t);
+        strftime(buf, 64, "%Y-%m-%d %H:%M:%S", local);  
+        MSG("INFO: [modify_os_time] System time has been synchronized via GPS, %s\n", buf);
+    }
+}
+
+
 /* -------------------------------------------------------------------------- */
 /* --- THREAD 4: PARSE GPS MESSAGE AND KEEP GATEWAY IN SYNC ----------------- */
 
@@ -2700,6 +2744,7 @@ static void gps_process_sync(void) {
     /* try to update time reference with the new GPS time & timestamp */
     pthread_mutex_lock(&mx_timeref);
     i = lgw_gps_sync(&time_reference_gps, trig_tstamp, utc, gps_time);
+    modify_os_time(trig_tstamp);
     pthread_mutex_unlock(&mx_timeref);
     if (i != LGW_GPS_SUCCESS) {
         MSG("WARNING: [gps] GPS out of sync, keeping previous time reference\n");

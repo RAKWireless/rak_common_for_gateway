@@ -17,8 +17,7 @@ if [ "$1" = "create_img" ]; then
 # RAK_eth0_IP
 interface eth0
 static ip_address=192.168.10.10
-static routers=192.168.10.1
-static domain_name_servers=8.8.8.8 223.5.5.5" >> /etc/dhcpcd.conf
+static routers=192.168.10.1" >> /etc/dhcpcd.conf
 
 else
     echo ""
