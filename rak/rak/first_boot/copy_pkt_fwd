@@ -6,7 +6,7 @@ source $SCRIPT_COMMON_FILE
 GW_MODEL=`do_get_gw_model`
 LORA_SPI=`do_get_lora_spi`
 INSTALL_LTE=`do_get_gw_install_lte`
-INSTALL_CHIRPSTACK=`write_json_chirpstack_install`
+INSTALL_CHIRPSTACK=`do_get_gw_install_chirpstack`
 
 if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
 
