@@ -1013,7 +1013,7 @@ COPY public.multicast_group (id, created_at, updated_at, name, service_profile_i
 --
 
 COPY public.network_server (id, created_at, updated_at, name, server, ca_cert, tls_cert, tls_key, routing_profile_ca_cert, routing_profile_tls_cert, routing_profile_tls_key, gateway_discovery_enabled, gateway_discovery_interval, gateway_discovery_tx_frequency, gateway_discovery_dr) FROM stdin;
-1	2019-11-08 02:39:13.771113+00	2019-11-08 02:39:13.771113+00	ns	localhost:8000							f	0	0	0
+1	2019-11-08 02:39:13.771113+00	2019-11-08 02:39:13.771113+00	ns	127.0.0.1:8000							f	0	0	0
 \.
 
 
