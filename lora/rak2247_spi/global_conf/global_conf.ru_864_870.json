@@ -202,8 +202,6 @@
 		"forward_crc_valid": true,
 		"forward_crc_error": false,
 		"forward_crc_disabled": false,
-		/* gps enable */
-		"gps_tty_path": "/dev/ttyAMA0",
 		"fake_gps": false,
 		"ref_latitude": 10,
 		"ref_longitude": 20,
