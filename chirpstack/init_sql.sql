@@ -29,8 +29,8 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.5 (Raspbian 11.5-1+deb10u1)
--- Dumped by pg_dump version 11.5 (Raspbian 11.5-1+deb10u1)
+-- Dumped from database version 11.7 (Raspbian 11.7-0+deb10u1)
+-- Dumped by pg_dump version 11.7 (Raspbian 11.7-0+deb10u1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -51,8 +51,8 @@ SET row_security = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.5 (Raspbian 11.5-1+deb10u1)
--- Dumped by pg_dump version 11.5 (Raspbian 11.5-1+deb10u1)
+-- Dumped from database version 11.7 (Raspbian 11.7-0+deb10u1)
+-- Dumped by pg_dump version 11.7 (Raspbian 11.7-0+deb10u1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -191,47 +191,13 @@ CREATE TABLE public.device (
     device_status_external_power_source boolean NOT NULL,
     dr smallint,
     variables public.hstore,
-    tags public.hstore
-);
-
-
-ALTER TABLE public.device OWNER TO chirpstack_as;
-
---
--- Name: device_activation; Type: TABLE; Schema: public; Owner: chirpstack_as
---
-
-CREATE TABLE public.device_activation (
-    id bigint NOT NULL,
-    created_at timestamp with time zone NOT NULL,
-    dev_eui bytea NOT NULL,
+    tags public.hstore,
     dev_addr bytea NOT NULL,
     app_s_key bytea NOT NULL
 );
 
 
-ALTER TABLE public.device_activation OWNER TO chirpstack_as;
-
---
--- Name: device_activation_id_seq; Type: SEQUENCE; Schema: public; Owner: chirpstack_as
---
-
-CREATE SEQUENCE public.device_activation_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.device_activation_id_seq OWNER TO chirpstack_as;
-
---
--- Name: device_activation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chirpstack_as
---
-
-ALTER SEQUENCE public.device_activation_id_seq OWNED BY public.device_activation.id;
-
+ALTER TABLE public.device OWNER TO chirpstack_as;
 
 --
 -- Name: device_keys; Type: TABLE; Schema: public; Owner: chirpstack_as
@@ -276,7 +242,8 @@ CREATE TABLE public.device_profile (
     name character varying(100) NOT NULL,
     payload_codec text NOT NULL,
     payload_encoder_script text NOT NULL,
-    payload_decoder_script text NOT NULL
+    payload_decoder_script text NOT NULL,
+    tags public.hstore
 );
 
 
@@ -347,7 +314,9 @@ CREATE TABLE public.gateway (
     last_seen_at timestamp with time zone,
     latitude double precision NOT NULL,
     longitude double precision NOT NULL,
-    altitude double precision NOT NULL
+    altitude double precision NOT NULL,
+    tags public.hstore,
+    metadata public.hstore
 );
 
 
@@ -770,13 +739,6 @@ ALTER TABLE ONLY public.application ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
--- Name: device_activation id; Type: DEFAULT; Schema: public; Owner: chirpstack_as
---
-
-ALTER TABLE ONLY public.device_activation ALTER COLUMN id SET DEFAULT nextval('public.device_activation_id_seq'::regclass);
-
-
---
 -- Name: gateway_ping id; Type: DEFAULT; Schema: public; Owner: chirpstack_as
 --
 
@@ -830,7 +792,6 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 --
 
 COPY public.application (id, name, description, organization_id, service_profile_id, payload_codec, payload_encoder_script, payload_decoder_script) FROM stdin;
-1	app	app	1	a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	CUSTOM_JS		\n// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}
 \.
 
 
@@ -839,7 +800,7 @@ COPY public.application (id, name, description, organization_id, service_profile
 --
 
 COPY public.code_migration (id, applied_at) FROM stdin;
-migrate_gw_stats	2019-11-08 02:38:11.214972+00
+migrate_gw_stats	2020-03-12 03:51:20.870664+00
 \.
 
 
@@ -847,18 +808,7 @@ migrate_gw_stats	2019-11-08 02:38:11.214972+00
 -- Data for Name: device; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.device (dev_eui, created_at, updated_at, application_id, device_profile_id, name, description, last_seen_at, device_status_battery, device_status_margin, latitude, longitude, altitude, device_status_external_power_source, dr, variables, tags) FROM stdin;
-\\x0000000000000555	2019-11-08 02:46:11.323242+00	2019-11-08 02:46:11.323242+00	1	9e89a1f2-fbbf-46fa-840d-73f238053bbd	device_otaa	device_otaa	\N	\N	\N	\N	\N	\N	f	\N		
-\\x0000000000000666	2019-11-08 02:48:03.579549+00	2019-11-08 02:48:03.579549+00	1	c1671da1-726a-4259-868a-e8472f0f8b59	device_abp	device_abp	\N	\N	\N	\N	\N	\N	f	\N		
-\.
-
-
---
--- Data for Name: device_activation; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
---
-
-COPY public.device_activation (id, created_at, dev_eui, dev_addr, app_s_key) FROM stdin;
-1	2019-11-08 02:48:36.354602+00	\\x0000000000000666	\\x00000666	\\x00000000000000000000000000000666
+COPY public.device (dev_eui, created_at, updated_at, application_id, device_profile_id, name, description, last_seen_at, device_status_battery, device_status_margin, latitude, longitude, altitude, device_status_external_power_source, dr, variables, tags, dev_addr, app_s_key) FROM stdin;
 \.
 
 
@@ -867,7 +817,6 @@ COPY public.device_activation (id, created_at, dev_eui, dev_addr, app_s_key) FRO
 --
 
 COPY public.device_keys (dev_eui, created_at, updated_at, nwk_key, join_nonce, app_key, gen_app_key) FROM stdin;
-\\x0000000000000555	2019-11-08 02:46:33.696641+00	2019-11-08 02:46:33.696641+00	\\x00000000000000000000000000000555	0	\\x00000000000000000000000000000000	\\x00000000000000000000000000000555
 \.
 
 
@@ -883,9 +832,9 @@ COPY public.device_multicast_group (dev_eui, multicast_group_id, created_at) FRO
 -- Data for Name: device_profile; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.device_profile (device_profile_id, network_server_id, organization_id, created_at, updated_at, name, payload_codec, payload_encoder_script, payload_decoder_script) FROM stdin;
-9e89a1f2-fbbf-46fa-840d-73f238053bbd	1	1	2019-11-08 02:41:21.626245+00	2019-11-08 02:45:31.466375+00	device_profile_otaa			\n// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}
-c1671da1-726a-4259-868a-e8472f0f8b59	1	1	2019-11-08 02:41:45.432903+00	2019-11-08 02:45:37.246008+00	device_profile_abp			\n// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}
+COPY public.device_profile (device_profile_id, network_server_id, organization_id, created_at, updated_at, name, payload_codec, payload_encoder_script, payload_decoder_script, tags) FROM stdin;
+d6741e98-4230-4d99-a760-244725679e45	1	1	2020-03-12 03:53:07.714166+00	2020-03-12 04:21:24.47568+00	device_profile_abp	CUSTOM_JS		// ttn application function to decode uplink data.\n// Decode decodes an array of bytes into an object.\n//  - port contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object\n// for RAK, return {\n//                     "DecodeDataHex": {} // RAK5205 sensor data in Hex format\n//                     "DecodeDataObj": {} // RAK5205 sensor data object.\n//                 }\n// The function prototype cannot be modified.\nfunction Decoder(bytes, port) {\n  var decoded = {"DecodeDataHex": {}, "DecodeDataObj": {}};\n  var hexString=bin2HexStr(bytes);\n  decoded.DecodeDataHex = hexString;\n  decoded.DecodeDataObj = rakSensorDataDecode(hexString);\n\n  return decoded;\n}\n\n// convert array of bytes to hex string.\n// e.g: 0188053797109D5900DC140802017A0768580673256D0267011D040214AF0371FFFFFFDDFC2E\nfunction bin2HexStr(bytesArr) {\n  var str = "";\n  for(var i=0; i<bytesArr.length; i++) {\n    var tmp = (bytesArr[i] & 0xff).toString(16);\n    if(tmp.length == 1) {\n      tmp = "0" + tmp;\n    }\n    str += tmp;\n  }\n  return str;\n}\n\n// convert string to short integer\nfunction parseShort(str, base) {\n  var n = parseInt(str, base);\n  return (n << 16) >> 16;\n}\n\n// convert string to triple bytes integer\nfunction parseTriple(str, base) {\n  var n = parseInt(str, base);\n  return (n << 8) >> 8;\n}\n\n// decode Hex sensor string data to object\nfunction rakSensorDataDecode(hexStr) {\n  var str = hexStr;\n  var myObj = {};\n  var environment = {};\n\n  while (str.length > 4) {\n    var flag = parseInt(str.substring(0, 4), 16);\n    switch (flag) {\n      case 0x0768:// Humidity\n        environment.humidity = ((parseShort(str.substring(4, 6), 16) * 0.01 / 2) * 100).toFixed(1) + '% RH';\n        str = str.substring(6);\n        break;\n      case 0x0673:// Atmospheric pressure\n        environment.barometer = (parseShort(str.substring(4, 8), 16) * 0.1).toFixed(2) + "hPa";\n        str = str.substring(8);\n        break;\n      case 0x0267:// Temperature\n        environment.temperature = (parseShort(str.substring(4, 8), 16) * 0.1).toFixed(2) + "°C";\n        str = str.substring(8);\n        break;\n      case 0x0188:// GPS\n        var gps = {};\n        gps.latitude = (parseTriple(str.substring(4, 10), 16) * 0.0001).toFixed(4) + "°";\n        gps.longitude = (parseTriple(str.substring(10, 16), 16) * 0.0001).toFixed(4) + "°";\n        gps.altitude = (parseTriple(str.substring(16, 22), 16) * 0.01).toFixed(1) + "m";\n        myObj.gps = gps;\n        str = str.substring(22);\n        break;\n      case 0x0371:// Triaxial acceleration\n        var acceleration = {};\n        acceleration.x = (parseShort(str.substring(4, 8), 16) * 0.001).toFixed(3) + "g";\n        acceleration.y = (parseShort(str.substring(8, 12), 16) * 0.001).toFixed(3) + "g";\n        acceleration.z = (parseShort(str.substring(12, 16), 16) * 0.001).toFixed(3) + "g";\n        myObj.acceleration = acceleration;\n        str = str.substring(16);\n        break;\n      case 0x0402:// air resistance\n        environment.gasResistance = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2)  + "KΩ";\n        str = str.substring(8);\n        break;\n      case 0x0802:// Battery Voltage\n        myObj.battery = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "V";\n        str = str.substring(8);\n        break;\n      case 0x0586:// gyroscope\n        var gyroscope = {};\n        gyroscope.x = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "°/s";\n        gyroscope.y = (parseShort(str.substring(8, 12), 16) * 0.01).toFixed(2) + "°/s";\n        gyroscope.z = (parseShort(str.substring(12, 16), 16) * 0.01).toFixed(2) + "°/s";\n        myObj.gyroscope = gyroscope;\n        str = str.substring(16);\n        break;\n      case 0x0902:// magnetometer x\n        var magnetometer = {};\n        magnetometer.x = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "μT";\n        magnetometer.y = (parseShort(str.substring(12, 16), 16) * 0.01).toFixed(2) + "μT";\n        magnetometer.z = (parseShort(str.substring(20, 24), 16) * 0.01).toFixed(2) + "μT";\n        myObj.magnetometer = magnetometer;\n        str = str.substring(24);\n        break;\n      default:\n        str = str.substring(7);\n        break;\n    }\n  }\n  if(Object.getOwnPropertyNames(environment).length > 0) {\n    myObj.environment = environment;\n  }\n\n  return myObj;\n}	
+70298761-1bf9-4a6c-bda1-69a0eb04aaaf	1	1	2020-03-12 03:52:48.337365+00	2020-03-12 04:21:37.038328+00	device_profile_otaa	CUSTOM_JS		// ttn application function to decode uplink data.\n// Decode decodes an array of bytes into an object.\n//  - port contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object\n// for RAK, return {\n//                     "DecodeDataHex": {} // RAK5205 sensor data in Hex format\n//                     "DecodeDataObj": {} // RAK5205 sensor data object.\n//                 }\n// The function prototype cannot be modified.\nfunction Decoder(bytes, port) {\n  var decoded = {"DecodeDataHex": {}, "DecodeDataObj": {}};\n  var hexString=bin2HexStr(bytes);\n  decoded.DecodeDataHex = hexString;\n  decoded.DecodeDataObj = rakSensorDataDecode(hexString);\n\n  return decoded;\n}\n\n// convert array of bytes to hex string.\n// e.g: 0188053797109D5900DC140802017A0768580673256D0267011D040214AF0371FFFFFFDDFC2E\nfunction bin2HexStr(bytesArr) {\n  var str = "";\n  for(var i=0; i<bytesArr.length; i++) {\n    var tmp = (bytesArr[i] & 0xff).toString(16);\n    if(tmp.length == 1) {\n      tmp = "0" + tmp;\n    }\n    str += tmp;\n  }\n  return str;\n}\n\n// convert string to short integer\nfunction parseShort(str, base) {\n  var n = parseInt(str, base);\n  return (n << 16) >> 16;\n}\n\n// convert string to triple bytes integer\nfunction parseTriple(str, base) {\n  var n = parseInt(str, base);\n  return (n << 8) >> 8;\n}\n\n// decode Hex sensor string data to object\nfunction rakSensorDataDecode(hexStr) {\n  var str = hexStr;\n  var myObj = {};\n  var environment = {};\n\n  while (str.length > 4) {\n    var flag = parseInt(str.substring(0, 4), 16);\n    switch (flag) {\n      case 0x0768:// Humidity\n        environment.humidity = ((parseShort(str.substring(4, 6), 16) * 0.01 / 2) * 100).toFixed(1) + '% RH';\n        str = str.substring(6);\n        break;\n      case 0x0673:// Atmospheric pressure\n        environment.barometer = (parseShort(str.substring(4, 8), 16) * 0.1).toFixed(2) + "hPa";\n        str = str.substring(8);\n        break;\n      case 0x0267:// Temperature\n        environment.temperature = (parseShort(str.substring(4, 8), 16) * 0.1).toFixed(2) + "°C";\n        str = str.substring(8);\n        break;\n      case 0x0188:// GPS\n        var gps = {};\n        gps.latitude = (parseTriple(str.substring(4, 10), 16) * 0.0001).toFixed(4) + "°";\n        gps.longitude = (parseTriple(str.substring(10, 16), 16) * 0.0001).toFixed(4) + "°";\n        gps.altitude = (parseTriple(str.substring(16, 22), 16) * 0.01).toFixed(1) + "m";\n        myObj.gps = gps;\n        str = str.substring(22);\n        break;\n      case 0x0371:// Triaxial acceleration\n        var acceleration = {};\n        acceleration.x = (parseShort(str.substring(4, 8), 16) * 0.001).toFixed(3) + "g";\n        acceleration.y = (parseShort(str.substring(8, 12), 16) * 0.001).toFixed(3) + "g";\n        acceleration.z = (parseShort(str.substring(12, 16), 16) * 0.001).toFixed(3) + "g";\n        myObj.acceleration = acceleration;\n        str = str.substring(16);\n        break;\n      case 0x0402:// air resistance\n        environment.gasResistance = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2)  + "KΩ";\n        str = str.substring(8);\n        break;\n      case 0x0802:// Battery Voltage\n        myObj.battery = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "V";\n        str = str.substring(8);\n        break;\n      case 0x0586:// gyroscope\n        var gyroscope = {};\n        gyroscope.x = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "°/s";\n        gyroscope.y = (parseShort(str.substring(8, 12), 16) * 0.01).toFixed(2) + "°/s";\n        gyroscope.z = (parseShort(str.substring(12, 16), 16) * 0.01).toFixed(2) + "°/s";\n        myObj.gyroscope = gyroscope;\n        str = str.substring(16);\n        break;\n      case 0x0902:// magnetometer x\n        var magnetometer = {};\n        magnetometer.x = (parseShort(str.substring(4, 8), 16) * 0.01).toFixed(2) + "μT";\n        magnetometer.y = (parseShort(str.substring(12, 16), 16) * 0.01).toFixed(2) + "μT";\n        magnetometer.z = (parseShort(str.substring(20, 24), 16) * 0.01).toFixed(2) + "μT";\n        myObj.magnetometer = magnetometer;\n        str = str.substring(24);\n        break;\n      default:\n        str = str.substring(7);\n        break;\n    }\n  }\n  if(Object.getOwnPropertyNames(environment).length > 0) {\n    myObj.environment = environment;\n  }\n\n  return myObj;\n}	
 \.
 
 
@@ -909,8 +858,8 @@ COPY public.fuota_deployment_device (fuota_deployment_id, dev_eui, created_at, u
 -- Data for Name: gateway; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.gateway (mac, created_at, updated_at, name, description, organization_id, ping, last_ping_id, last_ping_sent_at, network_server_id, gateway_profile_id, first_seen_at, last_seen_at, latitude, longitude, altitude) FROM stdin;
-\\x0000000000088888	2019-11-08 02:44:34.341903+00	2019-11-08 02:44:34.341903+00	rak_gateway	rak_gateway	1	f	\N	\N	1	\N	\N	\N	0	0	0
+COPY public.gateway (mac, created_at, updated_at, name, description, organization_id, ping, last_ping_id, last_ping_sent_at, network_server_id, gateway_profile_id, first_seen_at, last_seen_at, latitude, longitude, altitude, tags, metadata) FROM stdin;
+\\x0000000000088888	2020-03-12 04:01:31.055712+00	2020-03-12 04:01:31.055712+00	rak-gateway	rak-gateway	1	f	\N	\N	1	\N	\N	\N	0	0	0		\N
 \.
 
 
@@ -935,7 +884,6 @@ COPY public.gateway_ping_rx (id, created_at, ping_id, gateway_mac, received_at, 
 --
 
 COPY public.gateway_profile (gateway_profile_id, network_server_id, created_at, updated_at, name) FROM stdin;
-e381f69c-918e-4a91-bb33-b8f6ba22a64d	1	2019-11-08 02:39:54.124426+00	2019-11-08 02:39:54.124426+00	gateway_profile
 \.
 
 
@@ -944,51 +892,56 @@ e381f69c-918e-4a91-bb33-b8f6ba22a64d	1	2019-11-08 02:39:54.124426+00	2019-11-08 
 --
 
 COPY public.gorp_migrations (id, applied_at) FROM stdin;
-0001_initial.sql	2019-11-08 02:38:08.648966+00
-0002_join_accept_params.sql	2019-11-08 02:38:09.221887+00
-0003_rx_window_and_rx2_dr.sql	2019-11-08 02:38:09.243486+00
-0004_add_node_apps_nwks_key_name_devaddr.sql	2019-11-08 02:38:09.263977+00
-0005_add_queue.sql	2019-11-08 02:38:09.400093+00
-0006_remove_application_table.sql	2019-11-08 02:38:09.416322+00
-0007_migrate_channels_to_channel_list.sql	2019-11-08 02:38:09.480325+00
-0008_relax_fcnt.sql	2019-11-08 02:38:09.494729+00
-0009_adr_interval_and_install_margin.sql	2019-11-08 02:38:09.506384+00
-0010_recreate_application_table.sql	2019-11-08 02:38:09.621131+00
-0011_node_description_and_is_abp.sql	2019-11-08 02:38:09.646524+00
-0012_class_c_node.sql	2019-11-08 02:38:09.652324+00
-0013_application_settings.sql	2019-11-08 02:38:09.672374+00
-0014_users_and_application_users.sql	2019-11-08 02:38:09.728783+00
-0015_organizations.sql	2019-11-08 02:38:09.810844+00
-0016_delete_channel_list.sql	2019-11-08 02:38:09.821596+00
-0017_integrations.sql	2019-11-08 02:38:09.851422+00
-0018_gateway_ping.sql	2019-11-08 02:38:10.123927+00
-0019_node_prefix_search.sql	2019-11-08 02:38:10.185576+00
-0020_backend_interfaces.sql	2019-11-08 02:38:10.790023+00
-0021_user_email_and_note.sql	2019-11-08 02:38:10.814852+00
-0022_add_device_queue_mapping.sql	2019-11-08 02:38:10.838032+00
-0023_payload_decoder.sql	2019-11-08 02:38:10.842588+00
-0024_network_server_certs.sql	2019-11-08 02:38:10.853353+00
-0025_device_status.sql	2019-11-08 02:38:10.857191+00
-0026_network_server_gw_discovery.sql	2019-11-08 02:38:10.860978+00
-0027_global_search.sql	2019-11-08 02:38:10.876853+00
-0028_gateway_profile.sql	2019-11-08 02:38:10.910956+00
-0029_cleanup_old_tables.sql	2019-11-08 02:38:10.930473+00
-0030_lorawan_11_keys.sql	2019-11-08 02:38:10.944003+00
-0031_cleanup_indices.sql	2019-11-08 02:38:10.952184+00
-0032_fix_table_constraints.sql	2019-11-08 02:38:10.970226+00
-0033_drop_device_queue_mapping.sql	2019-11-08 02:38:10.975189+00
-0034_drop_nwk_session_keys.sql	2019-11-08 02:38:10.979222+00
-0035_multicast.sql	2019-11-08 02:38:11.011778+00
-0036_device_location.sql	2019-11-08 02:38:11.016936+00
-0037_fix_device_status.sql	2019-11-08 02:38:11.04506+00
-0038_device_profile_payload_codec.sql	2019-11-08 02:38:11.057708+00
-0039_application_add_dr.sql	2019-11-08 02:38:11.060515+00
-0040_fuota.sql	2019-11-08 02:38:11.171391+00
-0041_device_variables.sql	2019-11-08 02:38:11.184953+00
-0042_drop_multicast_f_cnt.sql	2019-11-08 02:38:11.188468+00
-0043_extend_org_user_permissions.sql	2019-11-08 02:38:11.192375+00
-0044_gateway_location_first_and_last_seen.sql	2019-11-08 02:38:11.197492+00
-0045_code_migrations.sql	2019-11-08 02:38:11.210291+00
+0001_initial.sql	2020-03-12 03:51:16.768903+00
+0002_join_accept_params.sql	2020-03-12 03:51:16.903019+00
+0003_rx_window_and_rx2_dr.sql	2020-03-12 03:51:16.91646+00
+0004_add_node_apps_nwks_key_name_devaddr.sql	2020-03-12 03:51:16.931897+00
+0005_add_queue.sql	2020-03-12 03:51:17.022968+00
+0006_remove_application_table.sql	2020-03-12 03:51:17.03712+00
+0007_migrate_channels_to_channel_list.sql	2020-03-12 03:51:17.118142+00
+0008_relax_fcnt.sql	2020-03-12 03:51:17.131956+00
+0009_adr_interval_and_install_margin.sql	2020-03-12 03:51:17.140658+00
+0010_recreate_application_table.sql	2020-03-12 03:51:17.311901+00
+0011_node_description_and_is_abp.sql	2020-03-12 03:51:17.40017+00
+0012_class_c_node.sql	2020-03-12 03:51:17.411283+00
+0013_application_settings.sql	2020-03-12 03:51:17.445094+00
+0014_users_and_application_users.sql	2020-03-12 03:51:18.012414+00
+0015_organizations.sql	2020-03-12 03:51:18.317272+00
+0016_delete_channel_list.sql	2020-03-12 03:51:18.344541+00
+0017_integrations.sql	2020-03-12 03:51:18.447343+00
+0018_gateway_ping.sql	2020-03-12 03:51:18.696466+00
+0019_node_prefix_search.sql	2020-03-12 03:51:18.756188+00
+0020_backend_interfaces.sql	2020-03-12 03:51:19.379006+00
+0021_user_email_and_note.sql	2020-03-12 03:51:19.408395+00
+0022_add_device_queue_mapping.sql	2020-03-12 03:51:19.483125+00
+0023_payload_decoder.sql	2020-03-12 03:51:19.495443+00
+0024_network_server_certs.sql	2020-03-12 03:51:19.520545+00
+0025_device_status.sql	2020-03-12 03:51:19.529102+00
+0026_network_server_gw_discovery.sql	2020-03-12 03:51:19.536941+00
+0027_global_search.sql	2020-03-12 03:51:19.564497+00
+0028_gateway_profile.sql	2020-03-12 03:51:19.680509+00
+0029_cleanup_old_tables.sql	2020-03-12 03:51:19.755246+00
+0030_lorawan_11_keys.sql	2020-03-12 03:51:19.776813+00
+0031_cleanup_indices.sql	2020-03-12 03:51:19.794491+00
+0032_fix_table_constraints.sql	2020-03-12 03:51:19.853668+00
+0033_drop_device_queue_mapping.sql	2020-03-12 03:51:19.866709+00
+0034_drop_nwk_session_keys.sql	2020-03-12 03:51:19.877711+00
+0035_multicast.sql	2020-03-12 03:51:19.989885+00
+0036_device_location.sql	2020-03-12 03:51:20.005838+00
+0037_fix_device_status.sql	2020-03-12 03:51:20.127132+00
+0038_device_profile_payload_codec.sql	2020-03-12 03:51:20.165374+00
+0039_application_add_dr.sql	2020-03-12 03:51:20.172284+00
+0040_fuota.sql	2020-03-12 03:51:20.621757+00
+0041_device_variables.sql	2020-03-12 03:51:20.665709+00
+0042_drop_multicast_f_cnt.sql	2020-03-12 03:51:20.676353+00
+0043_extend_org_user_permissions.sql	2020-03-12 03:51:20.690788+00
+0044_gateway_location_first_and_last_seen.sql	2020-03-12 03:51:20.709885+00
+0045_code_migrations.sql	2020-03-12 03:51:20.767952+00
+0046_devaddr_appskey_to_device.sql	2020-03-12 03:51:20.794563+00
+0047_cleanup_device_activation.sql	2020-03-12 03:51:20.814716+00
+0048_change_device_tags_index.sql	2020-03-12 03:51:20.833118+00
+0049_gateway_tags_metadata.sql	2020-03-12 03:51:20.849362+00
+0050_device_profile_tags.sql	2020-03-12 03:51:20.862966+00
 \.
 
 
@@ -1013,7 +966,7 @@ COPY public.multicast_group (id, created_at, updated_at, name, service_profile_i
 --
 
 COPY public.network_server (id, created_at, updated_at, name, server, ca_cert, tls_cert, tls_key, routing_profile_ca_cert, routing_profile_tls_cert, routing_profile_tls_key, gateway_discovery_enabled, gateway_discovery_interval, gateway_discovery_tx_frequency, gateway_discovery_dr) FROM stdin;
-1	2019-11-08 02:39:13.771113+00	2019-11-08 02:39:13.771113+00	ns	127.0.0.1:8000							f	0	0	0
+1	2020-03-12 03:51:55.851734+00	2020-03-12 03:51:55.851734+00	build_in_ns	localhost:8000							f	0	0	0
 \.
 
 
@@ -1022,7 +975,7 @@ COPY public.network_server (id, created_at, updated_at, name, server, ca_cert, t
 --
 
 COPY public.organization (id, created_at, updated_at, name, display_name, can_have_gateways) FROM stdin;
-1	2019-11-08 02:38:09.733811+00	2019-11-08 02:38:09.733811+00	chirpstack	ChirpStack	t
+1	2020-03-12 03:51:18.018387+00	2020-03-12 03:51:18.018387+00	chirpstack	ChirpStack	t
 \.
 
 
@@ -1031,7 +984,7 @@ COPY public.organization (id, created_at, updated_at, name, display_name, can_ha
 --
 
 COPY public.organization_user (id, created_at, updated_at, user_id, organization_id, is_admin, is_device_admin, is_gateway_admin) FROM stdin;
-1	2019-11-08 02:38:09.733811+00	2019-11-08 02:38:09.733811+00	1	1	t	f	f
+1	2020-03-12 03:51:18.018387+00	2020-03-12 03:51:18.018387+00	1	1	t	f	f
 \.
 
 
@@ -1064,7 +1017,7 @@ COPY public.remote_multicast_setup (dev_eui, multicast_group_id, created_at, upd
 --
 
 COPY public.service_profile (service_profile_id, organization_id, network_server_id, created_at, updated_at, name) FROM stdin;
-a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	1	1	2019-11-08 02:40:32.453436+00	2019-11-08 02:40:32.453436+00	service-profile
+a99e581e-1813-4eec-b011-afb5aca00563	1	1	2020-03-12 03:52:26.134453+00	2020-03-12 03:52:26.134453+00	service-profile-build-in
 \.
 
 
@@ -1073,7 +1026,7 @@ a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	1	1	2019-11-08 02:40:32.453436+00	2019-11-0
 --
 
 COPY public."user" (id, created_at, updated_at, username, password_hash, session_ttl, is_active, is_admin, email, note) FROM stdin;
-1	2019-11-08 02:38:09.678864+00	2019-11-08 02:38:09.678864+00	admin	PBKDF2$sha512$1$l8zGKtxRESq3PA2kFhHRWA==$H3lGMxOt55wjwoc+myeOoABofJY9oDpldJa7fhqdjbh700V6FLPML75UmBOt9J5VFNjAL1AvqCozA1HJM0QVGA==	0	t	t		
+1	2020-03-12 03:51:17.462185+00	2020-03-12 03:51:17.462185+00	admin	PBKDF2$sha512$1$l8zGKtxRESq3PA2kFhHRWA==$H3lGMxOt55wjwoc+myeOoABofJY9oDpldJa7fhqdjbh700V6FLPML75UmBOt9J5VFNjAL1AvqCozA1HJM0QVGA==	0	t	t		
 \.
 
 
@@ -1082,13 +1035,6 @@ COPY public."user" (id, created_at, updated_at, username, password_hash, session
 --
 
 SELECT pg_catalog.setval('public.application_id_seq', 1, true);
-
-
---
--- Name: device_activation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chirpstack_as
---
-
-SELECT pg_catalog.setval('public.device_activation_id_seq', 1, true);
 
 
 --
@@ -1162,14 +1108,6 @@ ALTER TABLE ONLY public.application
 
 ALTER TABLE ONLY public.code_migration
     ADD CONSTRAINT code_migration_pkey PRIMARY KEY (id);
-
-
---
--- Name: device_activation device_activation_pkey; Type: CONSTRAINT; Schema: public; Owner: chirpstack_as
---
-
-ALTER TABLE ONLY public.device_activation
-    ADD CONSTRAINT device_activation_pkey PRIMARY KEY (id);
 
 
 --
@@ -1386,13 +1324,6 @@ CREATE INDEX idx_application_service_profile_id ON public.application USING btre
 
 
 --
--- Name: idx_device_activation_dev_eui; Type: INDEX; Schema: public; Owner: chirpstack_as
---
-
-CREATE INDEX idx_device_activation_dev_eui ON public.device_activation USING btree (dev_eui);
-
-
---
 -- Name: idx_device_application_id; Type: INDEX; Schema: public; Owner: chirpstack_as
 --
 
@@ -1442,10 +1373,17 @@ CREATE INDEX idx_device_profile_organization_id ON public.device_profile USING b
 
 
 --
+-- Name: idx_device_profile_tags; Type: INDEX; Schema: public; Owner: chirpstack_as
+--
+
+CREATE INDEX idx_device_profile_tags ON public.device_profile USING gin (tags);
+
+
+--
 -- Name: idx_device_tags; Type: INDEX; Schema: public; Owner: chirpstack_as
 --
 
-CREATE INDEX idx_device_tags ON public.device USING btree (tags);
+CREATE INDEX idx_device_tags ON public.device USING gin (tags);
 
 
 --
@@ -1551,6 +1489,13 @@ CREATE INDEX idx_gateway_ping_rx_ping_id ON public.gateway_ping_rx USING btree (
 --
 
 CREATE INDEX idx_gateway_profile_network_server_id ON public.gateway_profile USING btree (network_server_id);
+
+
+--
+-- Name: idx_gateway_tags; Type: INDEX; Schema: public; Owner: chirpstack_as
+--
+
+CREATE INDEX idx_gateway_tags ON public.gateway USING gin (tags);
 
 
 --
@@ -1693,14 +1638,6 @@ ALTER TABLE ONLY public.application
 
 ALTER TABLE ONLY public.application
     ADD CONSTRAINT application_service_profile_id_fkey FOREIGN KEY (service_profile_id) REFERENCES public.service_profile(service_profile_id);
-
-
---
--- Name: device_activation device_activation_dev_eui_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chirpstack_as
---
-
-ALTER TABLE ONLY public.device_activation
-    ADD CONSTRAINT device_activation_dev_eui_fkey FOREIGN KEY (dev_eui) REFERENCES public.device(dev_eui) ON DELETE CASCADE;
 
 
 --
@@ -1943,8 +1880,8 @@ ALTER TABLE ONLY public.service_profile
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.5 (Raspbian 11.5-1+deb10u1)
--- Dumped by pg_dump version 11.5 (Raspbian 11.5-1+deb10u1)
+-- Dumped from database version 11.7 (Raspbian 11.7-0+deb10u1)
+-- Dumped by pg_dump version 11.7 (Raspbian 11.7-0+deb10u1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -2231,45 +2168,6 @@ ALTER SEQUENCE public.gateway_profile_extra_channel_id_seq OWNED BY public.gatew
 
 
 --
--- Name: gateway_stats; Type: TABLE; Schema: public; Owner: chirpstack_ns
---
-
-CREATE TABLE public.gateway_stats (
-    id bigint NOT NULL,
-    gateway_id bytea NOT NULL,
-    "timestamp" timestamp with time zone NOT NULL,
-    "interval" character varying(10) NOT NULL,
-    rx_packets_received integer NOT NULL,
-    rx_packets_received_ok integer NOT NULL,
-    tx_packets_received integer NOT NULL,
-    tx_packets_emitted integer NOT NULL
-);
-
-
-ALTER TABLE public.gateway_stats OWNER TO chirpstack_ns;
-
---
--- Name: gateway_stats_id_seq; Type: SEQUENCE; Schema: public; Owner: chirpstack_ns
---
-
-CREATE SEQUENCE public.gateway_stats_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.gateway_stats_id_seq OWNER TO chirpstack_ns;
-
---
--- Name: gateway_stats_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: chirpstack_ns
---
-
-ALTER SEQUENCE public.gateway_stats_id_seq OWNED BY public.gateway_stats.id;
-
-
---
 -- Name: gorp_migrations; Type: TABLE; Schema: public; Owner: chirpstack_ns
 --
 
@@ -2414,13 +2312,6 @@ ALTER TABLE ONLY public.gateway_profile_extra_channel ALTER COLUMN id SET DEFAUL
 
 
 --
--- Name: gateway_stats id; Type: DEFAULT; Schema: public; Owner: chirpstack_ns
---
-
-ALTER TABLE ONLY public.gateway_stats ALTER COLUMN id SET DEFAULT nextval('public.gateway_stats_id_seq'::regclass);
-
-
---
 -- Name: multicast_queue id; Type: DEFAULT; Schema: public; Owner: chirpstack_ns
 --
 
@@ -2432,9 +2323,8 @@ ALTER TABLE ONLY public.multicast_queue ALTER COLUMN id SET DEFAULT nextval('pub
 --
 
 COPY public.code_migration (id, applied_at) FROM stdin;
-v1_to_v2_flush_profiles_cache	2019-11-08 02:38:13.880283+00
-migrate_gateway_stats_to_redis	2019-11-08 02:38:13.892448+00
-stats_migration_flush_gw_cache	2019-11-08 02:38:13.906805+00
+v1_to_v2_flush_profiles_cache	2020-03-12 03:51:18.805049+00
+stats_migration_flush_gw_cache	2020-03-12 03:51:18.818715+00
 \.
 
 
@@ -2443,8 +2333,6 @@ stats_migration_flush_gw_cache	2019-11-08 02:38:13.906805+00
 --
 
 COPY public.device (dev_eui, created_at, updated_at, device_profile_id, service_profile_id, routing_profile_id, skip_fcnt_check, reference_altitude, mode) FROM stdin;
-\\x0000000000000555	2019-11-08 02:46:11.335025+00	2019-11-08 02:46:11.335025+00	9e89a1f2-fbbf-46fa-840d-73f238053bbd	a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	6d5db27e-4ce2-4b2b-b5d7-91f069397978	f	0	 
-\\x0000000000000666	2019-11-08 02:48:03.588386+00	2019-11-08 02:48:36.338554+00	c1671da1-726a-4259-868a-e8472f0f8b59	a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	6d5db27e-4ce2-4b2b-b5d7-91f069397978	t	0	A
 \.
 
 
@@ -2469,8 +2357,8 @@ COPY public.device_multicast_group (dev_eui, multicast_group_id, created_at) FRO
 --
 
 COPY public.device_profile (created_at, updated_at, device_profile_id, supports_class_b, class_b_timeout, ping_slot_period, ping_slot_dr, ping_slot_freq, supports_class_c, class_c_timeout, mac_version, reg_params_revision, rx_delay_1, rx_dr_offset_1, rx_data_rate_2, rx_freq_2, factory_preset_freqs, max_eirp, max_duty_cycle, supports_join, rf_region, supports_32bit_fcnt, geoloc_buffer_ttl, geoloc_min_buffer_size) FROM stdin;
-2019-11-08 02:41:21.633571+00	2019-11-08 02:45:31.458905+00	9e89a1f2-fbbf-46fa-840d-73f238053bbd	f	0	0	0	0	f	0	1.0.2	A	0	0	0	0	\N	0	0	t	EU868	f	0	0
-2019-11-08 02:41:45.43738+00	2019-11-08 02:45:37.238655+00	c1671da1-726a-4259-868a-e8472f0f8b59	f	0	0	0	0	f	0	1.0.2	A	0	0	0	0	\N	0	0	f	EU868	f	0	0
+2020-03-12 03:53:07.721003+00	2020-03-12 04:21:24.461787+00	d6741e98-4230-4d99-a760-244725679e45	f	0	0	0	0	f	0	1.0.2	A	0	0	0	0	\N	0	0	f	EU868	f	0	0
+2020-03-12 03:52:48.347632+00	2020-03-12 04:21:37.02655+00	70298761-1bf9-4a6c-bda1-69a0eb04aaaf	f	0	0	0	0	f	0	1.0.2	A	0	0	0	0	\N	0	0	t	EU868	f	0	0
 \.
 
 
@@ -2487,7 +2375,7 @@ COPY public.device_queue (id, created_at, updated_at, dev_eui, frm_payload, f_cn
 --
 
 COPY public.gateway (gateway_id, created_at, updated_at, first_seen_at, last_seen_at, location, altitude, gateway_profile_id, routing_profile_id) FROM stdin;
-\\x0000000000088888	2019-11-08 02:44:34.357993+00	2019-11-08 02:44:34.357993+00	\N	\N	(0,0)	0	\N	6d5db27e-4ce2-4b2b-b5d7-91f069397978
+\\x0000000000088888	2020-03-12 04:01:31.077242+00	2020-03-12 04:01:31.077242+00	\N	\N	(0,0)	0	\N	6d5db27e-4ce2-4b2b-b5d7-91f069397978
 \.
 
 
@@ -2504,7 +2392,6 @@ COPY public.gateway_board (id, gateway_id, fpga_id, fine_timestamp_key) FROM std
 --
 
 COPY public.gateway_profile (gateway_profile_id, created_at, updated_at, channels) FROM stdin;
-e381f69c-918e-4a91-bb33-b8f6ba22a64d	2019-11-08 02:39:54.13132+00	2019-11-08 02:39:54.13132+00	{0,1,2}
 \.
 
 
@@ -2517,42 +2404,35 @@ COPY public.gateway_profile_extra_channel (id, gateway_profile_id, modulation, f
 
 
 --
--- Data for Name: gateway_stats; Type: TABLE DATA; Schema: public; Owner: chirpstack_ns
---
-
-COPY public.gateway_stats (id, gateway_id, "timestamp", "interval", rx_packets_received, rx_packets_received_ok, tx_packets_received, tx_packets_emitted) FROM stdin;
-\.
-
-
---
 -- Data for Name: gorp_migrations; Type: TABLE DATA; Schema: public; Owner: chirpstack_ns
 --
 
 COPY public.gorp_migrations (id, applied_at) FROM stdin;
-0001_initial.sql	2019-11-08 02:38:13.303617+00
-0002_node_frame_log.sql	2019-11-08 02:38:13.334265+00
-0003_gateway_channel_config.sql	2019-11-08 02:38:13.396186+00
-0004_update_gateway_model.sql	2019-11-08 02:38:13.403414+00
-0005_profiles.sql	2019-11-08 02:38:13.524745+00
-0006_device_queue.sql	2019-11-08 02:38:13.561872+00
-0007_routing_profile_certs.sql	2019-11-08 02:38:13.571534+00
-0008_device_queue_emit_at_gps_ts.sql	2019-11-08 02:38:13.579936+00
-0009_gateway_profile.sql	2019-11-08 02:38:13.628957+00
-0010_device_skip_fcnt.sql	2019-11-08 02:38:13.632241+00
-0011_cleanup_old_tables.sql	2019-11-08 02:38:13.644153+00
-0012_lorawan_11.sql	2019-11-08 02:38:13.667257+00
-0013_cleanup_indices.sql	2019-11-08 02:38:13.676679+00
-0014_remove_gateway_name_and_descr.sql	2019-11-08 02:38:13.685029+00
-0015_code_migrations.sql	2019-11-08 02:38:13.698688+00
-0016_multicast.sql	2019-11-08 02:38:13.760597+00
-0017_gateway_mac_to_id.sql	2019-11-08 02:38:13.76656+00
-0018_gateway_board_config.sql	2019-11-08 02:38:13.779415+00
-0019_device_reference_altitude.sql	2019-11-08 02:38:13.78321+00
-0020_device_add_mode.sql	2019-11-08 02:38:13.794268+00
-0021_device_queue_devaddr.sql	2019-11-08 02:38:13.798047+00
-0022_bigint_for_frequency_fields.sql	2019-11-08 02:38:13.835831+00
-0023_device_profile_geoloc_buffer.sql	2019-11-08 02:38:13.847049+00
-0024_gateway_routing_profile.sql	2019-11-08 02:38:13.868021+00
+0001_initial.sql	2020-03-12 03:51:12.3914+00
+0002_node_frame_log.sql	2020-03-12 03:51:12.484758+00
+0003_gateway_channel_config.sql	2020-03-12 03:51:12.886768+00
+0004_update_gateway_model.sql	2020-03-12 03:51:12.934806+00
+0005_profiles.sql	2020-03-12 03:51:17.110444+00
+0006_device_queue.sql	2020-03-12 03:51:17.28108+00
+0007_routing_profile_certs.sql	2020-03-12 03:51:17.339132+00
+0008_device_queue_emit_at_gps_ts.sql	2020-03-12 03:51:17.378228+00
+0009_gateway_profile.sql	2020-03-12 03:51:17.983235+00
+0010_device_skip_fcnt.sql	2020-03-12 03:51:18.000659+00
+0011_cleanup_old_tables.sql	2020-03-12 03:51:18.052618+00
+0012_lorawan_11.sql	2020-03-12 03:51:18.125006+00
+0013_cleanup_indices.sql	2020-03-12 03:51:18.148465+00
+0014_remove_gateway_name_and_descr.sql	2020-03-12 03:51:18.168732+00
+0015_code_migrations.sql	2020-03-12 03:51:18.220393+00
+0016_multicast.sql	2020-03-12 03:51:18.47183+00
+0017_gateway_mac_to_id.sql	2020-03-12 03:51:18.48204+00
+0018_gateway_board_config.sql	2020-03-12 03:51:18.530452+00
+0019_device_reference_altitude.sql	2020-03-12 03:51:18.544469+00
+0020_device_add_mode.sql	2020-03-12 03:51:18.574404+00
+0021_device_queue_devaddr.sql	2020-03-12 03:51:18.58538+00
+0022_bigint_for_frequency_fields.sql	2020-03-12 03:51:18.723428+00
+0023_device_profile_geoloc_buffer.sql	2020-03-12 03:51:18.740441+00
+0024_gateway_routing_profile.sql	2020-03-12 03:51:18.770729+00
+0025_cleanup_gateway_stats.sql	2020-03-12 03:51:18.786241+00
 \.
 
 
@@ -2577,7 +2457,7 @@ COPY public.multicast_queue (id, created_at, schedule_at, emit_at_time_since_gps
 --
 
 COPY public.routing_profile (created_at, updated_at, routing_profile_id, as_id, ca_cert, tls_cert, tls_key) FROM stdin;
-2019-11-08 02:39:13.779757+00	2019-11-08 02:39:13.779757+00	6d5db27e-4ce2-4b2b-b5d7-91f069397978	localhost:8001			
+2020-03-12 03:51:56.020261+00	2020-03-12 03:51:56.020261+00	6d5db27e-4ce2-4b2b-b5d7-91f069397978	localhost:8001			
 \.
 
 
@@ -2586,7 +2466,7 @@ COPY public.routing_profile (created_at, updated_at, routing_profile_id, as_id, 
 --
 
 COPY public.service_profile (created_at, updated_at, service_profile_id, ul_rate, ul_bucket_size, ul_rate_policy, dl_rate, dl_bucket_size, dl_rate_policy, add_gw_metadata, dev_status_req_freq, report_dev_status_battery, report_dev_status_margin, dr_min, dr_max, channel_mask, pr_allowed, hr_allowed, ra_allowed, nwk_geo_loc, target_per, min_gw_diversity) FROM stdin;
-2019-11-08 02:40:32.460553+00	2019-11-08 02:40:32.460553+00	a4d9d8ac-8b48-417b-843b-e68bc2e8baa0	0	0	Drop	0	0	Drop	f	0	f	f	0	0	\\x	f	f	f	f	0	0
+2020-03-12 03:52:26.148301+00	2020-03-12 03:52:26.148301+00	a99e581e-1813-4eec-b011-afb5aca00563	0	0	Drop	0	0	Drop	f	0	f	f	0	0	\\x	f	f	f	f	0	0
 \.
 
 
@@ -2609,13 +2489,6 @@ SELECT pg_catalog.setval('public.device_queue_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('public.gateway_profile_extra_channel_id_seq', 1, false);
-
-
---
--- Name: gateway_stats_id_seq; Type: SEQUENCE SET; Schema: public; Owner: chirpstack_ns
---
-
-SELECT pg_catalog.setval('public.gateway_stats_id_seq', 1, false);
 
 
 --
@@ -2703,22 +2576,6 @@ ALTER TABLE ONLY public.gateway_profile_extra_channel
 
 ALTER TABLE ONLY public.gateway_profile
     ADD CONSTRAINT gateway_profile_pkey PRIMARY KEY (gateway_profile_id);
-
-
---
--- Name: gateway_stats gateway_stats_mac_timestamp_interval_key; Type: CONSTRAINT; Schema: public; Owner: chirpstack_ns
---
-
-ALTER TABLE ONLY public.gateway_stats
-    ADD CONSTRAINT gateway_stats_mac_timestamp_interval_key UNIQUE (gateway_id, "timestamp", "interval");
-
-
---
--- Name: gateway_stats gateway_stats_pkey; Type: CONSTRAINT; Schema: public; Owner: chirpstack_ns
---
-
-ALTER TABLE ONLY public.gateway_stats
-    ADD CONSTRAINT gateway_stats_pkey PRIMARY KEY (id);
 
 
 --
@@ -2853,27 +2710,6 @@ CREATE INDEX idx_gateway_routing_profile_id ON public.gateway USING btree (routi
 
 
 --
--- Name: idx_gateway_stats_gateway_id; Type: INDEX; Schema: public; Owner: chirpstack_ns
---
-
-CREATE INDEX idx_gateway_stats_gateway_id ON public.gateway_stats USING btree (gateway_id);
-
-
---
--- Name: idx_gateway_stats_interval; Type: INDEX; Schema: public; Owner: chirpstack_ns
---
-
-CREATE INDEX idx_gateway_stats_interval ON public.gateway_stats USING btree ("interval");
-
-
---
--- Name: idx_gateway_stats_timestamp; Type: INDEX; Schema: public; Owner: chirpstack_ns
---
-
-CREATE INDEX idx_gateway_stats_timestamp ON public.gateway_stats USING btree ("timestamp");
-
-
---
 -- Name: idx_multicast_group_routing_profile_id; Type: INDEX; Schema: public; Owner: chirpstack_ns
 --
 
@@ -2997,14 +2833,6 @@ ALTER TABLE ONLY public.gateway
 
 
 --
--- Name: gateway_stats gateway_stats_mac_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chirpstack_ns
---
-
-ALTER TABLE ONLY public.gateway_stats
-    ADD CONSTRAINT gateway_stats_mac_fkey FOREIGN KEY (gateway_id) REFERENCES public.gateway(gateway_id) ON DELETE CASCADE;
-
-
---
 -- Name: multicast_group multicast_group_routing_profile_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: chirpstack_ns
 --
 
@@ -3046,8 +2874,8 @@ ALTER TABLE ONLY public.multicast_queue
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.5 (Raspbian 11.5-1+deb10u1)
--- Dumped by pg_dump version 11.5 (Raspbian 11.5-1+deb10u1)
+-- Dumped from database version 11.7 (Raspbian 11.7-0+deb10u1)
+-- Dumped by pg_dump version 11.7 (Raspbian 11.7-0+deb10u1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
