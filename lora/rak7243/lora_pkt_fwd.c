@@ -2525,15 +2525,15 @@ void thread_down(void) {
                     else if (txlut.lut[i].rf_power > txpkt.rf_power) {
                         if (0 != i)
                         {
-                            txpkt.rf_power = txlut.lut[i - 1].rf_power;
                             MSG("INFO: >= used txlut index:%d. __1\n", i - 1);
                             MSG("WARNING: network-server wants to use powe = %d, and actually uses powd = %d\n", txpkt.rf_power, txlut.lut[i - 1].rf_power);
+                            txpkt.rf_power = txlut.lut[i - 1].rf_power;
                         }
                         else
                         {
-                            txpkt.rf_power = txlut.lut[0].rf_power;
                             MSG("INFO: >= used txlut index:%d. __2\n", i);
                             MSG("WARNING: network-server wants to use powe = %d, and actually uses powd = %d\n", txpkt.rf_power, txlut.lut[0].rf_power);
+                            txpkt.rf_power = txlut.lut[0].rf_power;
                         }
                         break;
                     }
