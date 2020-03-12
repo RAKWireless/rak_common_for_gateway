@@ -91,12 +91,6 @@ pushd ap
 sleep 1
 popd
 
-pushd sysconf
-./install.sh $CREATE_IMG
-sleep 1
-popd
-
-
 if [ "$INSTALL_CHIRPSTACK" = 1 ]; then
     pushd chirpstack
     ./install.sh $CREATE_IMG
@@ -118,6 +112,11 @@ if [ "$CREATE_IMG" = "create_img" ]; then
     mv bin bin_bak
     popd
 else
+
+pushd sysconf
+./install.sh $CREATE_IMG
+sleep 1
+popd
 
 echo_success "*********************************************************"
 echo_success "*  The RAKwireless gateway is successfully installed!   *"
