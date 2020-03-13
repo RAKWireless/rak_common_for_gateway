@@ -111,7 +111,7 @@ if [ "$CREATE_IMG" = "create_img" ]; then
     pushd /usr/local/rak
     mv bin bin_bak
     popd
-else
+fi
 
 pushd sysconf
 ./install.sh $CREATE_IMG
