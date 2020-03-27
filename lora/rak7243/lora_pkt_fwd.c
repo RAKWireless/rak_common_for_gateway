@@ -2540,7 +2540,7 @@ void thread_down(void) {
                 }
                 if (i == txlut.size) {
                     /* Exceeding maximum power, use maximum power */
-                    MSG("WARNING: power for TX - %d exceeding maximum power - , use maximum power - %d\n", txpkt.rf_power, txlut.lut[txlut.size - 1].rf_power, txlut.lut[txlut.size - 1].rf_power);
+                    MSG("WARNING: power for TX - %d exceeding maximum power - %d, use maximum power - %d\n", txpkt.rf_power, txlut.lut[txlut.size - 1].rf_power, txlut.lut[txlut.size - 1].rf_power);
                     txpkt.rf_power = txlut.lut[txlut.size - 1].rf_power;
                     MSG("INFO: >= used txlut index:%d. __3\n", txlut.size - 1);
                 }
@@ -2676,13 +2676,13 @@ void thread_jit(void) {
 static void modify_os_time(const uint32_t ppm_tstamp)
 {
     struct timespec y;
-    struct timeval tv;
+    struct timespec tv;
     static bool time_already_set = false;
     struct timeval stamp;
     gettimeofday(&stamp, NULL);
     int time_diff = 0;
     lgw_cnt2utc(time_reference_gps, ppm_tstamp, &y);
-	if ((!gps_enabled) || time_already_set)
+    if ((!gps_enabled) || time_already_set)
     {
         return;
     }
@@ -2694,15 +2694,17 @@ static void modify_os_time(const uint32_t ppm_tstamp)
     MSG("INFO: [modify_os_time] local_time=%ld, gps_time=%ld\n", stamp.tv_sec, y.tv_sec);
     time_diff = abs(y.tv_sec - stamp.tv_sec);
 
-    if (time_diff < 60)
+    if (time_diff < 10)
     {
         time_already_set = true;
+        MSG("INFO: [modify_os_time] The difference between the system time(%ld) and the GPS time(%ld) is less than 10 seconds. Use the system time.\n", stamp.tv_sec, y.tv_sec);
         return;
     }
 
     tv.tv_sec = y.tv_sec;
-    tv.tv_usec = 0;
-    int ret = settimeofday(&tv, NULL);
+    tv.tv_nsec = 0;
+
+    int ret = clock_settime(CLOCK_REALTIME, &tv);
     if (0 == ret)
     {
         time_already_set = true;

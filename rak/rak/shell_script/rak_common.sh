@@ -238,7 +238,7 @@ do_get_gw_id_from_json()
     if [ -f /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json ];then
         GATEWAY_EUI=`do_get_json_value gateway_conf.gateway_ID /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json`
     else
-        GATEWAY_EUI=`do_get_json_value gateway_conf.gateway_ID /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/local_conf.json`
+        GATEWAY_EUI=`do_get_json_value gateway_conf.gateway_ID /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json`
     fi
     echo $GATEWAY_EUI
 }
