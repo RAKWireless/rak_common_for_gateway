@@ -16,6 +16,9 @@ This project currently provides support for the below platforms.
 * RAK2287
 
 ##	Changelog
+2020-05-02 V4.2.1
+* 1.Added support for RAK2287 spi version.
+
 2020-02-14 V4.2.0
 * 1.Added support for RAK2246 spi version.
 * 2.Fix the bug that the internet cannot be accessed after ppp0 redial.
@@ -77,7 +80,8 @@ step4 : Next you will see some messages as follow. Please select the correspondi
       *	7.RAK833(SPI)
       *	8.RAK2247(SPI)
       *	9.RAK2246
-      Please enter 1-9 to select the model:
+      *	10.RAK2287
+      Please enter 1-10 to select the model:
 
 step5 : Wait a moment and the installation is complete.If your gateway uses a wired connection, please reconfigure the LAN's IP address using "sudo gateway-config" after the installation is complete.
 
