@@ -7,6 +7,12 @@ LORA_PKT_PATH=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd
 
 rpi_model=`do_get_rpi_model`
 INSTALL_CHIRPSTACK=`do_get_gw_install_chirpstack`
+GW_MODEL=`do_get_gw_model`
+GW_VERSION=`do_get_gw_version`
+GW_ID=`do_get_gw_id_from_json`
+
+INSTALL_FROM_IMG=`do_get_gateway_info install_img`
+INSTALL_LTE=`do_get_gw_install_lte`
 
 do_if_proc_is_run()
 {
@@ -88,12 +94,26 @@ do_copy_global_conf() {
         write_json_server_plan 3
         do_set_lora_server_ip
     fi
-
     do_restart_packet_forwarder 1
 }
 
 do_setup_ttn_channel_plan() {
-    default_item=1
+  default_item=1
+  if [ "${RAK_MODEL}" = "RAK2287" ]; then
+    FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
+        1 "EU_863_870" \
+        2 "US_902_928" \
+        3>&1 1>&2 2>&3)
+    RET=$?
+    if [ $RET -eq 1 ]; then
+        :
+    elif [ $RET -eq 0 ]; then
+        case "$FUN" in
+            1) do_copy_global_conf "ttn" "eu_863_870" 4;;
+            2) do_copy_global_conf "ttn" "us_902_928" 8;;
+        esac
+    fi
+  else
     FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
         1 "AS_923" \
         2 "AU_915_928" \
@@ -119,6 +139,7 @@ do_setup_ttn_channel_plan() {
             8) do_copy_global_conf "ttn" "us_902_928" 8;;
         esac
     fi
+  fi
 }
 
 do_set_lora_server_ip()
@@ -151,30 +172,46 @@ do_set_lora_server_ip()
 
 do_setup_LoRaServer_channel_plan() {
     default_item=1
-    FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
-        1 "AS_923" \
-        2 "AU_915_928" \
-        3 "CN_470_510" \
-        4 "EU_433" \
-        5 "EU_863_870" \
-        6 "IN_865_867" \
-        7 "KR_920_923" \
-        8 "RU_864_870" \
-        9 "US_902_928" \
-        3>&1 1>&2 2>&3)
-    RET=$?
-    if [ $RET -eq 0 ]; then
-        case "$FUN" in
-            1) do_copy_global_conf "chirpstack" "as_923" 1;;
-            2) do_copy_global_conf "chirpstack" "au_915_928" 2;;
-            3) do_copy_global_conf "chirpstack" "cn_470_510" 3;;
-            4) do_copy_global_conf "chirpstack" "eu_433" 4;;
-            5) do_copy_global_conf "chirpstack" "eu_863_870" 5;;
-            6) do_copy_global_conf "chirpstack" "in_865_867" 6;;
-            7) do_copy_global_conf "chirpstack" "kr_920_923" 7;;
-            8) do_copy_global_conf "chirpstack" "ru_864_870" 8;;
-            9) do_copy_global_conf "chirpstack" "us_902_928" 9;;
-        esac
+    if [ "${RAK_MODEL}" = "RAK2287" ]; then
+      FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
+          1 "EU_863_870" \
+          2 "US_902_928" \
+          3>&1 1>&2 2>&3)
+      RET=$?
+      if [ $RET -eq 1 ]; then
+          :
+      elif [ $RET -eq 0 ]; then
+          case "$FUN" in
+              1) do_copy_global_conf "ttn" "eu_863_870" 4;;
+              2) do_copy_global_conf "ttn" "us_902_928" 8;;
+          esac
+      fi
+    else
+      FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
+          1 "AS_923" \
+          2 "AU_915_928" \
+          3 "CN_470_510" \
+          4 "EU_433" \
+          5 "EU_863_870" \
+          6 "IN_865_867" \
+          7 "KR_920_923" \
+          8 "RU_864_870" \
+          9 "US_902_928" \
+          3>&1 1>&2 2>&3)
+      RET=$?
+      if [ $RET -eq 0 ]; then
+          case "$FUN" in
+              1) do_copy_global_conf "chirpstack" "as_923" 1;;
+              2) do_copy_global_conf "chirpstack" "au_915_928" 2;;
+              3) do_copy_global_conf "chirpstack" "cn_470_510" 3;;
+              4) do_copy_global_conf "chirpstack" "eu_433" 4;;
+              5) do_copy_global_conf "chirpstack" "eu_863_870" 5;;
+              6) do_copy_global_conf "chirpstack" "in_865_867" 6;;
+              7) do_copy_global_conf "chirpstack" "kr_920_923" 7;;
+              8) do_copy_global_conf "chirpstack" "ru_864_870" 8;;
+              9) do_copy_global_conf "chirpstack" "us_902_928" 9;;
+          esac
+      fi
     fi
 }
 
@@ -277,9 +314,17 @@ do_setup_channel_plan() {
 do_ChirpStack()
 {
     if [ "$INSTALL_CHIRPSTACK" = "1" ]; then
+      if [ "$1" = "stop" ] || [ "$1" = "disable" ] || [ "$1" = "enable" ];then
         systemctl $1 chirpstack-network-server
         systemctl $1 chirpstack-application-server
         systemctl $1 chirpstack-gateway-bridge
+      elif [ "$1" = "restart" ];then
+        systemctl $1 chirpstack-network-server
+      else
+        systemctl $1 chirpstack-network-server
+        systemctl $1 chirpstack-application-server
+        systemctl $1 chirpstack-gateway-bridge
+      fi
     fi
 }
 
@@ -704,12 +749,7 @@ do_set_apn_name()
 }
 
 do_main_menu() {
-    GW_MODEL=`do_get_gw_model`
-    GW_VERSION=`do_get_gw_version`
-    GW_ID=`do_get_gw_id_from_json`
-    
-    INSTALL_FROM_IMG=`do_get_gateway_info install_img`
-    INSTALL_LTE=`do_get_gw_install_lte`
+
     
     if [ "$INSTALL_FROM_IMG" = "1" ]; then
         if [ "$INSTALL_LTE" = "0" ]; then

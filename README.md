@@ -13,6 +13,7 @@ This project currently provides support for the below platforms.
 * RAK2247(USB/SPI)
 * RAK7243/RAK7244
 * RAK2246
+* RAK2287
 
 ##	Changelog
 2020-02-14 V4.2.0
@@ -53,7 +54,7 @@ This project currently provides support for the below platforms.
 
 ##	Installation procedure
 
-step1 : Download and install [Raspbian Stretch or Buster LITE](https://www.raspberrypi.org/downloads/raspbian/) 
+step1 : Download and install [Raspbian Buster LITE](https://www.raspberrypi.org/downloads/raspbian/) 
 
 step2 : Use "sudo raspi-config" command, enable spi and i2c interface, disable login shell over serial and enable serial port hardware.
 
