@@ -37,10 +37,10 @@ cp ../reset_lgw.sh libloragw/packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
 cp ../Makefile libloragw/Makefile -f
 make
 
-echo "--------van 001"
 popd
-echo "--------van 002"
-
+if [ -d $INSTALL_DIR/packet_forwarder ]; then
+    rm -rf $INSTALL_DIR/packet_forwarder/
+fi
 cp $INSTALL_DIR/sx1302_hal-1.0.5/packet_forwarder $INSTALL_DIR/ -rf
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak
 mkdir -p $INSTALL_DIR/packet_forwarder/lora_pkt_fwd
@@ -49,4 +49,3 @@ cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
 cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
 sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
 rm -f $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/local_conf.json
-

@@ -62,7 +62,9 @@ else
     fi
 fi
 
-cp $LORA_DIR_TMP/lora_gateway /opt/ttn-gateway/ -rf
+if [ -d $SCRIPT_DIR/../lora_gateway ]; then
+    cp $LORA_DIR_TMP/lora_gateway /opt/ttn-gateway/ -rf
+fi
 cp $LORA_DIR_TMP/packet_forwarder /opt/ttn-gateway/ -rf
 
 
