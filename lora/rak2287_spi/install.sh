@@ -47,5 +47,6 @@ mkdir -p $INSTALL_DIR/packet_forwarder/lora_pkt_fwd
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/lora_pkt_fwd
 cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
 cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+cp reset_lgw.sh $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/reset_lgw.sh
 sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
 rm -f $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/local_conf.json
