@@ -35,7 +35,7 @@ cp ../loragw_hal.c libloragw/src/loragw_hal.c -f
 mkdir -p libloragw/packet_forwarder/lora_pkt_fwd
 cp ../reset_lgw.sh libloragw/packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
 cp ../Makefile libloragw/Makefile -f
-cp ../lora_pkt_fwd.c libloragw/packet_forwarder/src/lora_pkt_fwd.c
+cp ../lora_pkt_fwd.c libloragw/packet_forwarder/lora_pkt_fwd/lora_pkt_fwd.c
 make
 
 popd
