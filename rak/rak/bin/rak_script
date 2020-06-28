@@ -11,6 +11,7 @@ if [ -f "/boot/rak_ap" ]; then
         echo "ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
 update_config=1" > /etc/wpa_supplicant/wpa_supplicant.conf
         rm -rf /boot/rak_ap
+        cp /usr/local/rak/ap/create_ap_bak.conf /usr/local/rak/ap/create_ap.conf
         systemctl enable create_ap.service
         write_json_wifi_mode 1
         reboot
@@ -41,6 +42,7 @@ fi
 if [ -f "/usr/local/rak/first_boot/set_ssid" ]; then
         cd /usr/local/rak/first_boot
         sudo ./set_ssid
+        cp /usr/local/rak/ap/create_ap.conf /usr/local/rak/ap/create_ap_bak.conf
         mv /usr/local/rak/first_boot/set_ssid /usr/local/rak/first_boot/set_ssid_bak
 fi
 

@@ -32,10 +32,10 @@ rm libloragw/inc/loragw_stts751.h -f
 rm libloragw/src/loragw_stts751.c -f
 cp ../loragw_hal.c libloragw/src/loragw_hal.c -f
 
-mkdir -p libloragw/packet_forwarder/lora_pkt_fwd
-cp ../reset_lgw.sh libloragw/packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
+#mkdir -p packet_forwarder/lora_pkt_fwd/
+#cp ../reset_lgw.sh packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
 cp ../Makefile libloragw/Makefile -f
-cp ../lora_pkt_fwd.c libloragw/packet_forwarder/src/lora_pkt_fwd.c
+cp ../lora_pkt_fwd.c packet_forwarder/src/lora_pkt_fwd.c
 make
 
 popd

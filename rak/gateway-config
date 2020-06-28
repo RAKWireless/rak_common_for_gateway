@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export NCURSES_NO_UTF8_ACS=1
+
 source /usr/local/rak/shell_script/rak_common.sh
 
 GATEWAY_CONFIG_INFO=/usr/local/rak/gateway-config-info.json
@@ -100,7 +102,7 @@ do_copy_global_conf() {
 do_setup_ttn_channel_plan() {
   default_item=1
   if [ "${GW_MODEL}" = "RAK2287" ]; then
-    FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
+    FUN=$(dialog --title "Channel-plan configuration" --default-item $default_item --menu "Channel-plan:" 18 60 12 \
         1 "EU_863_870" \
         2 "US_902_928" \
         3>&1 1>&2 2>&3)
@@ -114,7 +116,7 @@ do_setup_ttn_channel_plan() {
         esac
     fi
   else
-    FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
+    FUN=$(dialog --title "Channel-plan configuration" --default-item $default_item --menu "Channel-plan:" 18 60 12 \
         1 "AS_923" \
         2 "AU_915_928" \
         3 "CN_470_510" \
@@ -173,7 +175,7 @@ do_set_lora_server_ip()
 do_setup_LoRaServer_channel_plan() {
     default_item=1
     if [ "${GW_MODEL}" = "RAK2287" ]; then
-      FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
+      FUN=$(dialog --title "Channel-plan configuration" --default-item $default_item --menu "Channel-plan:" 18 60 12 \
           1 "EU_863_870" \
           2 "US_902_928" \
           3>&1 1>&2 2>&3)
@@ -187,7 +189,7 @@ do_setup_LoRaServer_channel_plan() {
           esac
       fi
     else
-      FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
+      FUN=$(dialog --title "Channel-plan configuration" --default-item $default_item --menu "Channel-plan:" 18 60 12 \
           1 "AS_923" \
           2 "AU_915_928" \
           3 "CN_470_510" \
