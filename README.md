@@ -16,10 +16,17 @@ This project currently provides support for the below platforms.
 * RAK2287
 
 ##	Changelog
+2020-06-28 V4.2.2
+
+* 1.Fix a display issue with gateway-config.
+* 2.Delete the temperature printing of RAK2287.
+
 2020-05-02 V4.2.1
+
 * 1.Added support for RAK2287 spi version.
 
 2020-02-14 V4.2.0
+
 * 1.Added support for RAK2246 spi version.
 * 2.Fix the bug that the internet cannot be accessed after ppp0 redial.
 * 3.install.sh can pass --help parameter to see more installation information.
