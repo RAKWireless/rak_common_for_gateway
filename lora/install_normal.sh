@@ -53,7 +53,7 @@ else
             pushd rak2246
             ./install.sh
             LORA_DIR_TMP=rak2246
-        elif  "${RAK_GW_MODEL}" = "RAK2245" ]; then
+        else
             pushd rak2245
             ./install.sh
             LORA_DIR_TMP=rak2245
