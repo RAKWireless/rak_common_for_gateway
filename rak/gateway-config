@@ -762,7 +762,7 @@ do_main_menu() {
 
             FUN=$(dialog --title "$GW_MODEL (Gateway ID:$GW_ID  Version: $GW_VERSION)" --cancel-label "Quit" --menu "Configuration options:" 16 80 20 \
                 1 "Set pi password" \
-                2 "Setup RAK Gateway LoRa concentrator" \
+                2 "Setup RAK Gateway Channel Plan" \
                 3 "Restart packet-forwarder" \
                 4 "Edit packet-forwarder config" \
                 5 "Configure WIFI" \
@@ -785,7 +785,7 @@ do_main_menu() {
         else
             FUN=$(dialog --title "$GW_MODEL (Gateway ID:$GW_ID  Version: $GW_VERSION)" --cancel-label "Quit" --menu "Configuration options:" 19 80 20 \
                 1 "Set pi password" \
-                2 "Setup RAK Gateway LoRa concentrator" \
+                2 "Setup RAK Gateway Channel Plan" \
                 3 "Restart packet-forwarder" \
                 4 "Edit packet-forwarder config" \
                 5 "Configure WIFI" \
@@ -815,7 +815,7 @@ do_main_menu() {
 
             FUN=$(dialog --title "$GW_MODEL (Gateway ID:$GW_ID  Version: $GW_VERSION)" --cancel-label "Quit" --menu "Configuration options:" 16 80 20 \
                 1 "Set pi password" \
-                2 "Setup RAK Gateway LoRa concentrator" \
+                2 "Setup RAK Gateway Channel Plan" \
                 3 "Restart packet-forwarder" \
                 4 "Edit packet-forwarder config" \
                 5 "Configure WIFI" \
@@ -838,7 +838,7 @@ do_main_menu() {
 
             FUN=$(dialog --title "$GW_MODEL (Gateway ID:$GW_ID  Version: $GW_VERSION)" --cancel-label "Quit" --menu "Configuration options:" 19 80 20 \
                 1 "Set pi password" \
-                2 "Setup RAK Gateway LoRa concentrator" \
+                2 "Setup RAK Gateway Channel Plan" \
                 3 "Restart packet-forwarder" \
                 4 "Edit packet-forwarder config" \
                 5 "Configure WIFI" \

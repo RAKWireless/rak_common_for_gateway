@@ -16,6 +16,10 @@ This project currently provides support for the below platforms.
 * RAK2287
 
 ##	Changelog
+2020-07-09 V4.2.3
+
+* 1.Some naming changes.
+
 2020-06-28 V4.2.2
 
 * 1.Fix a display issue with gateway-config.
