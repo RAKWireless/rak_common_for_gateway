@@ -64,7 +64,7 @@ net_id="000000"
   # specification for valid values that apply to your region.
   # See: https://www.lora-alliance.org/lorawan-for-developers
   [network_server.band]
-  name="EU_863_870"
+  name="EU868"
 
 
   # LoRaWAN network related settings.

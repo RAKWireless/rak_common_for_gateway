@@ -186,16 +186,26 @@ do_setup_LoRaServer_channel_plan() {
     default_item=1
     if [ "${GW_MODEL}" = "RAK2287" ]; then
       FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
-          1 "EU_863_870" \
-          2 "US_902_928" \
+          1 "AS_923" \
+          2 "AU_915_928" \
+          3 "EU_863_870" \
+          4 "IN_865_867" \
+          5 "KR_920_923" \
+          6 "RU_864_870" \
+          7 "US_902_928" \
           3>&1 1>&2 2>&3)
       RET=$?
       if [ $RET -eq 1 ]; then
           :
       elif [ $RET -eq 0 ]; then
           case "$FUN" in
-              1) do_copy_global_conf "chirpstack" "eu_863_870" 4;;
-              2) do_copy_global_conf "chirpstack" "us_902_928" 8;;
+              1) do_copy_global_conf "chirpstack" "as_923" 1;;
+              2) do_copy_global_conf "chirpstack" "au_915_928" 2;;
+              3) do_copy_global_conf "chirpstack" "eu_863_870" 5;;
+              4) do_copy_global_conf "chirpstack" "in_865_867" 6;;
+              5) do_copy_global_conf "chirpstack" "kr_920_923" 7;;
+              6) do_copy_global_conf "chirpstack" "ru_864_870" 8;;
+              7) do_copy_global_conf "chirpstack" "us_902_928" 9;;
           esac
       fi
     else
