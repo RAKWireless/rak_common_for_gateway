@@ -127,7 +127,7 @@
             "pa_gain": 3,
             "mix_gain": 15,
             "rf_power": 0,
-            "dig_gain": 20
+            "dig_gain": 0
         }
 	},
 	"gateway_conf": {
