@@ -101,7 +101,7 @@ do_copy_global_conf() {
 
 do_setup_ttn_channel_plan() {
   default_item=1
-  if [ "${GW_MODEL}" = "RAK2287" ]; then
+  if [ "${GW_MODEL}" = "RAK2287" ] || [ "${GW_MODEL}" = "RAK2285" ]; then
     FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
         1 "AS_923" \
         2 "AU_915_928" \
@@ -184,7 +184,7 @@ do_set_lora_server_ip()
 
 do_setup_LoRaServer_channel_plan() {
     default_item=1
-    if [ "${GW_MODEL}" = "RAK2287" ]; then
+    if [ "${GW_MODEL}" = "RAK2287" ] || [ "${GW_MODEL}" = "RAK2285" ]; then
       FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
           1 "AS_923" \
           2 "AU_915_928" \
@@ -337,9 +337,9 @@ do_ChirpStack()
 {
     if [ "$INSTALL_CHIRPSTACK" = "1" ]; then
       if [ "$1" = "stop" ] || [ "$1" = "disable" ] || [ "$1" = "enable" ];then
-        systemctl $1 chirpstack-network-server
-        systemctl $1 chirpstack-application-server
-        systemctl $1 chirpstack-gateway-bridge
+        systemctl $1 chirpstack-network-server > /dev/null 2>&1
+        systemctl $1 chirpstack-application-server > /dev/null 2>&1
+        systemctl $1 chirpstack-gateway-bridge > /dev/null 2>&1
       elif [ "$1" = "restart" ];then
       	ret=`ps -ef|grep chirpstack-application-server|grep -v grep|wc -l`
         if [ "$ret" = "0" ]; then

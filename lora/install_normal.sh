@@ -48,6 +48,13 @@ else
             LORA_DIR_TMP=rak2287_usb
         fi
         popd
+    elif [ "${RAK_GW_MODEL}" = "RAK2285" ]; then
+
+        pushd rak2285
+        LORA_DIR_TMP=rak2285
+        ./install.sh
+
+        popd
     else
         if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
             pushd rak2246

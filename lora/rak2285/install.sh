@@ -22,9 +22,9 @@ pushd $INSTALL_DIR
 
 # Build LoRa gateway app
 
-wget https://github.com/Lora-net/sx1302_hal/archive/V1.0.5.tar.gz -O ./rak2287.tar.gz
+wget https://github.com/Lora-net/sx1302_hal/archive/V1.0.5.tar.gz -O ./rak2285.tar.gz
 
-tar -zxvf ./rak2287.tar.gz
+tar -zxvf ./rak2285.tar.gz
 #mv sx1302_hal-1.0.5 lora_gateway
 pushd sx1302_hal-1.0.5
 make clean

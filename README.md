@@ -16,6 +16,12 @@ This project currently provides support for the below platforms.
 * RAK2287
 
 ##	Changelog
+2020-07-20 V4.2.4
+
+* 1. Add other region global_conf.json for RAK2287.
+* 2. Modify sx1302 tx power param.
+* 3. Add RAK2285 support.
+
 2020-07-09 V4.2.3
 
 * 1.Some naming changes.
@@ -91,8 +97,9 @@ step4 : Next you will see some messages as follow. Please select the correspondi
       *	7.RAK833(SPI)
       *	8.RAK2247(SPI)
       *	9.RAK2246
-      *	10.RAK2287
-      Please enter 1-10 to select the model:
+      *	10.RAK2287(SPI)
+      *	11.RAK2285
+      Please enter 1-11 to select the model:
 
 step5 : Wait a moment and the installation is complete.If your gateway uses a wired connection, please reconfigure the LAN's IP address using "sudo gateway-config" after the installation is complete.
 
