@@ -97,7 +97,7 @@ function do_set_model_to_json()
     elif [ $1 -eq 10 ]; then
         GW_MODEL=RAK2287
         do_set_spi_to_json 1
-    elif [ $1 -eq 10 ]; then
+    elif [ $1 -eq 11 ]; then
         GW_MODEL=RAK2285
         do_set_spi_to_json 1
     else
