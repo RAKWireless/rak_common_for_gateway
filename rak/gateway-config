@@ -79,7 +79,7 @@ do_copy_global_conf() {
     cp $LORA_PKT_PATH/global_conf/global_conf.$2.json $LORA_PKT_PATH/global_conf.json
 
     if [ "$1" = "ttn" ]; then
-        dialog --title "Server-plan configuration" --msgbox "Server-plan configuration has been copied." 5 60
+#        dialog --title "Server-plan configuration" --msgbox "Server-plan configuration has been copied." 5 60
         write_json_server_plan 1
         do_ChirpStack stop
         do_ChirpStack disable
