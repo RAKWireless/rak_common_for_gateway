@@ -693,7 +693,7 @@ static int parse_gateway_configuration(const char * conf_file) {
     /* server hostname or IP address (optional) */
     str = json_object_get_string(conf_obj, "server_address");
     if (str != NULL) {
-        strncpy(serv_addr, str, sizeof serv_addr);
+        strncpy(serv_addr, str, sizeof(serv_addr) - 1);
         MSG("INFO: server hostname or IP address is configured to \"%s\"\n", serv_addr);
     }
 
@@ -750,7 +750,7 @@ static int parse_gateway_configuration(const char * conf_file) {
     /* GPS module TTY path (optional) */
     str = json_object_get_string(conf_obj, "gps_tty_path");
     if (str != NULL) {
-        strncpy(gps_tty_path, str, sizeof gps_tty_path);
+        strncpy(gps_tty_path, str, sizeof(gps_tty_path) - 1);
         MSG("INFO: GPS serial port path is configured to \"%s\"\n", gps_tty_path);
     }
 
