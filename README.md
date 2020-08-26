@@ -18,9 +18,9 @@ This project currently provides support for the below platforms.
 ##	Changelog
 2020-07-20 V4.2.4
 
-* 1. Add other region global_conf.json for RAK2287.
-* 2. Modify sx1302 tx power param.
-* 3. Add RAK2285 support.
+* 1.Add other region global_conf.json for RAK2287.
+* 2.Modify sx1302 tx power param.
+* 3.Add RAK2285 support.
 
 2020-07-09 V4.2.3
 
