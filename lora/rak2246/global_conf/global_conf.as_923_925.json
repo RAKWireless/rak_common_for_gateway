@@ -85,7 +85,7 @@
 			"bandwidth": 125000,
 			"datarate": 50000
 		},
-		"tx_lut_0": {
+	"tx_lut_0": {
             "pa_gain": 0,
             "mix_gain": 8,
             "rf_power": 3,

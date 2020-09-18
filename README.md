@@ -14,8 +14,14 @@ This project currently provides support for the below platforms.
 * RAK7243/RAK7244
 * RAK2246
 * RAK2287
+* RAK2285
 
 ##	Changelog
+2020-09-01 V4.2.5
+
+* 1.Add AS920_923.
+* 2.EU433 changed to 8 consecutive channels.
+
 2020-07-20 V4.2.4
 
 * 1.Add other region global_conf.json for RAK2287.
