@@ -1,0 +1,18 @@
+{ 
+	"gateway_conf": { 
+		"gateway_ID": "B827EBFFFE7367F6", 
+		"servers": [ 
+			{ 
+				"server_address": "router.au.thethings.network", 
+				"serv_port_up": 1700, 
+				"serv_port_down": 1700, 
+				"serv_enabled": true 
+			} 
+		], 
+		"ref_latitude": -31.82374325, 
+		"ref_longitude": -60.52285924, 
+		"ref_altitude": 68, 
+		"contact_email": "melo_aq@live.com", 
+		"description": "prueba" 
+	} 
+} 
