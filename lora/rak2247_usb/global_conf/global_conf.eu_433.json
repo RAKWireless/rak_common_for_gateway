@@ -39,34 +39,34 @@
             "if": 0
         },
         "chan_multiSF_3": {
+            /* Lora MAC channel, 125kHz, all SF, 433.775 MHz */
+            "enable": true,
+            "radio": 1,
+            "if": 200000
+        },
+        "chan_multiSF_4": {
             /* Lora MAC channel, 125kHz, all SF, 433.975 MHz */
             "enable": true,
             "radio": 0,
             "if": -400000
         },
-        "chan_multiSF_4": {
+        "chan_multiSF_5": {
             /* Lora MAC channel, 125kHz, all SF, 434.175 MHz */
             "enable": true,
             "radio": 0,
             "if": -200000
         },
-        "chan_multiSF_5": {
+        "chan_multiSF_6": {
             /* Lora MAC channel, 125kHz, all SF, 434.375 MHz */
             "enable": true,
             "radio": 0,
             "if": 0
         },
-        "chan_multiSF_6": {
+        "chan_multiSF_7": {
             /* Lora MAC channel, 125kHz, all SF, 434.575 MHz */
             "enable": true,
             "radio": 0,
             "if": 200000
-        },
-        "chan_multiSF_7": {
-            /* Lora MAC channel, 125kHz, all SF, 434.775 MHz */
-            "enable": true,
-            "radio": 0,
-            "if": 400000
         },
         "chan_Lora_std": {
             /* Lora MAC channel, 250kHz, SF7, 434.175 MHz */
