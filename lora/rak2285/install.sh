@@ -37,8 +37,13 @@ cp ../loragw_hal.c libloragw/src/loragw_hal.c -f
 cp ../Makefile libloragw/Makefile -f
 cp ../lora_pkt_fwd.c packet_forwarder/src/lora_pkt_fwd.c
 make
-
+rm packet_forwarder/lora_pkt_fwd/obj/* -f
 popd
+
+pushd sx1302_hal-1.0.5/libloragw
+make clean
+popd
+
 if [ -d $INSTALL_DIR/packet_forwarder ]; then
     rm -rf $INSTALL_DIR/packet_forwarder/
 fi

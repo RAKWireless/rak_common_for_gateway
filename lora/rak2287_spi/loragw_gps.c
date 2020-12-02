@@ -4,7 +4,7 @@
  \____ \| ___ |    (_   _) ___ |/ ___)  _ \
  _____) ) ____| | | || |_| ____( (___| | | |
 (______/|_____)_|_|_| \__)_____)\____)_| |_|
-  (C)2013 Semtech-Cycleo
+  (C)2019 Semtech
 
 Description:
     Library of functions to manage a GNSS module (typically GPS) for accurate
@@ -12,7 +12,6 @@ Description:
     A limited set of module brands/models are supported.
 
 License: Revised BSD License, see LICENSE.TXT file include in the project
-Maintainer: Michael Coracin
 */
 
 
@@ -24,12 +23,12 @@ Maintainer: Michael Coracin
 #include <stdbool.h>    /* bool type */
 #include <stdio.h>      /* printf fprintf */
 #include <string.h>     /* memcpy */
+#include <errno.h>
 
 #include <time.h>       /* struct timespec */
 #include <fcntl.h>      /* open */
 #include <termios.h>    /* tcflush */
 #include <math.h>       /* modf */
-#include <linux/i2c-dev.h>
 
 #include <stdlib.h>
 
@@ -41,10 +40,12 @@ Maintainer: Michael Coracin
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 #if DEBUG_GPS == 1
     #define DEBUG_MSG(args...)  fprintf(stderr, args)
+    #define DEBUG_PRINTF(fmt, args...)    fprintf(stderr,"%s:%d: "fmt, __FUNCTION__, __LINE__, args)
     #define DEBUG_ARRAY(a,b,c)  for(a=0;a<b;++a) fprintf(stderr,"%x.",c[a]);fprintf(stderr,"end\n")
     #define CHECK_NULL(a)       if(a==NULL){fprintf(stderr,"%s:%d: ERROR: NULL POINTER AS ARGUMENT\n", __FUNCTION__, __LINE__);return LGW_GPS_ERROR;}
 #else
     #define DEBUG_MSG(args...)
+    #define DEBUG_PRINTF(fmt, args...)
     #define DEBUG_ARRAY(a,b,c)  for(a=0;a!=0;){}
     #define CHECK_NULL(a)       if(a==NULL){return LGW_GPS_ERROR;}
 #endif
@@ -249,6 +250,7 @@ int str_chop(char *s, int buff_size, char separator, int *idx_ary, int max_idx) 
     return j;
 }
 
+
 static int lgw_gps_enable_i2c(char *tty_path, char *gps_family, speed_t target_brate, int *fd_ptr) {
     int i;
     struct termios ttyopt; /* serial port options */
@@ -278,10 +280,13 @@ static int lgw_gps_enable_i2c(char *tty_path, char *gps_family, speed_t target_b
     	return LGW_GPS_ERROR;
     }
 
+    /* manage the different GPS modules families */
+
     num_written = write (gps_tty_dev, ubx_cmd_timegps, UBX_MSG_NAVTIMEGPS_LEN);
     if (num_written != UBX_MSG_NAVTIMEGPS_LEN) {
         DEBUG_MSG("ERROR: Failed to write on serial port (written=%d)\n", (int) num_written);
     }
+
     /* get timezone info */
     tzset();
 
@@ -432,14 +437,14 @@ int lgw_gps_disable(int fd) {
     /* restore serial ports parameters */
     i = tcsetattr(fd, TCSANOW, &ttyopt_restore);
     if (i != 0){
-        DEBUG_MSG("ERROR: IMPOSSIBLE TO RESTORE TTY PORT CONFIGURATION\n");
+        DEBUG_MSG("ERROR: IMPOSSIBLE TO RESTORE TTY PORT CONFIGURATION - %s\n", strerror(errno));
         return LGW_GPS_ERROR;
     }
     tcflush(fd, TCIOFLUSH);
 
     i = close(fd);
-    if (i <= 0) {
-        DEBUG_MSG("ERROR: TTY PORT FAIL TO CLOSE\n");
+    if (i != 0) {
+        DEBUG_PRINTF("ERROR: TTY PORT FAIL TO CLOSE - %s\n", strerror(errno));
         return LGW_GPS_ERROR;
     }
 

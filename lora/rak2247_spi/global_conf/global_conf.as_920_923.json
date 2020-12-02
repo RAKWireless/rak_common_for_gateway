@@ -11,14 +11,8 @@
         "stat_interval":30,
         "push_timeout_ms":100,
         "fake_gps":false,
-        "autoquit_threshold":30,
-        "beacon_freq_hz":923400000,
-        "beacon_freq_nb":1,
-        "beacon_freq_step":600000,
-        "beacon_datarate":9,
-        "beacon_bw_hz":125000,
-        "beacon_power":20,
-        "beacon_period":0
+        "autoquit_threshold":30
+
     },
     "SX1301_conf":
         {

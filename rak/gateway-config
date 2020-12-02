@@ -217,15 +217,15 @@ do_setup_LoRaServer_channel_plan() {
     else
       FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
           1 "AS_923(920_923)" \
-          1 "AS_923(923_925)" \
-          2 "AU_915_928" \
-          3 "CN_470_510" \
-          4 "EU_433" \
-          5 "EU_863_870" \
-          6 "IN_865_867" \
-          7 "KR_920_923" \
-          8 "RU_864_870" \
-          9 "US_902_928" \
+          2 "AS_923(923_925)" \
+          3 "AU_915_928" \
+          4 "CN_470_510" \
+          5 "EU_433" \
+          6 "EU_863_870" \
+          7 "IN_865_867" \
+          8 "KR_920_923" \
+          9 "RU_864_870" \
+          10 "US_902_928" \
           3>&1 1>&2 2>&3)
       RET=$?
       if [ $RET -eq 0 ]; then

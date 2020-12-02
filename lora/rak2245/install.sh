@@ -49,7 +49,11 @@ pushd packet_forwarder
 cp $SCRIPT_DIR/lora_pkt_fwd.c ./lora_pkt_fwd/src/lora_pkt_fwd.c
 
 make
+rm lora_pkt_fwd/obj/* -f
+popd
 
+pushd lora_gateway
+make clean
 popd
 
 cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf

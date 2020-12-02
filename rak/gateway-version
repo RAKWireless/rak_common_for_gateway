@@ -17,7 +17,7 @@ if [ "${RAK_MODEL}" = "RAK2247" ] || [ "${RAK_MODEL}" = "RAK833" ]; then
     else
         GW_MODEL_STR="${RAK_MODEL} for USB"
     fi
-elif [ "${RAK_MODEL}" = "RAK7243" ] || [ "${RAK_MODEL}" = "RAK7244" ]; then
+elif [ "${RAK_MODEL}" = "RAK7243" ] || [ "${RAK_MODEL}" = "RAK7244" ] || [ "${RAK_MODEL}" = "RAK7248" ]; then
 	if [ "$INSTALL_LTE" = "1" ]; then
 		GW_MODEL_STR="${RAK_MODEL} with LTE"
 	else

@@ -8,53 +8,60 @@
 		"radio_0": {
 			"enable": true,
 			"type": "SX1257",
-			"freq": 865200000,
+			"freq": 864500000,
 			"rssi_offset": -166.0,
 			"tx_enable": true,
-			"tx_freq_min": 865000000,
-			"tx_freq_max": 867000000,
-			"tx_notch_freq": 129000
+			"tx_freq_min": 863000000,
+			"tx_freq_max": 870000000
 		},
 		"radio_1": {
 			"enable": true,
 			"type": "SX1257",
-			"freq": 866385000,
+			"freq": 869000000,
 			"rssi_offset": -166.0,
 			"tx_enable": false
 		},
 		"chan_multiSF_0": {
-			"desc": "Lora MAC, 125kHz, all SF, 865.0625 MHz",
+			"desc": "Lora MAC, 125kHz, all SF, 864.1 MHz",
 			"enable": true,
 			"radio": 0,
-			"if": -137500
-		},
-		"chan_multiSF_1": {
-			"desc": "Lora MAC, 125kHz, all SF, 865.4025 MHz",
-			"enable": true,
-			"radio": 0,
-			"if": 202500
-		},
-		"chan_multiSF_2": {
-			"desc": "Lora MAC, 125kHz, all SF, 865.9850 MHz",
-			"enable": true,
-			"radio": 1,
 			"if": -400000
 		},
+		"chan_multiSF_1": {
+			"desc": "Lora MAC, 125kHz, all SF, 864.3 MHz",
+			"enable": true,
+			"radio": 0,
+			"if": -200000
+		},
+		"chan_multiSF_2": {
+			"desc": "Lora MAC, 125kHz, all SF, 864.5 MHz",
+			"enable": true,
+			"radio": 0,
+			"if": 0
+		},
 		"chan_multiSF_3": {
-			"desc": "disabled",
-			"enable": false
+			"desc": "Lora MAC, 125kHz, all SF, 864.7 MHz",
+			"enable": true,
+			"radio": 0,
+			"if": 200000
 		},
 		"chan_multiSF_4": {
-			"desc": "disabled",
-			"enable": false
+			"desc": "Lora MAC, 125kHz, all SF, 864.9 MHz",
+			"enable": true,
+			"radio": 0,
+			"if": 400000
 		},
 		"chan_multiSF_5": {
-			"desc": "disabled",
-			"enable": false
+			"desc": "Lora MAC, 125kHz, all SF, 868.9 MHz",
+			"enable": true,
+			"radio": 1,
+			"if": -100000
 		},
 		"chan_multiSF_6": {
-			"desc": "disabled",
-			"enable": false
+			"desc": "Lora MAC, 125kHz, all SF, 869.1 MHz",
+			"enable": true,
+			"radio": 1,
+			"if": 100000
 		},
 		"chan_multiSF_7": {
 			"desc": "disabled",
@@ -172,7 +179,7 @@
 	"gateway_conf": {
 		"gateway_ID": "0000000000000000",
 		/* change with default server address/ports, or overwrite in local_conf.json */
-		"server_address": "router.as.thethings.network",
+		"server_address": "router.ru.thethings.network",
 		"serv_port_up": 1700,
 		"serv_port_down": 1700,
 		/* adjust the following parameters for your network */
@@ -184,17 +191,17 @@
 		"forward_crc_error": false,
 		"forward_crc_disabled": false,
 		/* gps enable */
-		"gps_tty_path": "/dev/ttyAMA0",
+		"gps_tty_path": "/dev/i2c-1",
 		"fake_gps": false,
 		"ref_latitude": 10,
 		"ref_longitude": 20,
 		"ref_altitude": -1,
 		"autoquit_threshold": 20,
 		"beacon_period": 0, /* disable class B beacon */
-		"beacon_freq_hz": 866500000, 
+		"beacon_freq_hz": 869100000, 
 		"beacon_freq_nb": 1, 
 		"beacon_freq_step": 0, 
-		"beacon_datarate": 8, 
+		"beacon_datarate": 9, 
 		"beacon_bw_hz": 125000, 
 		"beacon_power": 27
 	}
