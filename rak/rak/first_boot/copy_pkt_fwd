@@ -33,8 +33,6 @@ if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
 		else
 			echo "some error."
 		fi
-		cp /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf/global_conf.eu_863_870.json /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
-		sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
     else
 		if [ "$GW_MODEL" = "RAK2247" ]; then
             if [ "$LORA_SPI" = "1" ]; then
@@ -44,8 +42,12 @@ if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
             fi
         elif [ "$GW_MODEL" = "RAK2246" ]; then
             cp /usr/local/rak/lora/rak2246/* /opt/ttn-gateway/ -rf
+		elif [ "$GW_MODEL" = "RAK7248" ]; then
+            cp /usr/local/rak/lora/rak2287_spi/* /opt/ttn-gateway/ -rf
+			cp /usr/local/rak/lora/rak2287_spi/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
         else
-            cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+			cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+            cp /usr/local/rak/lora/rak7243/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
         fi
     fi
 
