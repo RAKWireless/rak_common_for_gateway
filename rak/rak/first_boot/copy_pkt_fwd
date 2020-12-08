@@ -45,7 +45,7 @@ if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
         elif [ "$GW_MODEL" = "RAK2246" ]; then
             cp /usr/local/rak/lora/rak2246/* /opt/ttn-gateway/ -rf
         else
-            cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
+            cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
         fi
     fi
 

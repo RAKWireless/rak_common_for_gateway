@@ -36,6 +36,10 @@ cp $SCRIPT_DIR/loragw_spi.native.c ./libloragw/src/loragw_spi.native.c
 cp $SCRIPT_DIR/test_loragw_gps_uart.c ./libloragw/tst/test_loragw_gps.c
 cp $SCRIPT_DIR/test_loragw_gps_i2c.c ./libloragw/tst/test_loragw_gps_i2c.c
 cp $SCRIPT_DIR/Makefile ./libloragw/Makefile
+cp $SCRIPT_DIR/../print_lora_log.sh util_pkt_logger/
+if [ -f $SCRIPT_DIR/../../lte/lte_test ]; then
+	cp $SCRIPT_DIR/../../lte/lte_test .
+fi
 make
 
 popd
@@ -53,10 +57,6 @@ cp $SCRIPT_DIR/lora_pkt_fwd.c ./lora_pkt_fwd/src/lora_pkt_fwd.c
 
 make
 rm lora_pkt_fwd/obj/* -f
-popd
-
-pushd lora_gateway
-make clean
 popd
 
 if [ -d global_conf ]; then

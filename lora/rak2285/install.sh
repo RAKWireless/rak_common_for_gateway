@@ -40,14 +40,11 @@ make
 rm packet_forwarder/lora_pkt_fwd/obj/* -f
 popd
 
-pushd sx1302_hal-1.0.5/libloragw
-make clean
-popd
-
 if [ -d $INSTALL_DIR/packet_forwarder ]; then
     rm -rf $INSTALL_DIR/packet_forwarder/
 fi
 cp $INSTALL_DIR/sx1302_hal-1.0.5/packet_forwarder $INSTALL_DIR/ -rf
+cp $INSTALL_DIR/sx1302_hal-1.0.5/libloragw $INSTALL_DIR/lora_gateway -rf
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak
 mkdir -p $INSTALL_DIR/packet_forwarder/lora_pkt_fwd
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/lora_pkt_fwd
