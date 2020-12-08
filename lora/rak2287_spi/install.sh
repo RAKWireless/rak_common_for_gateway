@@ -49,6 +49,7 @@ cp $INSTALL_DIR/sx1302_hal-1.0.5/packet_forwarder $INSTALL_DIR/ -rf
 cp $INSTALL_DIR/sx1302_hal-1.0.5/libloragw $INSTALL_DIR/lora_gateway -rf
 if [ -f $SCRIPT_DIR/../../lte/lte_test ]; then
 	cp $SCRIPT_DIR/../../lte/lte_test $INSTALL_DIR/lora_gateway/
+	cp $SCRIPT_DIR/reset_lgw.sh $INSTALL_DIR/lora_gateway/
 fi
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak
 mkdir -p $INSTALL_DIR/packet_forwarder/lora_pkt_fwd
