@@ -42,7 +42,7 @@ elif [ "${RAK_GW_MODEL}" = "RAK2287" ] ; then
 	./install.sh
 	LORA_DIR_TMP=rak2287_spi
 	popd
-elif [ "${RAK_GW_MODEL}" = "RAK7243" ]; then
+elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ]; then
 	pushd rak7243
 	if [ "${INSTALL_LTE}" = "1" ]; then
 		cp global_conf_i2c global_conf -rf
@@ -65,15 +65,16 @@ else
 		./install.sh
 		LORA_DIR_TMP=rak2246
 	else
-		pushd rak2245
+		pushd rak7243
+		cp global_conf_uart global_conf -rf
 		./install.sh
-		LORA_DIR_TMP=rak2245
+		LORA_DIR_TMP=rak7243
 	fi
 	popd
 fi
 
 
-if [ -d $SCRIPT_DIR/../lora_gateway ]; then
+if [ -d $LORA_DIR_TMP/lora_gateway ]; then
     cp $LORA_DIR_TMP/lora_gateway /opt/ttn-gateway/ -rf
 fi
 cp $LORA_DIR_TMP/packet_forwarder /opt/ttn-gateway/ -rf
@@ -93,4 +94,5 @@ if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
 fi
 
 systemctl enable ttn-gateway.service
+systemctl restart ttn-gateway.service
 
