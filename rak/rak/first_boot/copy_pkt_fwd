@@ -11,24 +11,43 @@ INSTALL_CHIRPSTACK=`do_get_gw_install_chirpstack`
 if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
 
     if [ "$INSTALL_LTE" = "1" ]; then
-        cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+        if [ "$GW_MODEL" = "RAK7243" ] || [ "$GW_MODEL" = "RAK7244" ]; then
+			cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+			if [ "$INSTALL_LTE" = "1" ]; then
+				cp /usr/local/rak/lora/rak7243/global_conf_i2c /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
+			else
+				cp /usr/local/rak/lora/rak7243/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
+			fi
+			
+		elif [ "$GW_MODEL" = "RAK7248" ]; then
+            if [ "$LORA_SPI" = "1" ]; then
+                cp /usr/local/rak/lora/rak2287_spi/* /opt/ttn-gateway/ -rf
+				if [ "$INSTALL_LTE" = "1" ]; then
+					cp /usr/local/rak/lora/rak2287_spi/global_conf_i2c /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
+				else
+					cp /usr/local/rak/lora/rak2287_spi/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
+				fi
+			else
+				cp /usr/local/rak/lora/rak2287_usb/* /opt/ttn-gateway/ -rf
+			fi
+		else
+			echo "some error."
+		fi
     else
-        if [ "$GW_MODEL" = "RAK2247" ]; then
+		if [ "$GW_MODEL" = "RAK2247" ]; then
             if [ "$LORA_SPI" = "1" ]; then
                 cp /usr/local/rak/lora/rak2247_spi/* /opt/ttn-gateway/ -rf
             else
                 cp /usr/local/rak/lora/rak2247_usb/* /opt/ttn-gateway/ -rf
             fi
-        elif [ "$GW_MODEL" = "RAK2287" ]; then
-            if [ "$LORA_SPI" = "1" ]; then
-                cp /usr/local/rak/lora/rak2287_spi/* /opt/ttn-gateway/ -rf
-            else
-                cp /usr/local/rak/lora/rak2287_usb/* /opt/ttn-gateway/ -rf
-            fi
         elif [ "$GW_MODEL" = "RAK2246" ]; then
             cp /usr/local/rak/lora/rak2246/* /opt/ttn-gateway/ -rf
+		elif [ "$GW_MODEL" = "RAK7248" ]; then
+            cp /usr/local/rak/lora/rak2287_spi/* /opt/ttn-gateway/ -rf
+			cp /usr/local/rak/lora/rak2287_spi/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
         else
-            cp /usr/local/rak/lora/rak2245/* /opt/ttn-gateway/ -rf
+			cp /usr/local/rak/lora/rak7243/* /opt/ttn-gateway/ -rf
+            cp /usr/local/rak/lora/rak7243/global_conf_uart /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf -rf
         fi
     fi
 
@@ -41,4 +60,6 @@ if [ ! -d "/opt/ttn-gateway/packet_forwarder" ]; then
     fi
     sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" \
 	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
+	
+	chmod 755 /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
 fi

@@ -2,21 +2,30 @@
 
 ##	Introduction 
 
-The aim of this project is to help users set up a LoRa network easily. The User Guide can be get from our Web.
+The aim of this project is to help users to use the RAK Raspberry Pi Developer Gateway more easily. The User Guide can be get from our Web(https://docs.rakwireless.com/Introduction/).
 
 ##	Supported platforms
 
 This project currently provides support for the below platforms.
 * RAK831
-* RAK833(USB/SPI)
 * RAK2245
-* RAK2247(USB/SPI)
-* RAK7243/RAK7244
+* RAK7243/RAK7244 no LTE
+* RAK7243/RAK7244 with LTE
+* RAK833(USB)
+* RAK2247(USB)
+* RAK833(SPI)
+* RAK2247(SPI)
 * RAK2246
-* RAK2287
+* RAK7248 no LTE (RAK2287 + raspberry pi)
+* RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
 * RAK2285
 
 ##	Changelog
+2020-11-25 V4.2.6
+
+* 1.Added support for RAK7248C.
+* 2.Added support for class B in global_conf.json, but it is disabled by default. When needed, you can enable it in `/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json`.
+
 2020-09-01 V4.2.5
 
 * 1.Add AS920_923.
@@ -94,31 +103,21 @@ step3 : Clone the installer and start the installation (More installation option
 step4 : Next you will see some messages as follow. Please select the corresponding hardware model.
 
       Please select your gateway model:
-      *	1.RAK831
-      *	2.RAK2245
-      *	3.RAK7243/RAK7244 no LTE
-      *	4.RAK7243/RAK7244 with LTE
-      *	5.RAK833(USB)
-      *	6.RAK2247(USB)
-      *	7.RAK833(SPI)
-      *	8.RAK2247(SPI)
-      *	9.RAK2246
-      *	10.RAK2287(SPI)
-      *	11.RAK2285
-      Please enter 1-11 to select the model:
+      *	 1.RAK831
+      *	 2.RAK2245
+      *	 3.RAK7243/RAK7244 no LTE
+      *	 4.RAK7243/RAK7244 with LTE
+      *	 5.RAK833(USB)
+      *	 6.RAK2247(USB)
+      *	 7.RAK833(SPI)
+      *	 8.RAK2247(SPI)
+      *	 9.RAK2246
+      *	10.RAK7248 no LTE (RAK2287 + raspberry pi)
+      *	11.RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
+      *	12.RAK2285
+      Please enter 1-12 to select the model:
 
-step5 : Wait a moment and the installation is complete.If your gateway uses a wired connection, please reconfigure the LAN's IP address using "sudo gateway-config" after the installation is complete.
+step5 : Wait a moment and the installation is complete.
 
 step6 : For more other features, please use "sudo gateway-config".
 
-
-
-
-##  Note: The following content is contributed by @x893:
-
-For DietPi OS need add
-apt install build-essential net-tools -y
-in rak/install.sh (for example before apt install git ppp dialog jq minicom monit -y)
-and need check hciuart enabled because
-systemctl disable hciuart
-not installed and script fail.

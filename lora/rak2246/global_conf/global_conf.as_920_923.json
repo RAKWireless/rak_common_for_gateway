@@ -13,13 +13,14 @@
         "fake_gps":false,
         "autoquit_threshold":30,
         "gps_tty_path":"/dev/ttyAMA0",
-        "beacon_freq_hz":923400000,
-        "beacon_freq_nb":1,
-        "beacon_freq_step":600000,
-        "beacon_datarate":9,
-        "beacon_bw_hz":125000,
-        "beacon_power":20,
-        "beacon_period":0
+        "beacon_period": 0, /* disable class B beacon */
+        "beacon_freq_hz": 923400000,
+        "beacon_freq_nb": 1,
+        "beacon_freq_step": 0,
+        "beacon_datarate": 9,
+        "beacon_bw_hz": 125000,
+        "beacon_power": 27
+		
     },
     "SX1301_conf":
         {

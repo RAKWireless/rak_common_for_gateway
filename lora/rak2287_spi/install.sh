@@ -31,23 +31,35 @@ make clean
 rm libloragw/inc/loragw_stts751.h -f
 rm libloragw/src/loragw_stts751.c -f
 cp ../loragw_hal.c libloragw/src/loragw_hal.c -f
+cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
+cp ../test_loragw_gps_i2c.c libloragw/tst/test_loragw_gps_i2c.c -f
 
 #mkdir -p packet_forwarder/lora_pkt_fwd/
 #cp ../reset_lgw.sh packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
 cp ../Makefile libloragw/Makefile -f
 cp ../lora_pkt_fwd.c packet_forwarder/src/lora_pkt_fwd.c
 make
-
+rm packet_forwarder/lora_pkt_fwd/obj/* -f
 popd
+
 if [ -d $INSTALL_DIR/packet_forwarder ]; then
     rm -rf $INSTALL_DIR/packet_forwarder/
 fi
 cp $INSTALL_DIR/sx1302_hal-1.0.5/packet_forwarder $INSTALL_DIR/ -rf
+cp $INSTALL_DIR/sx1302_hal-1.0.5/libloragw $INSTALL_DIR/lora_gateway -rf
+if [ -f $SCRIPT_DIR/../../lte/lte_test ]; then
+	cp $SCRIPT_DIR/../../lte/lte_test $INSTALL_DIR/lora_gateway/
+	cp $SCRIPT_DIR/reset_lgw.sh $INSTALL_DIR/lora_gateway/
+fi
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak
 mkdir -p $INSTALL_DIR/packet_forwarder/lora_pkt_fwd
 mv $INSTALL_DIR/packet_forwarder/lora_pkt_fwd_bak $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/lora_pkt_fwd
-cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
-cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+
+if [ -d global_conf ]; then
+	cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
+	cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+	sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+fi
+
 cp reset_lgw.sh $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/reset_lgw.sh
-sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
 rm -f $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/local_conf.json

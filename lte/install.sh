@@ -19,6 +19,8 @@ if [ "${INSTALL_LTE}" = "1" ] || [ "$1" = "create_img" ]; then
     cp rak-pppd.service /lib/systemd/system
     cp pppd.sh /usr/local/rak/bin/
     cp ppp.sh /usr/local/rak/bin/
+	
+	gcc lte_test.c -o lte_test
 
     echo_success "Install LTE module success!\n"
     sleep 2
