@@ -51,6 +51,7 @@ function echo_model_info()
     echo_yellow "*\t10.RAK7248 no LTE (RAK2287 + raspberry pi)"
 	echo_yellow "*\t11.RAK7248 with LTE (RAK2287 + LTE + raspberry pi)"
     echo_yellow "*\t12.RAK2285"
+    echo_yellow "*\t13.RAK2287"
     echo_yellow  "Please enter 1-12 to select the model:\c"
 }
 
@@ -102,8 +103,11 @@ function do_set_model_to_json()
         GW_MODEL=RAK7248
         do_set_spi_to_json 1
 		INSTALL_LTE=1
-	elif [ $1 -eq 12 ]; then
+    elif [ $1 -eq 12 ]; then
         GW_MODEL=RAK2285
+        do_set_spi_to_json 1
+    elif [ $1 -eq 13 ]; then
+        GW_MODEL=RAK2287
         do_set_spi_to_json 1
     else
         # Never come here
