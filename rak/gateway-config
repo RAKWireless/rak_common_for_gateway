@@ -101,7 +101,7 @@ do_copy_global_conf() {
 
 do_setup_ttn_channel_plan() {
   default_item=1
-  if [ "${GW_MODEL}" = "RAK2287" ] || [ "${GW_MODEL}" = "RAK2285" ]; then
+  if [ "${GW_MODEL}" = "RAK2285" ]; then
     FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
         1 "AS_923(920_923)" \
         2 "AS_923(923_925)" \
@@ -188,7 +188,7 @@ do_set_lora_server_ip()
 
 do_setup_LoRaServer_channel_plan() {
     default_item=1
-    if [ "${GW_MODEL}" = "RAK2287" ] || [ "${GW_MODEL}" = "RAK2285" ]; then
+    if [ "${GW_MODEL}" = "RAK2285" ]; then
       FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
           1 "AS_923(920_923)" \
           2 "AS_923(923_925)" \

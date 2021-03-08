@@ -1,15 +1,16 @@
 {
     "SX130x_conf": {
-        "spidev_path": "/dev/spidev0.0",
+        "com_type": "SPI",
+        "com_path": "/dev/spidev0.0",
         "lorawan_public": true,
         "clksrc": 0,
         "antenna_gain": 0, /* antenna gain, in dBi */
         "full_duplex": false,
-        "precision_timestamp": {
+        "fine_timestamp": {
             "enable": false,
-            "max_ts_metrics": 255,
-            "nb_symbols": 1
+            "mode": "all_sf" /* high_capacity or all_sf */
         },
+
         "radio_0": {
             "enable": true,
             "type": "SX1250",
@@ -46,6 +47,7 @@
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": false
         },
+        "chan_multiSF_All": {"spreading_factor_enable": [ 5, 6, 7, 8, 9, 10, 11, 12 ]},
         "chan_multiSF_0": {"enable": true, "radio": 0, "if": -137500},   /* Freq : 865.0625 MHz*/
         "chan_multiSF_1": {"enable": true, "radio": 0, "if": 202500},    /* Freq : 865.4025 MHz*/
         "chan_multiSF_2": {"enable": true, "radio": 1, "if": -400000},   /* Freq : 865.9850 MHz*/
@@ -80,7 +82,7 @@
         "ref_longitude": 0.0,
         "ref_altitude": 0,
         /* Beaconing parameters */
-        "beacon_period": 0,	/* disable class B beacon */
+        "beacon_period": 0,	/* disable class B beacon, set to 128 enable beacon */
         "beacon_freq_hz": 866500000, 
         "beacon_freq_nb": 1, 
         "beacon_freq_step": 0, 
