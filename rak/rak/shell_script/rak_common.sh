@@ -250,6 +250,13 @@ do_get_rpi_model()
     if [ ! -z "$text" ]; then
         model=3
     fi
+	
+	if [ $model -eq 255 ]; then
+        text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi Compute Module 3'`
+        if [ ! -z "$text" ]; then
+            model=3
+        fi
+    fi
 
     if [ $model -eq 255 ]; then
         text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi 4'`

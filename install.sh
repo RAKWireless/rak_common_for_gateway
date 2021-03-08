@@ -86,11 +86,6 @@ set +e
 write_json_chirpstack_install $INSTALL_CHIRPSTACK
 set -e
 
-pushd ap
-./install.sh $CREATE_IMG
-sleep 1
-popd
-
 if [ "$INSTALL_CHIRPSTACK" = 1 ]; then
     pushd chirpstack
     ./install.sh $CREATE_IMG

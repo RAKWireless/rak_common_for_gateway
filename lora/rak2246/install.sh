@@ -31,8 +31,15 @@ fi
 pushd lora_gateway
 
 cp $SCRIPT_DIR/library.cfg ./libloragw/library.cfg
+cp $SCRIPT_DIR/loragw_gps.c ./libloragw/src/loragw_gps.c
 cp $SCRIPT_DIR/loragw_spi.native.c ./libloragw/src/loragw_spi.native.c
+cp $SCRIPT_DIR/test_loragw_gps_uart.c ./libloragw/tst/test_loragw_gps.c
+cp $SCRIPT_DIR/test_loragw_gps_i2c.c ./libloragw/tst/test_loragw_gps_i2c.c
+cp $SCRIPT_DIR/Makefile ./libloragw/Makefile
 cp $SCRIPT_DIR/../print_lora_log.sh util_pkt_logger/
+if [ -f $SCRIPT_DIR/../../lte/lte_test ]; then
+	cp $SCRIPT_DIR/../../lte/lte_test .
+fi
 make
 
 popd
@@ -44,7 +51,6 @@ if [ ! -d $SCRIPT_DIR/../packet_forwarder ]; then
 else
     cp $SCRIPT_DIR/../packet_forwarder . -rf
 fi
-
 pushd packet_forwarder
 
 cp $SCRIPT_DIR/lora_pkt_fwd.c ./lora_pkt_fwd/src/lora_pkt_fwd.c
@@ -53,8 +59,14 @@ make
 rm lora_pkt_fwd/obj/* -f
 popd
 
-cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
-cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
-sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+if [ -d global_conf ]; then
+	cp global_conf $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/ -rf
+	cp global_conf/global_conf.eu_863_870.json $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+	sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/global_conf.json
+else
+	echo ""
+fi
 rm -f $INSTALL_DIR/packet_forwarder/lora_pkt_fwd/local_conf.json
+
+#cp ppp.sh /usr/local/rak/bin/
 

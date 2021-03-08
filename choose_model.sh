@@ -94,6 +94,7 @@ function do_set_model_to_json()
         do_set_spi_to_json 1
     elif [ $1 -eq 9 ]; then
         GW_MODEL=RAK2246
+		INSTALL_LTE=1
         do_set_spi_to_json 1
     elif [ $1 -eq 10 ]; then
         GW_MODEL=RAK7248

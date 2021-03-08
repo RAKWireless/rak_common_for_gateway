@@ -13,7 +13,7 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
-if [[ $NEW_HOSTNAME == "" ]]; then NEW_HOSTNAME="rak-gateway"; fi
+if [[ $NEW_HOSTNAME == "" ]]; then NEW_HOSTNAME="egm-das"; fi
 # Change hostname if needed
 CURRENT_HOSTNAME=$(hostname)
 
