@@ -21,6 +21,10 @@ This project currently provides support for the below platforms.
 * RAK2285
 
 ##	Changelog
+2021-01-21 V4.2.7
+
+* 1.Only upgraded for RAK2287, added EU433 and CN470 for RAK2287.
+
 2020-11-25 V4.2.6
 
 * 1.Added support for RAK7248C.

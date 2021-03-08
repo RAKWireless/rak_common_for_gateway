@@ -20,6 +20,7 @@ apt install git ppp dialog jq minicom monit i2c-tools -y
 cp gateway-config /usr/bin/
 cp gateway-version /usr/bin/
 cp rak_test /usr/bin/
+cp test_rak /usr/bin/
 cp rak /usr/local/ -rf
 
 if [ "$1" = "create_img" ]; then
