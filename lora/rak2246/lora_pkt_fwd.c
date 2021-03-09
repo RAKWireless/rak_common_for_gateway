@@ -2820,7 +2820,7 @@ void thread_gps(void) {
                         frame_size = 0;
                     } else if (latest_msg == INVALID) {
                         /* message header received but message appears to be corrupted */
-                        //MSG("WARNING: [gps] could not get a valid message from GPS (no time)\n");
+                        MSG("WARNING: [gps] could not get a valid message from GPS (no time)\n");
                         frame_size = 0;
                     } else if (latest_msg == UBX_NAV_TIMEGPS) {
                         gps_process_sync();
