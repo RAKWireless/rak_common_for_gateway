@@ -7,20 +7,24 @@ The aim of this project is to help users to use the RAK Raspberry Pi Developer G
 ##	Supported platforms
 
 This project currently provides support for the below platforms.
-* RAK831
+* RAK831(Choose RAK2245)
 * RAK2245
 * RAK7243/RAK7244 no LTE
 * RAK7243/RAK7244 with LTE
-* RAK833(USB)
+* RAK833(USB)(Choose RAK2247 USB)
 * RAK2247(USB)
-* RAK833(SPI)
+* RAK833(SPI)(Choose RAK2247 SPI)
 * RAK2247(SPI)
 * RAK2246
 * RAK7248 no LTE (RAK2287 + raspberry pi)
 * RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
-* RAK2285
 
 ##	Changelog
+2021-03-09 V4.2.8
+
+* 1.Added support for RAK2287-USB.
+* 2.Remove some obsolete models.
+
 2021-01-21 V4.2.7
 
 * 1.Only upgraded for RAK2287, added EU433 and CN470 for RAK2287.
@@ -107,19 +111,16 @@ step3 : Clone the installer and start the installation (More installation option
 step4 : Next you will see some messages as follow. Please select the corresponding hardware model.
 
       Please select your gateway model:
-      *	 1.RAK831
-      *	 2.RAK2245
-      *	 3.RAK7243/RAK7244 no LTE
-      *	 4.RAK7243/RAK7244 with LTE
-      *	 5.RAK833(USB)
-      *	 6.RAK2247(USB)
-      *	 7.RAK833(SPI)
-      *	 8.RAK2247(SPI)
-      *	 9.RAK2246
-      *	10.RAK7248 no LTE (RAK2287 + raspberry pi)
-      *	11.RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
-      *	12.RAK2285
-      Please enter 1-12 to select the model:
+      *	 1.RAK2245
+      *	 2.RAK7243/RAK7244 no LTE
+      *	 3.RAK7243/RAK7244 with LTE
+      *	 4.RAK2247(USB)
+      *	 5.RAK2247(SPI)
+      *	 6.RAK2246
+      *	 7.RAK7248 no LTE (RAK2287 SPI + raspberry pi)
+      *	 8.RAK7248 with LTE (RAK2287 SPI + LTE + raspberry pi)
+	  *	 9.RAK2287 USB
+      Please enter 1-9 to select the model:
 
 step5 : Wait a moment and the installation is complete.
 

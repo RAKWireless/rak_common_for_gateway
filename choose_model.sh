@@ -39,19 +39,16 @@ do_check_variable_type_echo(){
 function echo_model_info()
 {
     echo_yellow "Please select your gateway model:"
-    echo_yellow "*\t 1.RAK831"
-    echo_yellow "*\t 2.RAK2245"
-    echo_yellow "*\t 3.RAK7243/RAK7244 no LTE"
-    echo_yellow "*\t 4.RAK7243/RAK7244 with LTE"
-    echo_yellow "*\t 5.RAK833(USB)"
-    echo_yellow "*\t 6.RAK2247(USB)"
-    echo_yellow "*\t 7.RAK833(SPI)"
-    echo_yellow "*\t 8.RAK2247(SPI)"
-    echo_yellow "*\t 9.RAK2246"
-    echo_yellow "*\t10.RAK7248 no LTE (RAK2287 + raspberry pi)"
-	echo_yellow "*\t11.RAK7248 with LTE (RAK2287 + LTE + raspberry pi)"
-    echo_yellow "*\t12.RAK2285"
-    echo_yellow  "Please enter 1-12 to select the model:\c"
+    echo_yellow "*\t 1.RAK2245"
+    echo_yellow "*\t 2.RAK7243/RAK7244 no LTE"
+    echo_yellow "*\t 3.RAK7243/RAK7244 with LTE"
+    echo_yellow "*\t 4.RAK2247(USB)"
+    echo_yellow "*\t 5.RAK2247(SPI)"
+    echo_yellow "*\t 6.RAK2246"
+    echo_yellow "*\t 7.RAK7248 no LTE (RAK2287 SPI + raspberry pi)"
+	echo_yellow "*\t 8.RAK7248 with LTE (RAK2287 SPI + LTE + raspberry pi)"
+    echo_yellow "*\t 9.RAK2287 USB"
+    echo_yellow  "Please enter 1-9 to select the model:\c"
 }
 
 function do_set_model_to_json()
@@ -60,10 +57,14 @@ function do_set_model_to_json()
     RAK_GW_JSON=./rak/rak/gateway-config-info.json
     INSTALL_LTE=0
     if [ $1 -eq 1 ]; then
-        GW_MODEL=RAK831
+        GW_MODEL=RAK2245
         do_set_spi_to_json 1
     elif [ $1 -eq 2 ]; then
-        GW_MODEL=RAK2245
+        if [ $rpi_model -eq 4 ]; then
+            GW_MODEL=RAK7244
+        else
+            GW_MODEL=RAK7243
+        fi
         do_set_spi_to_json 1
     elif [ $1 -eq 3 ]; then
         if [ $rpi_model -eq 4 ]; then
@@ -71,40 +72,27 @@ function do_set_model_to_json()
         else
             GW_MODEL=RAK7243
         fi
-        do_set_spi_to_json 1
-    elif [ $1 -eq 4 ]; then
-        if [ $rpi_model -eq 4 ]; then
-            GW_MODEL=RAK7244
-        else
-            GW_MODEL=RAK7243
-        fi
         INSTALL_LTE=1
         do_set_spi_to_json 1
+    elif [ $1 -eq 4 ]; then
+        GW_MODEL=RAK2247
+        do_set_spi_to_json 0
     elif [ $1 -eq 5 ]; then
-        GW_MODEL=RAK833
-        do_set_spi_to_json 0
+        GW_MODEL=RAK2247
+        do_set_spi_to_json 1
     elif [ $1 -eq 6 ]; then
-        GW_MODEL=RAK2247
-        do_set_spi_to_json 0
-    elif [ $1 -eq 7 ]; then
-        GW_MODEL=RAK833
-        do_set_spi_to_json 1
-    elif [ $1 -eq 8 ]; then
-        GW_MODEL=RAK2247
-        do_set_spi_to_json 1
-    elif [ $1 -eq 9 ]; then
         GW_MODEL=RAK2246
         do_set_spi_to_json 1
-    elif [ $1 -eq 10 ]; then
+    elif [ $1 -eq 7 ]; then
         GW_MODEL=RAK7248
         do_set_spi_to_json 1
-    elif [ $1 -eq 11 ]; then
+    elif [ $1 -eq 8 ]; then
         GW_MODEL=RAK7248
         do_set_spi_to_json 1
 		INSTALL_LTE=1
-	elif [ $1 -eq 12 ]; then
-        GW_MODEL=RAK2285
-        do_set_spi_to_json 1
+	elif [ $1 -eq 9 ]; then
+        GW_MODEL=RAK2287
+        do_set_spi_to_json 0
     else
         # Never come here
         echo "error"
@@ -133,7 +121,7 @@ function do_set_model()
     do
         read RAK_MODEL
         if [ -z "$RAK_MODEL" ]; then
-            echo_yellow "Please enter 1-12 to select the model:\c"
+            echo_yellow "Please enter 1-9 to select the model:\c"
             continue
         fi
 
@@ -141,7 +129,7 @@ function do_set_model()
         RET=$?
 
         if [ $RET -eq 0 ]; then
-            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 12 ]; then
+            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 9 ]; then
                 echo_yellow "Please enter 1-10 to select the model:\c"
                 continue
             else
@@ -149,7 +137,7 @@ function do_set_model()
                 return 0
             fi
         else
-            echo_yellow "Please enter 1-12 to select the model:\c"
+            echo_yellow "Please enter 1-9 to select the model:\c"
             continue
 
         fi
