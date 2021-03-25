@@ -21,7 +21,7 @@ INSTALL_LTE=`do_get_gw_install_lte`
 mkdir /opt/ttn-gateway -p
 
 
-if [ "${RAK_GW_MODEL}" = "RAK2247" ] || [ "${RAK_GW_MODEL}" = "RAK833" ]; then
+if [ "${RAK_GW_MODEL}" = "RAK2247" ]; then
 	if [ "${LORA_SPI}" = "1" ]; then
 		pushd rak2247_spi
 		./install.sh
@@ -33,14 +33,18 @@ if [ "${RAK_GW_MODEL}" = "RAK2247" ] || [ "${RAK_GW_MODEL}" = "RAK833" ]; then
 	fi
 	popd
 elif [ "${RAK_GW_MODEL}" = "RAK2287" ] ; then
-	pushd rak2287_spi
-	if [ "${INSTALL_LTE}" = "1" ]; then
-		cp global_conf_i2c global_conf -rf
+	pushd rak2287
+	if [ "${LORA_SPI}" = "1" ]; then
+		if [ "${INSTALL_LTE}" = "1" ]; then
+			cp global_conf_i2c global_conf -rf
+		else
+			cp global_conf_uart global_conf -rf
+		fi
 	else
-		cp global_conf_uart global_conf -rf
+		cp global_conf_usb global_conf -rf
 	fi
 	./install.sh
-	LORA_DIR_TMP=rak2287_spi
+	LORA_DIR_TMP=rak2287
 	popd
 elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ]; then
 	pushd rak7243
@@ -51,13 +55,6 @@ elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ]; the
 	fi
 	./install.sh
 	LORA_DIR_TMP=rak7243
-	popd
-elif [ "${RAK_GW_MODEL}" = "RAK2285" ]; then
-
-	pushd rak2285
-	LORA_DIR_TMP=rak2285
-	./install.sh
-
 	popd
 else
 	if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then

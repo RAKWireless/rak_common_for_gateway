@@ -36,7 +36,7 @@ sudo -u postgres psql -c "create database chirpstack_as with owner chirpstack_as
 sudo -u postgres psql -c "create database chirpstack_ns with owner chirpstack_ns;"
 sudo -u postgres psql chirpstack_as -c "create extension pg_trgm;"
 sudo -u postgres psql chirpstack_as -c "create extension hstore;"
-sudo -u postgres psql -U postgres -f /tmp/init_sql.sql
+#sudo -u postgres psql -U postgres -f /tmp/init_sql.sql
 rm -f /tmp/init_sql.sql
 
 #3. install lora packages
