@@ -59,6 +59,11 @@ elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ]; the
 else
 	if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
 		pushd rak2246
+		if [ "${INSTALL_LTE}" = "1" ]; then
+			cp global_conf_i2c global_conf -rf
+		else
+			cp global_conf_uart global_conf -rf
+		fi
 		./install.sh
 		LORA_DIR_TMP=rak2246
 	else
