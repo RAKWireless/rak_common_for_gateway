@@ -32,7 +32,7 @@ if [ "${RAK_GW_MODEL}" = "RAK2247" ]; then
 		LORA_DIR_TMP=rak2247_usb
 	fi
 	popd
-elif [ "${RAK_GW_MODEL}" = "RAK2287" ] ; then
+elif [ "${RAK_GW_MODEL}" = "RAK2287" ] || [ "${RAK_GW_MODEL}" = "RAK7248" ] ; then
 	pushd rak2287
 	if [ "${LORA_SPI}" = "1" ]; then
 		if [ "${INSTALL_LTE}" = "1" ]; then
