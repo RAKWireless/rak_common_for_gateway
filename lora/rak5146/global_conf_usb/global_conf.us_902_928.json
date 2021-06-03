@@ -1,7 +1,7 @@
 {
     "SX130x_conf": {
-        "com_type": "SPI",
-        "com_path": "/dev/spidev0.0",
+        "com_type": "USB",
+        "com_path": "/dev/ttyACM0",
         "lorawan_public": true,
         "clksrc": 0,
         "antenna_gain": 0, /* antenna gain, in dBi */
@@ -10,6 +10,7 @@
             "enable": false,
             "mode": "all_sf" /* high_capacity or all_sf */
         },
+
         "radio_0": {
             "enable": true,
             "type": "SX1250",

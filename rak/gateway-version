@@ -33,6 +33,16 @@ elif [ "${RAK_MODEL}" = "RAK7248" ] || [ "${RAK_MODEL}" = "RAK2287" ]; then
 	else
 		GW_MODEL_STR="${RAK_MODEL} for USB"
 	fi
+elif [ "${RAK_MODEL}" = "RAK5146" ]; then
+	if [ "${LORA_SPI}" = "1" ]; then
+		if [ "$INSTALL_LTE" = "1" ]; then
+			GW_MODEL_STR="${RAK_MODEL} with LTE"
+		else
+			GW_MODEL_STR="${RAK_MODEL} no LTE"
+		fi
+	else
+		GW_MODEL_STR="${RAK_MODEL} for USB"
+	fi
 else
     GW_MODEL_STR=$RAK_MODEL
 fi

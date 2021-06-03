@@ -10,6 +10,7 @@
             "enable": false,
             "mode": "all_sf" /* high_capacity or all_sf */
         },
+
         "radio_0": {
             "enable": true,
             "type": "SX1250",

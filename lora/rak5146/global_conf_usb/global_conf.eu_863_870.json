@@ -1,7 +1,7 @@
 {
     "SX130x_conf": {
-        "com_type": "SPI",
-        "com_path": "/dev/spidev0.0",
+        "com_type": "USB",
+        "com_path": "/dev/ttyACM0",
         "lorawan_public": true,
         "clksrc": 0,
         "antenna_gain": 0, /* antenna gain, in dBi */
@@ -13,12 +13,12 @@
         "radio_0": {
             "enable": true,
             "type": "SX1250",
-            "freq": 865200000,
+            "freq": 867500000,
             "rssi_offset": -215.4,
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": true,
-            "tx_freq_min": 865000000,
-            "tx_freq_max": 867000000,
+            "tx_freq_min": 863000000,
+            "tx_freq_max": 870000000,
             "tx_gain_lut":[
                 {"rf_power": 12, "pa_gain": 1, "pwr_idx": 4},
                 {"rf_power": 13, "pa_gain": 1, "pwr_idx": 5},
@@ -41,29 +41,29 @@
         "radio_1": {
             "enable": true,
             "type": "SX1250",
-            "freq": 866385000,
+            "freq": 868500000,
             "rssi_offset": -215.4,
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": false
         },
         "chan_multiSF_All": {"spreading_factor_enable": [ 5, 6, 7, 8, 9, 10, 11, 12 ]},
-        "chan_multiSF_0": {"enable": true, "radio": 0, "if": -137500},   /* Freq : 865.0625 MHz*/
-        "chan_multiSF_1": {"enable": true, "radio": 0, "if": 202500},    /* Freq : 865.4025 MHz*/
-        "chan_multiSF_2": {"enable": true, "radio": 1, "if": -400000},   /* Freq : 865.9850 MHz*/
-        "chan_multiSF_3": {"enable": false, "radio": 0, "if":  200000},  /* Disabled */
-        "chan_multiSF_4": {"enable": false, "radio": 1, "if": -300000},  /* Disabled */
-        "chan_multiSF_5": {"enable": false, "radio": 1, "if": -100000},  /* Disabled */
-        "chan_multiSF_6": {"enable": false, "radio": 1, "if":  100000},  /* Disabled */
-        "chan_multiSF_7": {"enable": false, "radio": 1, "if":  300000},  /* Disabled */
-        "chan_Lora_std":  {"enable": false, "radio": 0, "if":  300000, "bandwidth": 500000, "spread_factor": 8,						/* Freq : 917.5 MHz*/
+        "chan_multiSF_0": {"enable": true, "radio": 1, "if": -400000},
+        "chan_multiSF_1": {"enable": true, "radio": 1, "if": -200000},
+        "chan_multiSF_2": {"enable": true, "radio": 1, "if":  0},
+        "chan_multiSF_3": {"enable": true, "radio": 0, "if": -400000},
+        "chan_multiSF_4": {"enable": true, "radio": 0, "if": -200000},
+        "chan_multiSF_5": {"enable": true, "radio": 0, "if":  0},
+        "chan_multiSF_6": {"enable": true, "radio": 0, "if":  200000},
+        "chan_multiSF_7": {"enable": true, "radio": 0, "if":  400000},
+        "chan_Lora_std":  {"enable": true, "radio": 1, "if": -200000, "bandwidth": 250000, "spread_factor": 7,
                            "implicit_hdr": false, "implicit_payload_length": 17, "implicit_crc_en": false, "implicit_coderate": 1},
-        "chan_FSK":       {"enable": false, "radio": 1, "if":  300000, "bandwidth": 125000, "datarate": 50000}						/* Freq : 868.8 MHz*/
+        "chan_FSK":       {"enable": true, "radio": 1, "if":  300000, "bandwidth": 125000, "datarate": 50000}
     },
 
     "gateway_conf": {
         "gateway_ID": "AA555A0000000000",
         /* change with default server address/ports */
-        "server_address": "router.us.thethings.network",
+        "server_address": "router.eu.thethings.network",
         "serv_port_up": 1700,
         "serv_port_down": 1700,
         /* adjust the following parameters for your network */
@@ -82,10 +82,10 @@
         "ref_altitude": 0,
         /* Beaconing parameters */
         "beacon_period": 0,	/* disable class B beacon, set to 128 enable beacon */
-        "beacon_freq_hz": 866500000, 
+        "beacon_freq_hz": 869525000, 
         "beacon_freq_nb": 1, 
         "beacon_freq_step": 0, 
-        "beacon_datarate": 8, 
+        "beacon_datarate": 9, 
         "beacon_bw_hz": 125000, 
         "beacon_power": 27
     },
