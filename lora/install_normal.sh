@@ -46,6 +46,20 @@ elif [ "${RAK_GW_MODEL}" = "RAK2287" ] || [ "${RAK_GW_MODEL}" = "RAK7248" ] ; th
 	./install.sh
 	LORA_DIR_TMP=rak2287
 	popd
+elif [ "${RAK_GW_MODEL}" = "RAK5146" ]; then
+	pushd rak5146
+	if [ "${LORA_SPI}" = "1" ]; then
+		if [ "${INSTALL_LTE}" = "1" ]; then
+			cp global_conf_i2c global_conf -rf
+		else
+			cp global_conf_uart global_conf -rf
+		fi
+	else
+		cp global_conf_usb global_conf -rf
+	fi
+	./install.sh
+	LORA_DIR_TMP=rak5146
+	popd
 elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ]; then
 	pushd rak7243
 	if [ "${INSTALL_LTE}" = "1" ]; then

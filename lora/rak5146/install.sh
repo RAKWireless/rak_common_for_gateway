@@ -22,14 +22,14 @@ pushd $INSTALL_DIR
 
 # Build LoRa gateway app
 
-SX1302_HAL_URL="https://github.com/Lora-net/sx1302_hal/archive/V2.0.1.tar.gz"
-wget $SX1302_HAL_URL -O ./rak2287.tar.gz
+SX1303_HAL_URL="https://github.com/Lora-net/sx1302_hal/archive/V2.1.0.tar.gz"
+wget $SX1303_HAL_URL -O ./rak5146.tar.gz
 
-tar -zxvf ./rak2287.tar.gz
+tar -zxvf ./rak5146.tar.gz
 
 sleep 1
-mv sx1302_hal-2.0.1 sx1302_hal
-pushd sx1302_hal
+mv sx1302_hal-2.1.0 sx1303_hal
+pushd sx1303_hal
 make clean
 cp ../loragw_stts751.c libloragw/src/loragw_stts751.c -f
 cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
@@ -46,8 +46,8 @@ popd
 if [ -d $INSTALL_DIR/packet_forwarder ]; then
     rm -rf $INSTALL_DIR/packet_forwarder/
 fi
-cp $INSTALL_DIR/sx1302_hal/packet_forwarder $INSTALL_DIR/ -rf
-cp $INSTALL_DIR/sx1302_hal/libloragw $INSTALL_DIR/lora_gateway -rf
+cp $INSTALL_DIR/sx1303_hal/packet_forwarder $INSTALL_DIR/ -rf
+cp $INSTALL_DIR/sx1303_hal/libloragw $INSTALL_DIR/lora_gateway -rf
 if [ -f $SCRIPT_DIR/../../lte/lte_test ]; then
 	cp $SCRIPT_DIR/../../lte/lte_test $INSTALL_DIR/lora_gateway/
 	cp $SCRIPT_DIR/reset_lgw.sh $INSTALL_DIR/lora_gateway/

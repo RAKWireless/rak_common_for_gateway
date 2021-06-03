@@ -18,8 +18,13 @@ This project currently provides support for the below platforms.
 * RAK2246
 * RAK7248 no LTE (RAK2287 + raspberry pi)
 * RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
+* RAK5146(USB)
 
 ##	Changelog
+2021-06-03 V4.2.9
+
+* 1.Added support for RAK5146-USB and change its sx1302_hal  version from V2.0.1 to V2.1.0.
+
 2021-03-09 V4.2.8
 
 * 1.Added support for RAK2287-USB.
@@ -119,8 +124,9 @@ step4 : Next you will see some messages as follow. Please select the correspondi
       *	 6.RAK2246
       *	 7.RAK7248 no LTE (RAK2287 SPI + raspberry pi)
       *	 8.RAK7248 with LTE (RAK2287 SPI + LTE + raspberry pi)
-	  *	 9.RAK2287 USB
-      Please enter 1-9 to select the model:
+      *	 9.RAK2287 USB
+      *	 10.RAK5146 USB
+      Please enter 1-10 to select the model:
 
 step5 : Wait a moment and the installation is complete.
 
