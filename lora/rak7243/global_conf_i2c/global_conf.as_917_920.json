@@ -8,16 +8,16 @@
         "radio_0": {
             "enable": true,
             "type": "SX1257",
-            "freq": 921800000,
+            "freq": 917700000,
             "rssi_offset": -166,
             "tx_enable": true,
-            "tx_freq_min": 920000000,
-            "tx_freq_max": 923000000
+            "tx_freq_min": 91700000,
+            "tx_freq_max": 92000000
         },
         "radio_1": {
             "enable": true,
             "type": "SX1257",
-            "freq": 922800000,
+            "freq": 918700000,
             "rssi_offset": -166,
             "tx_enable": false
         },
@@ -213,14 +213,14 @@
         "forward_crc_error": false,
         "forward_crc_disabled": false,
         /* gps enable */
-        "gps_tty_path": "/dev/ttyAMA0",
+        "gps_tty_path": "/dev/i2c-1",
         "fake_gps": false,
         "ref_latitude": 10,
         "ref_longitude": 20,
         "ref_altitude": -1,
         "autoquit_threshold": 20,
         "beacon_period": 0, /* disable class B beacon */
-        "beacon_freq_hz": 921600000,
+        "beacon_freq_hz": 917500000,
         "beacon_freq_nb": 1,
         "beacon_freq_step": 0,
         "beacon_datarate": 9,

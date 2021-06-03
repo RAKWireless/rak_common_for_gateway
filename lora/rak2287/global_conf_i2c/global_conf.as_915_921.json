@@ -13,12 +13,12 @@
         "radio_0": {
             "enable": true,
             "type": "SX1250",
-            "freq": 923600000,
+            "freq": 917000000,
             "rssi_offset": -215.4,
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": true,
-            "tx_freq_min": 923200000,
-            "tx_freq_max": 925000000,
+            "tx_freq_min": 915000000,
+            "tx_freq_max": 921000000,
             "tx_gain_lut":[
                 {"rf_power": 12, "pa_gain": 1, "pwr_idx": 6},
                 {"rf_power": 13, "pa_gain": 1, "pwr_idx": 7},
@@ -41,20 +41,20 @@
         "radio_1": {
             "enable": true,
             "type": "SX1250",
-            "freq": 924600000,
+            "freq": 918000000,
             "rssi_offset": -215.4,
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": false
         },
         "chan_multiSF_All": {"spreading_factor_enable": [ 5, 6, 7, 8, 9, 10, 11, 12 ]},
-        "chan_multiSF_0": {"enable": true, "radio": 0, "if": -400000},  /* Freq : 923.2 MHz*/
-        "chan_multiSF_1": {"enable": true, "radio": 0, "if": -200000},  /* Freq : 923.4 MHz*/
-        "chan_multiSF_2": {"enable": true, "radio": 0, "if":  0},       /* Freq : 923.6 MHz*/
-        "chan_multiSF_3": {"enable": true, "radio": 0, "if":  200000},  /* Freq : 923.8 MHz*/
-        "chan_multiSF_4": {"enable": true, "radio": 0, "if":  400000},  /* Freq : 924.0 MHz*/
-        "chan_multiSF_5": {"enable": true, "radio": 1, "if": -400000},  /* Freq : 924.2 MHz*/
-        "chan_multiSF_6": {"enable": true, "radio": 1, "if": -200000},  /* Freq : 924.4 MHz*/
-        "chan_multiSF_7": {"enable": true, "radio": 1, "if":  0},       /* Freq : 924.5 MHz*/
+        "chan_multiSF_0": {"enable": true, "radio": 0, "if": -400000},  /* Freq : 916.6 MHz*/
+        "chan_multiSF_1": {"enable": true, "radio": 0, "if": -200000},  /* Freq : 916.8 MHz*/
+        "chan_multiSF_2": {"enable": true, "radio": 0, "if":  0},       /* Freq : 917.0 MHz*/
+        "chan_multiSF_3": {"enable": true, "radio": 0, "if":  200000},  /* Freq : 917.2 MHz*/
+        "chan_multiSF_4": {"enable": true, "radio": 0, "if":  400000},  /* Freq : 917.4 MHz*/
+        "chan_multiSF_5": {"enable": true, "radio": 1, "if": -400000},  /* Freq : 917.6 MHz*/
+        "chan_multiSF_6": {"enable": true, "radio": 1, "if": -200000},  /* Freq : 917.8 MHz*/
+        "chan_multiSF_7": {"enable": true, "radio": 1, "if":  0},       /* Freq : 918.0 MHz*/
         "chan_Lora_std":  {"enable": true, "radio": 1, "if":  -100000, "bandwidth": 250000, "spread_factor": 7,						/* Freq : 904.6 MHz*/
                            "implicit_hdr": false, "implicit_payload_length": 17, "implicit_crc_en": false, "implicit_coderate": 1},
         "chan_FSK":       {"enable": true, "radio": 1, "if":  200000, "bandwidth": 125000, "datarate": 50000}						/* Freq : 924.8 MHz*/
@@ -82,7 +82,7 @@
         "ref_altitude": 0,
         /* Beaconing parameters */
         "beacon_period": 0,	/* disable class B beacon, set to 128 enable beacon */
-        "beacon_freq_hz": 923400000,
+        "beacon_freq_hz": 916800000,
         "beacon_freq_nb": 1,
         "beacon_freq_step": 0,
         "beacon_datarate": 9,

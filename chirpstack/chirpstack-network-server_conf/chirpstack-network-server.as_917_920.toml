@@ -64,7 +64,7 @@ net_id="000000"
   # specification for valid values that apply to your region.
   # See: https://www.lora-alliance.org/lorawan-for-developers
   [network_server.band]
-  name="AS923-2"
+  name="AS923-4"
 
 
   # LoRaWAN network related settings.
@@ -90,7 +90,7 @@ net_id="000000"
   #
   # Please consult the LoRaWAN Regional Parameters specification for valid
   # options of the configured network_server.band.name.
-  rx2_frequency=921400000
+  rx2_frequency=917300000
 
     # Extra channel configuration.
     #
@@ -102,29 +102,30 @@ net_id="000000"
     # using the NewChannelReq mac-command.
     #
     #[[network_server.network_settings.extra_channels]]
-    #frequency=921800000
+    #frequency=917700000
     #min_dr=2
     #max_dr=5
-	#
+
     #[[network_server.network_settings.extra_channels]]
-    #frequency=922000000
+    #frequency=917900000
     #min_dr=2
     #max_dr=5
-	#
+
     #[[network_server.network_settings.extra_channels]]
-    #frequency=922200000
+    #frequency=918100000
     #min_dr=2
     #max_dr=5
-	#
+
     #[[network_server.network_settings.extra_channels]]
-    #frequency=922400000
+    #frequency=918300000
     #min_dr=2
     #max_dr=5
-	#
+
     #[[network_server.network_settings.extra_channels]]
-    #frequency=922600000
+    #frequency=918500000
     #min_dr=2
     #max_dr=5
+
 
     # Class B settings
     [network_server.network_settings.class_b]
