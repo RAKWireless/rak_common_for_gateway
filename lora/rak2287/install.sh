@@ -22,13 +22,13 @@ pushd $INSTALL_DIR
 
 # Build LoRa gateway app
 
-SX1302_HAL_URL="https://github.com/Lora-net/sx1302_hal/archive/V2.1.0.tar.gz"
+SX1302_HAL_URL="https://github.com/Lora-net/sx1302_hal/archive/V2.0.1.tar.gz"
 wget $SX1302_HAL_URL -O ./rak2287.tar.gz
 
 tar -zxvf ./rak2287.tar.gz
 
 sleep 1
-mv sx1302_hal-2.1.0 sx1302_hal
+mv sx1302_hal-2.0.1 sx1302_hal
 pushd sx1302_hal
 make clean
 cp ../loragw_stts751.c libloragw/src/loragw_stts751.c -f
