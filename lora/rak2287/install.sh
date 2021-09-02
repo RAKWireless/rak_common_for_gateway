@@ -31,8 +31,9 @@ sleep 1
 mv sx1302_hal-2.0.1 sx1302_hal
 pushd sx1302_hal
 make clean
-cp ../loragw_stts751.c libloragw/src/loragw_stts751.c -f
-cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
+cp ../loragw_stts751.c libloragw/src/ -f
+cp ../loragw_gps.c libloragw/src/ -f
+cp ../test_loragw_gps_uart.c libloragw/tst/ -f
 cp ../test_loragw_gps_i2c.c libloragw/tst/test_loragw_gps_i2c.c -f
 
 #mkdir -p packet_forwarder/lora_pkt_fwd/
