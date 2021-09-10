@@ -102,7 +102,7 @@ This project currently provides support for the below platforms.
 
 ##	Installation procedure
 
-step1 : Download and install [Raspbian Buster LITE](https://www.raspberrypi.org/downloads/raspbian/) 
+step1 : Download and install latest [Raspberry Pi OS Lite](https://www.raspberrypi.org/software/operating-systems/#raspberry-pi-os-32-bit) 
 
 step2 : Use "sudo raspi-config" command, enable spi and i2c interface, disable login shell over serial and enable serial port hardware.
 
