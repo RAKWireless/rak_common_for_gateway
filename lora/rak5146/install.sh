@@ -22,23 +22,21 @@ pushd $INSTALL_DIR
 
 # Build LoRa gateway app
 
-SX1303_HAL_URL="https://github.com/Lora-net/sx1302_hal/archive/V2.1.0.tar.gz"
-wget $SX1303_HAL_URL -O ./rak5146.tar.gz
-
-tar -zxvf ./rak5146.tar.gz
-
+git clone -b V2.1.0 https://github.com/Lora-net/sx1302_hal.git 
+mv sx1302_hal sx1303_hal
 sleep 1
-mv sx1302_hal-2.1.0 sx1303_hal
 pushd sx1303_hal
 make clean
-cp ../loragw_stts751.c libloragw/src/loragw_stts751.c -f
+cp ../loragw_stts751.c libloragw/src/ -f
+cp ../loragw_gps.c libloragw/src/ -f
 cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
-cp ../test_loragw_gps_i2c.c libloragw/tst/test_loragw_gps_i2c.c -f
+cp ../test_loragw_gps_i2c.c libloragw/tst/ -f
+cp ../Makefile libloragw/ -f
 
 #mkdir -p packet_forwarder/lora_pkt_fwd/
-#cp ../reset_lgw.sh packet_forwarder/lora_pkt_fwd/reset_lgw.sh -f
+#cp ../reset_lgw.sh packet_forwarder/lora_pkt_fwd/ -f
 
-cp ../lora_pkt_fwd.c packet_forwarder/src/lora_pkt_fwd.c
+cp ../lora_pkt_fwd.c packet_forwarder/src/
 make
 rm packet_forwarder/lora_pkt_fwd/obj/* -f
 popd
