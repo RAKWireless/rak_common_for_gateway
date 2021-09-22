@@ -18,7 +18,10 @@ This project currently provides support for the below platforms.
 * RAK2246
 * RAK7248 no LTE (RAK2287 + raspberry pi)
 * RAK7248 with LTE (RAK2287 + LTE + raspberry pi)
+* RAK2287(USB)
+* RAK7271(Choose RAK2287 USB)
 * RAK5146(USB)
+* RAK7371(Choose RAK5146 USB)
 
 ##	Changelog
 2021-06-03 V4.2.9
