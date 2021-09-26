@@ -29,6 +29,7 @@ pushd sx1303_hal
 make clean
 cp ../loragw_stts751.c libloragw/src/ -f
 cp ../loragw_gps.c libloragw/src/ -f
+cp ../loragw_hal.c libloragw/src/ -f
 cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
 cp ../test_loragw_gps_i2c.c libloragw/tst/ -f
 cp ../Makefile libloragw/ -f
