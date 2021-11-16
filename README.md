@@ -133,5 +133,7 @@ step4 : Next you will see some messages as follow. Please select the correspondi
 
 step5 : Wait a moment and the installation is complete.
 
-step6 : For more other features, please use "sudo gateway-config".
+step6 : reboot your gateway.
+
+step7 : Now you can use "sudo gateway-config" to configure your gateway.
 
