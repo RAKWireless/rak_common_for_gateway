@@ -86,33 +86,33 @@ net_id="000000"
     #
     [[network_server.network_settings.extra_channels]]
     frequency=917700000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     [[network_server.network_settings.extra_channels]]
     frequency=917900000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     [[network_server.network_settings.extra_channels]]
     frequency=918100000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     [[network_server.network_settings.extra_channels]]
     frequency=918300000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     [[network_server.network_settings.extra_channels]]
     frequency=918500000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     [[network_server.network_settings.extra_channels]]
     frequency=918700000
-    min_dr=2
-    max_dr=5
+    min_dr=0
+    max_dr=7
 
     # Class B settings
     [network_server.network_settings.class_b]
