@@ -84,31 +84,35 @@ net_id="000000"
     # The other channels (or channel / data-rate changes) will be (re)configured
     # using the NewChannelReq mac-command.
     #
-    #[[network_server.network_settings.extra_channels]]
-    #frequency=917000000
-    #min_dr=2
-    #max_dr=5
+    [[network_server.network_settings.extra_channels]]
+    frequency=917000000
+    min_dr=2
+    max_dr=5
 
-    #[[network_server.network_settings.extra_channels]]
-    #frequency=917200000
-    #min_dr=2
-    #max_dr=5
+    [[network_server.network_settings.extra_channels]]
+    frequency=917200000
+    min_dr=2
+    max_dr=5
 
-    #[[network_server.network_settings.extra_channels]]
-    #frequency=917400000
-    #min_dr=2
-    #max_dr=5
+    [[network_server.network_settings.extra_channels]]
+    frequency=917400000
+    min_dr=2
+    max_dr=5
 
-    #[[network_server.network_settings.extra_channels]]
-    #frequency=917600000
-    #min_dr=2
-    #max_dr=5
+    [[network_server.network_settings.extra_channels]]
+    frequency=917600000
+    min_dr=2
+    max_dr=5
 
-    #[[network_server.network_settings.extra_channels]]
-    #frequency=917800000
-    #min_dr=2
-    #max_dr=5
+    [[network_server.network_settings.extra_channels]]
+    frequency=917800000
+    min_dr=2
+    max_dr=5
 
+    [[network_server.network_settings.extra_channels]]
+    frequency=918000000
+    min_dr=2
+    max_dr=5
 
     # Class B settings
     [network_server.network_settings.class_b]
