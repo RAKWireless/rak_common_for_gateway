@@ -1,78 +1,77 @@
 {
-    "SX1301_conf":
-    {
-        "lorawan_public":true,
-        "clksrc":1,
-        "antenna_gain":0,
-        "radio_0":{
-            "enable":true,
-            "type":"SX1257",
-            "freq":921800000,
-            "rssi_offset":-159.0,
-            "tx_enable":true,
-            "tx_freq_min":920000000,
-            "tx_freq_max":923000000
+    "SX1301_conf": {
+        "lorawan_public": true,
+        "clksrc": 1,
+        "antenna_gain": 0,
+        "radio_0": {
+            "enable": true,
+            "type": "SX1257",
+            "freq": 917700000,
+            "rssi_offset": -159.0,
+            "tx_enable": true,
+            "tx_freq_min": 91700000,
+            "tx_freq_max": 92000000
         },
-        "radio_1":{
-            "enable":true,
-            "type":"SX1257",
-            "freq": 922600000,
-            "rssi_offset":-159.0,
-            "tx_enable":false
+        "radio_1": {
+            "enable": true,
+            "type": "SX1257",
+            "freq": 918500000,
+            "rssi_offset": -159.0,
+            "tx_enable": false
         },
-        "chan_multiSF_0":{
-            "enable":true,
-            "radio":0,
+        "chan_multiSF_0": {
+            "enable": true,
+            "radio": 0,
             "if": -400000
         },
-        "chan_multiSF_1":{
-            "enable":true,
-            "radio":0,
+        "chan_multiSF_1": {
+            "enable": true,
+            "radio": 0,
             "if": -200000
         },
-        "chan_multiSF_2":{
-            "enable":true,
+        "chan_multiSF_2": {
+            "enable": true,
             "radio": 0,
             "if": 0
         },
-        "chan_multiSF_3":{
-            "enable":true,
+        "chan_multiSF_3": {
+            "enable": true,
             "radio": 0,
             "if": 200000
         },
-        "chan_multiSF_4":{
-            "enable":true,
+        "chan_multiSF_4": {
+            "enable": true,
             "radio": 1,
-            "if":-400000
+            "if": -400000
         },
-        "chan_multiSF_5":{
-            "enable":true,
+        "chan_multiSF_5": {
+            "enable": true,
             "radio": 1,
-            "if":-200000
+            "if": -200000
         },
-        "chan_multiSF_6":{
-            "enable":true,
-            "radio":1,
-            "if":0
+        "chan_multiSF_6": {
+            "enable": true,
+            "radio": 1,
+            "if": 0
         },
-        "chan_multiSF_7":{
-            "enable":true,
+        "chan_multiSF_7": {
+            "enable": true,
             "radio": 1,
             "if": 200000
         },
-        "chan_Lora_std":{
-            "enable":true,
-            "radio":1,
-            "if":100000,
-            "bandwidth":250000,
-            "spread_factor":7
+        "chan_Lora_std": {
+            "enable": true,
+            "radio": 1,
+            "if": -100000,
+            "bandwidth": 250000,
+            "spread_factor": 7
         },
-        "chan_FSK":{
-            "enable":true,
-            "radio":1,
-            "if":-200000,
-            "bandwidth":125000,
-            "datarate":50000
+        "chan_FSK": {
+            "enable": true,
+            "radio": 1,
+            "if": 200000,
+            "bandwidth": 125000,
+            "datarate": 50000
         },
         "tx_lut_0": {
             "desc": "TX gain table, index 0",

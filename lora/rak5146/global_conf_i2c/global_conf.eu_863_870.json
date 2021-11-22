@@ -10,6 +10,37 @@
             "enable": false,
             "mode": "all_sf" /* high_capacity or all_sf */
         },
+        "sx1261_conf": {
+            "rssi_offset": 20, /* dB */
+            "spectral_scan": {
+                "enable": false,
+                "freq_start": 867100000,
+                "nb_chan": 8,
+                "nb_scan": 2000,
+                "pace_s": 10
+            },
+            "lbt": {
+                "enable": false,
+                "rssi_target": -80, /* dBm */
+                "channels":[ /* 16 channels maximum */
+                    { "freq_hz": 867100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 }
+                ]
+            }
+        },
         "radio_0": {
             "enable": true,
             "type": "SX1250",
