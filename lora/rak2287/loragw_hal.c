@@ -790,8 +790,10 @@ int lgw_sx1261_setconf(struct lgw_conf_sx1261_s * conf) {
 
     /* Set the SX1261 global conf */
     CONTEXT_SX1261.enable = conf->enable;
+    if (CONTEXT_COM_TYPE == LGW_COM_SPI) {
     strncpy(CONTEXT_SX1261.spi_path, conf->spi_path, sizeof CONTEXT_SX1261.spi_path);
     CONTEXT_SX1261.spi_path[sizeof CONTEXT_SX1261.spi_path - 1] = '\0'; /* ensure string termination */
+    }
     CONTEXT_SX1261.rssi_offset = conf->rssi_offset;
 
     /* Set the LBT conf */
@@ -1099,7 +1101,7 @@ int lgw_start(void) {
 
             err = stts751_configure(ts_fd, ts_addr);
             if (err != LGW_I2C_SUCCESS) {
-                printf("INFO: no temeprature sensor found on port 0x%02X\n", ts_addr);
+                printf("INFO: no temperature sensor found on port 0x%02X\n", ts_addr);
                 i2c_linuxdev_close(ts_fd);
                 ts_fd = -1;
             } else {
@@ -1108,7 +1110,7 @@ int lgw_start(void) {
             }
         }
         if (i == sizeof I2C_PORT_TEMP_SENSOR) {
-            printf("ERROR: no temeprature sensor found.\n");
+            printf("ERROR: no temperature sensor found.\n");
             return LGW_HAL_ERROR;
         }
 #endif

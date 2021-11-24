@@ -87,7 +87,7 @@ do_copy_global_conf() {
         write_json_server_plan 2
         do_set_lora_server_ip
         if [ "$INSTALL_CHIRPSTACK" = "1" ]; then
-            do_set_LoRaServer_adr_disable
+            do_set_chirpstack_adr_disable
             cp /etc/chirpstack-network-server/chirpstack-network-server.$2.toml /etc/chirpstack-network-server/chirpstack-network-server.toml
             do_ChirpStack restart
             do_ChirpStack enable
@@ -99,62 +99,38 @@ do_copy_global_conf() {
     do_restart_packet_forwarder 1
 }
 
-do_setup_ttn_channel_plan() {
+do_set_channel_plan() {
   default_item=1
-  if [ "${GW_MODEL}" = "RAK2285" ]; then
     FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
-        1 "AS_923(920_923)" \
-        2 "AS_923(923_925)" \
-        3 "AU_915_928" \
-        4 "EU_863_870" \
-        5 "IN_865_867" \
-        6 "KR_920_923" \
-        7 "RU_864_870" \
-        8 "US_902_928" \
+        1  "AS_923(915_928)" \
+        2  "AS_923_2(920_923)" \
+        3  "AS_923_3(915_921)" \
+        4  "AS_923_4(917_920)" \
+        5  "AU_915_928" \
+        6  "CN_470_510" \
+        7  "EU_863_870" \
+        8  "IN_865_867" \
+        9  "KR_920_923" \
+        10 "RU_864_870" \
+        11 "US_902_928" \
         3>&1 1>&2 2>&3)
     RET=$?
     if [ $RET -eq 1 ]; then
         :
     elif [ $RET -eq 0 ]; then
         case "$FUN" in
-            1) do_copy_global_conf "ttn" "as_920_923" 1;;
-            2) do_copy_global_conf "ttn" "as_923_925" 1;;
-            3) do_copy_global_conf "ttn" "au_915_928" 2;;
-            4) do_copy_global_conf "ttn" "eu_863_870" 4;;
-            5) do_copy_global_conf "ttn" "in_865_867" 5;;
-            6) do_copy_global_conf "ttn" "kr_920_923" 6;;
-            7) do_copy_global_conf "ttn" "ru_864_870" 7;;
-            8) do_copy_global_conf "ttn" "us_902_928" 8;;
+            1)  do_copy_global_conf $1 "as_915_928" 1;;
+            2)  do_copy_global_conf $1 "as_920_923" 1;;
+            3)  do_copy_global_conf $1 "as_915_921" 1;;
+            4)  do_copy_global_conf $1 "as_917_920" 1;;
+            5)  do_copy_global_conf $1 "au_915_928" 2;;
+            6)  do_copy_global_conf $1 "cn_470_510" 3;;
+            7)  do_copy_global_conf $1 "eu_863_870" 4;;
+            8)  do_copy_global_conf $1 "in_865_867" 5;;
+            9)  do_copy_global_conf $1 "kr_920_923" 6;;
+            10) do_copy_global_conf $1 "ru_864_870" 7;;
+            11) do_copy_global_conf $1 "us_902_928" 8;;
         esac
-    fi
-  else
-    FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
-        1 "AS_923(920_923)" \
-        2 "AS_923(923_925)" \
-        3 "AU_915_928" \
-        4 "CN_470_510" \
-        5 "EU_863_870" \
-        6 "IN_865_867" \
-        7 "KR_920_923" \
-        8 "RU_864_870" \
-        9 "US_902_928" \
-        3>&1 1>&2 2>&3)
-    RET=$?
-    if [ $RET -eq 1 ]; then
-        :
-    elif [ $RET -eq 0 ]; then
-        case "$FUN" in
-            1) do_copy_global_conf "ttn" "as_920_923" 1;;
-            2) do_copy_global_conf "ttn" "as_923_925" 1;;
-            3) do_copy_global_conf "ttn" "au_915_928" 2;;
-            4) do_copy_global_conf "ttn" "cn_470_510" 3;;
-            5) do_copy_global_conf "ttn" "eu_863_870" 4;;
-            6) do_copy_global_conf "ttn" "in_865_867" 5;;
-            7) do_copy_global_conf "ttn" "kr_920_923" 6;;
-            8) do_copy_global_conf "ttn" "ru_864_870" 7;;
-            9) do_copy_global_conf "ttn" "us_902_928" 8;;
-        esac
-    fi
   fi
 }
 
@@ -186,80 +162,21 @@ do_set_lora_server_ip()
     fi
 }
 
-do_setup_LoRaServer_channel_plan() {
-    default_item=1
-    if [ "${GW_MODEL}" = "RAK2285" ]; then
-      FUN=$(dialog --title "TTN Channel-plan configuration" --default-item $default_item --menu "Select the Channel-plan:" 18 60 12 \
-          1 "AS_923(920_923)" \
-          2 "AS_923(923_925)" \
-          3 "AU_915_928" \
-          4 "EU_863_870" \
-          5 "IN_865_867" \
-          6 "KR_920_923" \
-          7 "RU_864_870" \
-          8 "US_902_928" \
-          3>&1 1>&2 2>&3)
-      RET=$?
-      if [ $RET -eq 1 ]; then
-          :
-      elif [ $RET -eq 0 ]; then
-          case "$FUN" in
-              1) do_copy_global_conf "chirpstack" "as_920_923" 1;;
-              2) do_copy_global_conf "chirpstack" "as_923_925" 1;;
-              3) do_copy_global_conf "chirpstack" "au_915_928" 2;;
-              4) do_copy_global_conf "chirpstack" "eu_863_870" 5;;
-              5) do_copy_global_conf "chirpstack" "in_865_867" 6;;
-              6) do_copy_global_conf "chirpstack" "kr_920_923" 7;;
-              7) do_copy_global_conf "chirpstack" "ru_864_870" 8;;
-              8) do_copy_global_conf "chirpstack" "us_902_928" 9;;
-          esac
-      fi
-    else
-      FUN=$(dialog --title "Server Channel-plan configuration" --default-item $default_item --menu "Server Channel-plan:" 18 60 12 \
-          1 "AS_923(920_923)" \
-          2 "AS_923(923_925)" \
-          3 "AU_915_928" \
-          4 "CN_470_510" \
-          5 "EU_433" \
-          6 "EU_863_870" \
-          7 "IN_865_867" \
-          8 "KR_920_923" \
-          9 "RU_864_870" \
-          10 "US_902_928" \
-          3>&1 1>&2 2>&3)
-      RET=$?
-      if [ $RET -eq 0 ]; then
-          case "$FUN" in
-              1) do_copy_global_conf "chirpstack" "as_920_923" 1;;
-              2) do_copy_global_conf "chirpstack" "as_923_925" 1;;
-              3) do_copy_global_conf "chirpstack" "au_915_928" 2;;
-              4) do_copy_global_conf "chirpstack" "cn_470_510" 3;;
-              5) do_copy_global_conf "chirpstack" "eu_433" 4;;
-              6) do_copy_global_conf "chirpstack" "eu_863_870" 5;;
-              7) do_copy_global_conf "chirpstack" "in_865_867" 6;;
-              8) do_copy_global_conf "chirpstack" "kr_920_923" 7;;
-              9) do_copy_global_conf "chirpstack" "ru_864_870" 8;;
-             10) do_copy_global_conf "chirpstack" "us_902_928" 9;;
-          esac
-      fi
-    fi
-}
-
-do_set_LoRaServer_adr_enable()
+do_set_chirpstack_adr_enable()
 {
     write_json_loraserver_adr "1"
     sed -i "s/^.*disable_adr.*$/  disable_adr=false/" /etc/chirpstack-network-server/chirpstack-network-server.toml
     do_ChirpStack restart
 }
 
-do_set_LoRaServer_adr_disable()
+do_set_chirpstack_adr_disable()
 {
     write_json_loraserver_adr "2"
     sed -i "s/^.*disable_adr.*$/  disable_adr=true/" /etc/chirpstack-network-server/chirpstack-network-server.toml
     do_ChirpStack restart
 }
 
-do_set_LoRaServer_adr()
+do_set_chirpstack_adr()
 {
     default_item=2
     FUN=$(dialog --title "ChirpStack ADR configuration" --default-item $default_item --menu "ChirpStack ADR configuration:" 18 40 12 \
@@ -269,13 +186,13 @@ do_set_LoRaServer_adr()
     RET=$?
     if [ $RET -eq 0 ]; then
         case "$FUN" in
-            1) do_set_LoRaServer_adr_enable;;
-            2) do_set_LoRaServer_adr_disable;;
+            1) do_set_chirpstack_adr_enable;;
+            2) do_set_chirpstack_adr_disable;;
         esac
     fi
 }
 
-do_setup_LoRaServer_config()
+do_set_chirpstack_config()
 {
     if [ "$INSTALL_CHIRPSTACK" = "1" ]; then
         default_item=1
@@ -286,8 +203,8 @@ do_setup_LoRaServer_config()
         RET=$?
         if [ $RET -eq 0 ]; then
             case "$FUN" in
-                1) do_setup_LoRaServer_channel_plan;;
-                2) do_set_LoRaServer_adr;;
+                1) do_set_channel_plan "chirpstack";;
+                2) do_set_chirpstack_adr;;
             esac
         fi
     else
@@ -298,13 +215,13 @@ do_setup_LoRaServer_config()
         RET=$?
         if [ $RET -eq 0 ]; then
             case "$FUN" in
-                1) do_setup_LoRaServer_channel_plan;;
+                1) do_set_channel_plan "chirpstack";;
             esac
         fi
     fi
 }
 
-do_setup_channel_plan() {
+do_choose_channel_plan() {
     if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
         default_item=`do_get_gateway_info lora_server.server_plan`
 
@@ -318,8 +235,8 @@ do_setup_channel_plan() {
             :
         elif [ $RET -eq 0 ]; then
             case "$FUN" in
-                1) do_setup_ttn_channel_plan;;
-                2) do_setup_LoRaServer_config ;;
+                1) do_set_channel_plan "ttn";;
+                2) do_set_chirpstack_config ;;
             esac
         fi
     else
@@ -333,8 +250,8 @@ do_setup_channel_plan() {
             :
         elif [ $RET -eq 0 ]; then
             case "$FUN" in
-                1) do_setup_ttn_channel_plan;;
-                2) do_setup_LoRaServer_config ;;
+                1) do_set_channel_plan "ttn";;
+                2) do_set_chirpstack_config ;;
             esac
         fi
     fi
@@ -803,7 +720,7 @@ do_main_menu() {
             elif [ $RET -eq 0 ]; then
                 case "$FUN" in
                     1) do_setup_admin_password;;
-                    2) do_setup_channel_plan;;
+                    2) do_choose_channel_plan;;
                     3) do_restart_packet_forwarder;;
                     4) nano $LORA_PKT_PATH/global_conf.json && do_main_menu;;
                     5) do_configure_wifi;;
@@ -828,7 +745,7 @@ do_main_menu() {
             elif [ $RET -eq 0 ]; then
                 case "$FUN" in
                     1) do_setup_admin_password;;
-                    2) do_setup_channel_plan;;
+                    2) do_choose_channel_plan;;
                     3) do_restart_packet_forwarder;;
                     4) nano $LORA_PKT_PATH/global_conf.json && do_main_menu;;
                     5) do_configure_wifi;;
@@ -855,7 +772,7 @@ do_main_menu() {
             elif [ $RET -eq 0 ]; then
                 case "$FUN" in
                     1) do_setup_admin_password;;
-                    2) do_setup_channel_plan;;
+                    2) do_choose_channel_plan;;
                     3) do_restart_packet_forwarder;;
                     4) nano $LORA_PKT_PATH/global_conf.json && do_main_menu;;
                     5) do_configure_wifi;;
@@ -880,7 +797,7 @@ do_main_menu() {
             elif [ $RET -eq 0 ]; then
                 case "$FUN" in
                     1) do_setup_admin_password;;
-                    2) do_setup_channel_plan;;
+                    2) do_choose_channel_plan;;
                     3) do_restart_packet_forwarder;;
                     4) nano $LORA_PKT_PATH/global_conf.json && do_main_menu;;
                     5) do_configure_wifi;;

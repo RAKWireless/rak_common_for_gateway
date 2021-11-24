@@ -10,6 +10,30 @@
             "enable": false,
             "mode": "all_sf" /* high_capacity or all_sf */
         },
+        "sx1261_conf": {
+            "rssi_offset": 0, /* dB */
+            "spectral_scan": {
+                "enable": true,
+                "freq_start": 921900000,
+                "nb_chan": 8,
+                "nb_scan": 2000,
+                "pace_s": 10
+            },
+            "lbt": {
+                "enable": true,
+                "rssi_target": -65, /* dBm */
+                "channels":[ /* 16 channels maximum */
+                    { "freq_hz": 921900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 922100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 922300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 922500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 922700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 922900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 923100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 923300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 }
+                ]
+            }
+        },
         "radio_0": {
             "enable": true,
             "type": "SX1250",

@@ -32,6 +32,7 @@ cp ../loragw_gps.c libloragw/src/ -f
 cp ../loragw_hal.c libloragw/src/ -f
 cp ../test_loragw_gps_uart.c libloragw/tst/test_loragw_gps.c -f
 cp ../test_loragw_gps_i2c.c libloragw/tst/ -f
+cp ../test_loragw_hal_tx.c libloragw/tst/ -f
 cp ../Makefile libloragw/ -f
 
 #mkdir -p packet_forwarder/lora_pkt_fwd/

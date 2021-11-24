@@ -791,28 +791,28 @@ ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_
 -- Data for Name: application; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.application (id, name, description, organization_id, service_profile_id, payload_codec, payload_encoder_script, payload_decoder_script) FROM stdin;
-2	app	app	1	a99e581e-1813-4eec-b011-afb5aca00563			
-\.
+-- COPY public.application (id, name, description, organization_id, service_profile_id, payload_codec, payload_encoder_script, payload_decoder_script) FROM stdin;
+-- 2	app	app	1	a99e581e-1813-4eec-b011-afb5aca00563			
+-- \.
 
 
 --
 -- Data for Name: code_migration; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.code_migration (id, applied_at) FROM stdin;
-migrate_gw_stats	2020-03-12 03:51:20.870664+00
-\.
+-- COPY public.code_migration (id, applied_at) FROM stdin;
+-- migrate_gw_stats	2020-03-12 03:51:20.870664+00
+-- \.
 
 
 --
 -- Data for Name: device; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.device (dev_eui, created_at, updated_at, application_id, device_profile_id, name, description, last_seen_at, device_status_battery, device_status_margin, latitude, longitude, altitude, device_status_external_power_source, dr, variables, tags, dev_addr, app_s_key) FROM stdin;
-\\x922edc54ef2bef7a	2020-05-11 13:15:52.637459+01	2020-05-11 13:15:52.637459+01	2	d6741e98-4230-4d99-a760-244725679e45	device_abp_class_a	device_abp_class_a	\N	\N	\N	\N	\N	\N	f	\N			\\x01d5b611	\\x2163cd2095c9f4449702fdb40fe81d97
-\\x4bc15ee7377bb15b	2020-05-11 13:15:35.209783+01	2020-05-11 13:15:35.209783+01	2	70298761-1bf9-4a6c-bda1-69a0eb04aaaf	device_otaa_class_a	device_otaa_class_a	2020-05-12 09:22:14.582535+01	\N	\N	\N	\N	\N	f	3			\\x006ece70	\\xc486f7151dde76bcf64de4c2209714fe
-\.
+-- COPY public.device (dev_eui, created_at, updated_at, application_id, device_profile_id, name, description, last_seen_at, device_status_battery, device_status_margin, latitude, longitude, altitude, device_status_external_power_source, dr, variables, tags, dev_addr, app_s_key) FROM stdin;
+-- \\x922edc54ef2bef7a	2020-05-11 13:15:52.637459+01	2020-05-11 13:15:52.637459+01	2	d6741e98-4230-4d99-a760-244725679e45	device_abp_class_a	device_abp_class_a	\N	\N	\N	\N	\N	\N	f	\N			\\x01d5b611	\\x2163cd2095c9f4449702fdb40fe81d97
+-- \\x4bc15ee7377bb15b	2020-05-11 13:15:35.209783+01	2020-05-11 13:15:35.209783+01	2	70298761-1bf9-4a6c-bda1-69a0eb04aaaf	device_otaa_class_a	device_otaa_class_a	2020-05-12 09:22:14.582535+01	\N	\N	\N	\N	\N	f	3			\\x006ece70	\\xc486f7151dde76bcf64de4c2209714fe
+-- \.
 
 
 --
@@ -835,10 +835,10 @@ COPY public.device_multicast_group (dev_eui, multicast_group_id, created_at) FRO
 -- Data for Name: device_profile; Type: TABLE DATA; Schema: public; Owner: chirpstack_as
 --
 
-COPY public.device_profile (device_profile_id, network_server_id, organization_id, created_at, updated_at, name, payload_codec, payload_encoder_script, payload_decoder_script, tags) FROM stdin;
-d6741e98-4230-4d99-a760-244725679e45	1	1	2020-03-12 03:53:07.714166+00	2020-05-11 13:18:23.564601+01	device_profile_abp	CUSTOM_JS		// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       tmp = "0x" + tmp;\n       if (i != arr.length - 1) {\n           tmp += ",";\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}	
-70298761-1bf9-4a6c-bda1-69a0eb04aaaf	1	1	2020-03-12 03:52:48.337365+00	2020-05-11 13:18:44.087446+01	device_profile_otaa	CUSTOM_JS		// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       tmp = "0x" + tmp;\n       if (i != arr.length - 1) {\n           tmp += ",";\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}	
-\.
+-- COPY public.device_profile (device_profile_id, network_server_id, organization_id, created_at, updated_at, name, payload_codec, payload_encoder_script, payload_decoder_script, tags) FROM stdin;
+-- d6741e98-4230-4d99-a760-244725679e45	1	1	2020-03-12 03:53:07.714166+00	2020-05-11 13:18:23.564601+01	device_profile_abp	CUSTOM_JS		// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       tmp = "0x" + tmp;\n       if (i != arr.length - 1) {\n           tmp += ",";\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}	
+-- 70298761-1bf9-4a6c-bda1-69a0eb04aaaf	1	1	2020-03-12 03:52:48.337365+00	2020-05-11 13:18:44.087446+01	device_profile_otaa	CUSTOM_JS		// Decode decodes an array of bytes into an object.\n//  - fPort contains the LoRaWAN fPort number\n//  - bytes is an array of bytes, e.g. [225, 230, 255, 0]\n// The function must return an object, e.g. {"temperature": 22.5}\nfunction bin2String(array) {\n  return String.fromCharCode.apply(String, array);\n}\n\nfunction bin2HexStr(arr)\n \n{\n    var str = "";\n    for(var i=0; i<arr.length; i++)\n    {\n\n       var tmp = arr[i].toString(16);\n       if(tmp.length == 1)\n       {\n           tmp = "0" + tmp;\n       }\n       tmp = "0x" + tmp;\n       if (i != arr.length - 1) {\n           tmp += ",";\n       }\n       str += tmp;\n    }\n    return str;\n}\n\nfunction Decode(fPort, bytes) \n{\n  \tvar myObj = {"DecodeDataString":"", "DecodeDataHex":""};\n  \tvar tostring=bin2String(bytes);\n  \tvar tosHextring=bin2HexStr(bytes);\n  \tmyObj.DecodeDataString = tostring;\n  \tmyObj.DecodeDataHex = tosHextring;\n\treturn myObj;\n}	
+-- \.
 
 
 --
