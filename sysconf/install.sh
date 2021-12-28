@@ -35,7 +35,7 @@ fi
 
 # set ntp & UTC
 apt update
-apt install -y ntp
+apt install -y systemd-timesyncd
 timedatectl set-timezone UTC
 timedatectl set-ntp true
 
