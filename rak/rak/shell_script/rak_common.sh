@@ -264,6 +264,23 @@ do_get_rpi_model()
             model=0
         fi
     fi
+
+    # Added for support of the "Raspberry Pi Compute Module 3"
+    if [ $model -eq 255 ]; then
+        text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi Compute Module 3'`
+        if [ ! -z "$text" ]; then
+            model=3
+        fi
+    fi
+
+    # Added for support of the "Raspberry Pi Compute Module 4"
+    if [ $model -eq 255 ]; then
+        text=`tr -d '\0' </proc/device-tree/model | grep -a 'Pi Compute Module 4'`
+        if [ ! -z "$text" ]; then
+            model=4
+        fi
+    fi
+
     echo $model
 }
 
