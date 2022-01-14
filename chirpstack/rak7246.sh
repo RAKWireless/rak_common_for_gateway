@@ -3,17 +3,7 @@
 SCRIPT_COMMON_FILE=$(pwd)/../rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
-# script needs to be run with super privilege
-if [ $(id -u) -ne 0 ]; then
-  printf "Script must be run with superuser privilege. Try 'sudo ./install.sh'\n"
-  exit 1
-fi
-
-rpi_model=`do_get_rpi_model`
-if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
-    ./rak7246.sh
-    exit 0
-fi
+sudo dpkg --add-architecture armel
 
 GATEWAY_EUI=`do_get_gw_id`
 
@@ -23,8 +13,6 @@ if [ "$1" = "create_img" ]; then
 else
     sed  -i "s/0000000000088888/$GATEWAY_EUI/g"  /tmp/init_sql.sql
 fi
-
-#apt list --upgradable
 
 # 1. install requirements
 apt -f -y install dialog mosquitto mosquitto-clients redis-server redis-tools postgresql apt-transport-https dirmngr
@@ -39,26 +27,16 @@ sudo -u postgres psql chirpstack_as -c "create extension hstore;"
 sudo -u postgres psql -U postgres -f /tmp/init_sql.sql
 rm -f /tmp/init_sql.sql
 
-#3. install lora packages
-#3.1 install https requirements
-#apt -f -y install apt-transport-https dirmngr
-apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1CE2AFD36DBCCA00
-echo "deb https://artifacts.chirpstack.io/packages/3.x/deb stable main" | sudo tee /etc/apt/sources.list.d/chirpstack.list
-apt update
-apt install chirpstack-network-server
-apt install chirpstack-gateway-bridge
-apt install chirpstack-application-server
-
 #rm *.deb -f
 #3.2 download chirpstack packages
-#wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-application-server/chirpstack-application-server_3.5.1_linux_armv7.deb
-#wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-gateway-bridge/chirpstack-gateway-bridge_3.4.1_linux_armv7.deb
-#wget https://artifacts.chirpstack.io/packages/3.x/deb/pool/main/c/chirpstack-network-server/chirpstack-network-server_3.6.0_linux_armv7.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-application-server/chirpstack-application-server_3.10.0_linux_armv6.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-gateway-bridge/chirpstack-gateway-bridge_3.11.0_linux_armv6.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-network-server/chirpstack-network-server_3.10.0_linux_armv6.deb
 
 #3.3 install chirpstack packages
-#dpkg -i chirpstack-application-server_3.5.1_linux_armv7.deb
-#dpkg -i chirpstack-gateway-bridge_3.4.1_linux_armv7.deb
-#dpkg -i chirpstack-network-server_3.6.0_linux_armv7.deb
+dpkg -i chirpstack-application-server_3.10.0_linux_armv6.deb
+dpkg -i chirpstack-gateway-bridge_3.11.0_linux_armv6.deb
+dpkg -i chirpstack-network-server_3.10.0_linux_armv6.deb
 
 #4. configure lora
 # configure chirpstack Server
@@ -79,4 +57,4 @@ systemctl restart chirpstack-application-server
 
 # start chirpstack-gateway-bridge
 systemctl restart chirpstack-gateway-bridge
-echo_success "Install ChirpStack success!"
+echo "Install ChirpStack success!"

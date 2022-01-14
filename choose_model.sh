@@ -105,7 +105,7 @@ function do_set_model_to_json()
 	elif [ $1 -eq 12 ]; then
         GW_MODEL=RAK5146
         do_set_spi_to_json 1
-		INSTALL_LTE=1
+        INSTALL_LTE=1
     else
         # Never come here
         echo "error"
