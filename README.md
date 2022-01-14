@@ -22,6 +22,8 @@ This project currently provides support for the below platforms.
 * RAK7271(Choose RAK2287 USB)
 * RAK5146(USB)
 * RAK7371(Choose RAK5146 USB)
+* RAK5146(SPI)
+* RAK5146(SPI) with LTE
 
 ##	Changelog
 2021-06-03 V4.2.9
@@ -129,7 +131,9 @@ step4 : Next you will see some messages as follow. Please select the correspondi
       *	 8.RAK7248 with LTE (RAK2287 SPI + LTE + raspberry pi)
       *	 9.RAK2287 USB
       *	 10.RAK5146 USB
-      Please enter 1-10 to select the model:
+      *	 11.RAK5146 SPI
+      *	 12.RAK5146 SPI with LTE
+      Please enter 1-12 to select the model:
 
 step5 : Wait a moment and the installation is complete.
 
