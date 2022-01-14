@@ -11,8 +11,7 @@ fi
 
 rpi_model=`do_get_rpi_model`
 if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
-#RPi Zero script for ChirpStack   
-   ./rak7246.sh
+    echo_warn "ChirpStack is not support for this rpi model."
     exit 0
 fi
 
