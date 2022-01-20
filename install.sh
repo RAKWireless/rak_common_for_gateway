@@ -58,7 +58,7 @@ while true; do
             fi
 
             if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
-                INSTALL_CHIRPSTACK=0
+                INSTALL_CHIRPSTACK=1
             fi
             shift;
         fi

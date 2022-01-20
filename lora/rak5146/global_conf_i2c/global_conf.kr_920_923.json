@@ -87,7 +87,7 @@
     "gateway_conf": {
         "gateway_ID": "AA555A0000000000",
         /* change with default server address/ports */
-        "server_address": "router.us.thethings.network",
+        "server_address": "nam1.cloud.thethings.network",
         "serv_port_up": 1700,
         "serv_port_down": 1700,
         /* adjust the following parameters for your network */

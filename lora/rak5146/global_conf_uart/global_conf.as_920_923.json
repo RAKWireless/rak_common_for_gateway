@@ -42,7 +42,7 @@
             "rssi_tcomp": {"coeff_a": 0, "coeff_b": 0, "coeff_c": 20.41, "coeff_d": 2162.56, "coeff_e": 0},
             "tx_enable": true,
             "tx_freq_min":920000000,
-            "tx_freq_max":923000000
+            "tx_freq_max":923000000,
             "tx_gain_lut":[
                 {"rf_power": 12, "pa_gain": 1, "pwr_idx": 1},
                 {"rf_power": 13, "pa_gain": 1, "pwr_idx": 2},
@@ -75,7 +75,7 @@
         "chan_multiSF_1": {"enable": true, "radio": 0, "if": -200000},  /* Freq : 921.6 MHz*/
         "chan_multiSF_2": {"enable": true, "radio": 0, "if":  0},       /* Freq : 921.8 MHz*/
         "chan_multiSF_3": {"enable": true, "radio": 0, "if":  200000},  /* Freq : 922.0 MHz*/
-        "chan_multiSF_4": {"enable": true, "radio": 0, "if": -400000},  /* Freq : 922.2 MHz*/
+        "chan_multiSF_4": {"enable": true, "radio": 1, "if": -400000},  /* Freq : 922.2 MHz*/
         "chan_multiSF_5": {"enable": true, "radio": 1, "if": -200000},  /* Freq : 922.4 MHz*/
         "chan_multiSF_6": {"enable": true, "radio": 1, "if": 0},        /* Freq : 922.6 MHz*/
         "chan_multiSF_7": {"enable": true, "radio": 1, "if":  200000},  /* Freq : 922.8 MHz*/
@@ -87,7 +87,7 @@
     "gateway_conf": {
         "gateway_ID": "AA555A0000000000",
         /* change with default server address/ports */
-        "server_address": "router.as2.thethings.network",
+        "server_address": "eu1.cloud.thethings.network",
         "serv_port_up": 1700,
         "serv_port_down": 1700,
         /* adjust the following parameters for your network */
