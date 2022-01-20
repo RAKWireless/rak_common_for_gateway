@@ -23,6 +23,9 @@ cp create_ap.service /lib/systemd/system/
 cp create_ap.conf /usr/local/rak/ap
 
 if [ "$1" = "create_img" ]; then
+    if [ ! -d /usr/local/rak/first_boot ]; then
+        mkdir /usr/local/rak/first_boot
+    fi
     cp set_ssid /usr/local/rak/first_boot/
     systemctl enable create_ap
 else

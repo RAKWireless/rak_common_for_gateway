@@ -218,7 +218,6 @@ swig_string_data Transfer(struct mpsse_context *mpsse, char *data, int size);
 char *Read(struct mpsse_context *mpsse, int size);
 char *Transfer(struct mpsse_context *mpsse, char *data, int size);
 
-extern unsigned char fast_rw_buf[SPI_RW_SIZE + CMD_SIZE];
 int FastWrite(struct mpsse_context *mpsse, char *data, int size);
 int FastRead(struct mpsse_context *mpsse, char *data, int size);
 int FastTransfer(struct mpsse_context *mpsse, char *wdata, char *rdata, int size);
