@@ -23,6 +23,7 @@ apt-get -y install git libftdi-dev libusb-dev
 
 if [ ! -d libmpsse ]; then
     git clone https://github.com/devttys0/libmpsse.git
+    cp -f mpsse.h libmpsse/src
 fi
 pushd libmpsse/src
 ./configure --disable-python
