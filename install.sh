@@ -8,8 +8,6 @@ if [ $UID != 0 ]; then
     exit 1
 fi
 
-#$1=create_img
-
 SCRIPT_COMMON_FILE=$(pwd)/rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
@@ -42,7 +40,7 @@ while true; do
 
         --img)
         shift;
-        CREATE_IMG=create_img
+        CREATE_IMG="create_img"
         ;;
 
         --chirpstack)
@@ -66,16 +64,15 @@ while true; do
 
         --)
         shift;
-#        echo "Invalid para.1"
         break;
         ;;
-#        *) 
-#		echo "Invalid para.2"; break ;;
     esac
 done
 
-# select gw model
-./choose_model.sh $CREATE_IMG
+if [[ $CREATE_IMG != "create_img" ]]; then
+	# select gw model
+    ./choose_model.sh
+fi
 
 apt update
 pushd rak
