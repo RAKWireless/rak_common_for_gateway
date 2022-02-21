@@ -32,7 +32,7 @@ pushd lora_gateway
 
 cp $SCRIPT_DIR/library.cfg ./libloragw/library.cfg
 cp $SCRIPT_DIR/loragw_spi.native.c ./libloragw/src/loragw_spi.native.c
-cp $SCRIPT_DIR/../print_lora_log.sh util_pkt_logger/
+#cp $SCRIPT_DIR/../print_lora_log.sh util_pkt_logger/
 make
 
 popd

@@ -198,7 +198,9 @@ int main()
         /* blocking non-canonical read on serial port */
         ssize_t nb_char = read(gps_tty_dev, serial_buff + wr_idx, LGW_GPS_MIN_MSG_SIZE);
         if (nb_char <= 0) {
-            printf("WARNING: [gps] read() returned value %d\n", nb_char);
+            #if DEBUG_GPS == 1
+                printf("WARNING: [gps] read() returned value %d\n", nb_char);
+            #endif
             continue;
         }
         wr_idx += (size_t)nb_char;

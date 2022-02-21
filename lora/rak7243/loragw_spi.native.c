@@ -53,9 +53,8 @@ Maintainer: Sylvain Miermont
 
 #define READ_ACCESS     0x00
 #define WRITE_ACCESS    0x80
-#define SPI_SPEED       2000000
-#define SPI_DEV_PATH    "/dev/spidev0.0"
-//#define SPI_DEV_PATH    "/dev/spidev32766.0"
+#define SPI_SPEED       (getenv("LORAGW_SPI_SPEED")==NULL ? 2000000 : atoi(getenv("LORAGW_SPI_SPEED")))
+#define SPI_DEV_PATH    (getenv("LORAGW_SPI")==NULL ? "/dev/spidev0.0" : getenv("LORAGW_SPI"))
 
 /* -------------------------------------------------------------------------- */
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
