@@ -72,7 +72,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #endif
 
 #define JSON_CONF_DEFAULT   "global_conf.json"
-#define JSON_CONF_LOCAL		"local_conf.json"
+#define JSON_CONF_LOCAL     "local_conf.json"
 
 #define DEFAULT_SERVER      127.0.0.1   /* hostname also supported */
 #define DEFAULT_PORT_UP     1780

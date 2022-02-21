@@ -23,12 +23,8 @@ apt-get -y install git libftdi-dev libusb-dev
 
 if [ ! -d libmpsse ]; then
     git clone https://github.com/devttys0/libmpsse.git
-	# judge RPiOS64
-	uname -a | grep aarch64
-	if [ $? -eq 0 ] ;then
-		cp -f mpsse.h libmpsse/src
-		cp -f fast.c libmpsse/src
-	fi
+    cp -f mpsse.h libmpsse/src
+    cp -f fast.c libmpsse/src
 fi
 pushd libmpsse/src
 ./configure --disable-python

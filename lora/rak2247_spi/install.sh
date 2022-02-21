@@ -31,7 +31,7 @@ fi
 pushd lora_gateway
 
 cp $SCRIPT_DIR/library.cfg ./libloragw/library.cfg
-#cp $SCRIPT_DIR/loragw_spi.native.c ./libloragw/src/loragw_spi.native.c
+cp $SCRIPT_DIR/loragw_spi.native.c ./libloragw/src/loragw_spi.native.c
 make
 
 popd

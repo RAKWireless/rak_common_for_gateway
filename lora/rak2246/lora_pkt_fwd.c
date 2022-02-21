@@ -2791,10 +2791,13 @@ void thread_gps(void) {
         /* blocking non-canonical read on serial port */
         ssize_t nb_char = read(gps_tty_fd, serial_buff + wr_idx, LGW_GPS_MIN_MSG_SIZE);
         if (nb_char <= 0) {
-	    invalid_nb_char_count++;
-	    if ((invalid_nb_char_count % 20000) == 0){
-                MSG("WARNING: [gps] read() returned value %d\n", nb_char);
-	    }
+            invalid_nb_char_count++;
+            if (invalid_nb_char_count == 20000){
+                invalid_nb_char_count = 0;
+                #if DEBUG_GPS == 1
+                    MSG("WARNING: [gps] read() returned value %d\n", nb_char);
+                #endif
+            }
             continue;
         }
         wr_idx += (size_t)nb_char;
