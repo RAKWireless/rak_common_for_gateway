@@ -11,7 +11,7 @@ fi
 SCRIPT_COMMON_FILE=$(pwd)/rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
-rpi_model=`do_get_rpi_model`
+#rpi_model=`do_get_rpi_model`
 
 function echo_yellow()
 {
@@ -51,7 +51,8 @@ function echo_model_info()
     echo_yellow "*\t 10.RAK5146(USB)"
     echo_yellow "*\t 11.RAK5146(SPI)"
     echo_yellow "*\t 12.RAK5146(SPI) with LTE"
-    echo_yellow  "Please enter 1-12 to select the model:\c"
+    echo_yellow "*\t 13.RAK5147(USB)"
+    echo_yellow  "Please enter 1-13 to select the model:\c"
 }
 
 function do_set_model_to_json()
@@ -63,18 +64,18 @@ function do_set_model_to_json()
         GW_MODEL=RAK2245
         do_set_spi_to_json 1
     elif [ $1 -eq 2 ]; then
-        if [ $rpi_model -eq 4 ]; then
-            GW_MODEL=RAK7244
-        else
-            GW_MODEL=RAK7243
-        fi
+#        if [ $rpi_model -eq 4 ]; then
+            GW_MODEL=RAK7243/RAK7244
+#        else
+#            GW_MODEL=RAK7243
+#        fi
         do_set_spi_to_json 1
     elif [ $1 -eq 3 ]; then
-        if [ $rpi_model -eq 4 ]; then
-            GW_MODEL=RAK7244
-        else
-            GW_MODEL=RAK7243
-        fi
+#        if [ $rpi_model -eq 4 ]; then
+            GW_MODEL=RAK7243/RAK7244
+#        else
+#            GW_MODEL=RAK7243
+#        fi
         INSTALL_LTE=1
         do_set_spi_to_json 1
     elif [ $1 -eq 4 ]; then
@@ -106,6 +107,8 @@ function do_set_model_to_json()
         GW_MODEL=RAK5146
         do_set_spi_to_json 1
         INSTALL_LTE=1
+    elif [ $1 -eq 13 ]; then
+        GW_MODEL=RAK5147
     else
         # Never come here
         echo "error"
@@ -122,7 +125,7 @@ function do_set_model_to_json()
 function do_set_spi_to_json()
 {
     JSON_FILE=./rak/rak/rak_gw_model.json
-    
+
     linenum=`sed -n "/spi/=" $JSON_FILE`
     sed -i "${linenum}c\\\\t\"spi\": \"$1\"" $JSON_FILE
 }
@@ -134,7 +137,7 @@ function do_set_model()
     do
         read RAK_MODEL
         if [ -z "$RAK_MODEL" ]; then
-            echo_yellow "Please enter 1-12 to select the model:\c"
+            echo_yellow "Please enter 1-13 to select the model:\c"
             continue
         fi
 
@@ -142,15 +145,15 @@ function do_set_model()
         RET=$?
 
         if [ $RET -eq 0 ]; then
-            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 12 ]; then
-                echo_yellow "Please enter 1-12 to select the model:\c"
+            if [ $RAK_MODEL -lt 1 ] || [ $RAK_MODEL -gt 13 ]; then
+                echo_yellow "Please enter 1-13 to select the model:\c"
                 continue
             else
                 do_set_model_to_json $RAK_MODEL
                 return 0
             fi
         else
-            echo_yellow "Please enter 1-12 to select the model:\c"
+            echo_yellow "Please enter 1-13 to select the model:\c"
             continue
 
         fi

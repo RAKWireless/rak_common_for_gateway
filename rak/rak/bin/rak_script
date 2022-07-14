@@ -59,7 +59,7 @@ if [ -f "/usr/local/rak/first_boot/expand_rootfs.sh" ]; then
         reboot
 fi
 
-GW_MODEL=`do_get_gw_model`
+# GW_MODEL=`do_get_gw_model`
 INSTALL_LTE=`do_get_gw_install_lte`
 # active lte
 if [ "$INSTALL_LTE" = "1" ]; then
