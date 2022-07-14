@@ -18,39 +18,39 @@ if [ "${RAK_MODEL}" = "RAK2247" ] || [ "${RAK_MODEL}" = "RAK833" ]; then
         GW_MODEL_STR="${RAK_MODEL} for USB"
     fi
 elif [ "${RAK_MODEL}" = "RAK7243" ] || [ "${RAK_MODEL}" = "RAK7244" ] || [ "${RAK_GW_MODEL}" = "RAK7243/RAK7244" ]; then
-	if [ "$INSTALL_LTE" = "1" ]; then
-		GW_MODEL_STR="${RAK_MODEL} with LTE"
-	else
-		GW_MODEL_STR="${RAK_MODEL} no LTE"
-	fi
+    if [ "$INSTALL_LTE" = "1" ]; then
+        GW_MODEL_STR="${RAK_MODEL} with LTE"
+    else
+        GW_MODEL_STR="${RAK_MODEL} no LTE"
+    fi
 elif [ "${RAK_MODEL}" = "RAK7248" ] || [ "${RAK_MODEL}" = "RAK2287" ]; then
-	if [ "${LORA_SPI}" = "1" ]; then
-		if [ "$INSTALL_LTE" = "1" ]; then
-			GW_MODEL_STR="${RAK_MODEL} with LTE"
-		else
-			GW_MODEL_STR="${RAK_MODEL} no LTE"
-		fi
-	else
-		GW_MODEL_STR="${RAK_MODEL} for USB"
-	fi
+    if [ "${LORA_SPI}" = "1" ]; then
+        if [ "$INSTALL_LTE" = "1" ]; then
+            GW_MODEL_STR="${RAK_MODEL} with LTE"
+        else
+            GW_MODEL_STR="${RAK_MODEL} no LTE"
+        fi
+    else
+        GW_MODEL_STR="${RAK_MODEL} for USB"
+    fi
 elif [ "${RAK_MODEL}" = "RAK5146" ]; then
-	if [ "${LORA_SPI}" = "1" ]; then
-		if [ "$INSTALL_LTE" = "1" ]; then
-			GW_MODEL_STR="${RAK_MODEL} with LTE"
-		else
-			GW_MODEL_STR="${RAK_MODEL} no LTE"
-		fi
-	else
-		GW_MODEL_STR="${RAK_MODEL} for USB"
-	fi
+    if [ "${LORA_SPI}" = "1" ]; then
+        if [ "$INSTALL_LTE" = "1" ]; then
+            GW_MODEL_STR="${RAK_MODEL} with LTE"
+        else
+            GW_MODEL_STR="${RAK_MODEL} no LTE"
+        fi
+    else
+        GW_MODEL_STR="${RAK_MODEL} for USB"
+    fi
 else
     GW_MODEL_STR=$RAK_MODEL
 fi
 
 if [ "$INSTALL_FROM_IMG" = "1" ]; then
-	EXTRA_STR="install from firmware"
+    EXTRA_STR="install from firmware"
 else
-	EXTRA_STR="install from source code"
+    EXTRA_STR="install from source code"
 fi
 
 KERNEL_VERSION=`uname -r`

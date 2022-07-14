@@ -7,7 +7,7 @@ source /usr/local/rak/shell_script/rak_common.sh
 GATEWAY_CONFIG_INFO=/usr/local/rak/gateway-config-info.json
 LORA_PKT_PATH=/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd
 
-rpi_model=`do_get_rpi_model`
+# rpi_model=`do_get_rpi_model`
 INSTALL_CHIRPSTACK=`do_get_gw_install_chirpstack`
 GW_MODEL=`do_get_gw_model`
 GW_VERSION=`do_get_gw_version`
@@ -148,7 +148,7 @@ do_set_lora_server_ip()
         rm /tmp/gate_server_ip
         write_json_lora_server_ip "$gate_server_ip"
         sed -i "s/^.*server_address.*$/\t\"server_address\": \"$gate_server_ip\",/" $LORA_PKT_PATH/global_conf.json
-        if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+        # if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
             do_check_ip_is_localhost $gate_server_ip
             RET=$?
             if  [ $RET -eq 0 ]; then
@@ -158,7 +158,7 @@ do_set_lora_server_ip()
                 do_ChirpStack disable
                 do_ChirpStack stop
             fi
-        fi
+        # fi
     fi
 }
 
@@ -222,7 +222,7 @@ do_set_chirpstack_config()
 }
 
 do_choose_channel_plan() {
-    if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+    # if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
         default_item=`do_get_gateway_info lora_server.server_plan`
 
         FUN=$(dialog --title "Server-plan configuration" --default-item $default_item --menu "Select the Server-plan:" 15 60 3 \
@@ -239,22 +239,22 @@ do_choose_channel_plan() {
                 2) do_set_chirpstack_config ;;
             esac
         fi
-    else
-        FUN=$(dialog --title "Server-plan configuration" --default-item 1 --menu "Select the Server-plan:" 15 60 3 \
-            1 "Server is TTN" \
-            2 "Server is Other server" \
-            3>&1 1>&2 2>&3)
-        RET=$?
+    # else
+    #     FUN=$(dialog --title "Server-plan configuration" --default-item 1 --menu "Select the Server-plan:" 15 60 3 \
+    #         1 "Server is TTN" \
+    #         2 "Server is Other server" \
+    #         3>&1 1>&2 2>&3)
+    #     RET=$?
 
-        if [ $RET -eq 1 ]; then
-            :
-        elif [ $RET -eq 0 ]; then
-            case "$FUN" in
-                1) do_set_channel_plan "ttn";;
-                2) do_set_chirpstack_config ;;
-            esac
-        fi
-    fi
+    #     if [ $RET -eq 1 ]; then
+    #         :
+    #     elif [ $RET -eq 0 ]; then
+    #         case "$FUN" in
+    #             1) do_set_channel_plan "ttn";;
+    #             2) do_set_chirpstack_config ;;
+    #         esac
+    #     fi
+    # fi
     do_main_menu
 }
 
@@ -616,7 +616,7 @@ do_configure_lan() {
           let line_ip=linenum+2
           let line_gw=linenum+3
 
-          sed -i "${line_ip}cstatic ip_address=${new_eth0_ip}" /etc/dhcpcd.conf
+          sed -i "${line_ip}cstatic ip_address=${new_eth0_ip}/24" /etc/dhcpcd.conf
           sed -i "${line_gw}cstatic routers=${new_eth0_gw}" /etc/dhcpcd.conf
           write_json_lan_ip ${new_eth0_ip}
           write_json_lan_gw ${new_eth0_gw}

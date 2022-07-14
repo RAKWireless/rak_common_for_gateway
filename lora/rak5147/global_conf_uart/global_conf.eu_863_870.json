@@ -1,0 +1,131 @@
+{
+    "SX130x_conf": {
+        "com_type": "SPI",
+        "com_path": "/dev/spidev0.0",
+        "lorawan_public": true,
+        "clksrc": 0,
+        "antenna_gain": 0, /* antenna gain, in dBi */
+        "full_duplex": false,
+        "fine_timestamp": {
+            "enable": false,
+            "mode": "all_sf" /* high_capacity or all_sf */
+        },
+        "sx1261_conf": {
+            "rssi_offset": 20, /* dB */
+            "spectral_scan": {
+                "enable": false,
+                "freq_start": 867100000,
+                "nb_chan": 8,
+                "nb_scan": 2000,
+                "pace_s": 10
+            },
+            "lbt": {
+                "enable": false,
+                "rssi_target": -80, /* dBm */
+                "channels":[ /* 16 channels maximum */
+                    { "freq_hz": 867100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 867900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 868900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869100000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869300000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869500000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869700000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 },
+                    { "freq_hz": 869900000, "bandwidth": 125000, "scan_time_us": 5000, "transmit_time_ms": 4000 }
+                ]
+            }
+        },
+        "radio_0": {
+            "enable": true,
+            "type": "SX1257",
+            "freq": 867500000,
+            "rssi_offset": -196.0,
+            "rssi_tcomp": {"coeff_a": -0.006, "coeff_b": 0.789, "coeff_c": -14.992, "coeff_d": 1988.572, "coeff_e": 105236.996},
+            "tx_enable": true,
+            "tx_freq_min": 863000000,
+            "tx_freq_max": 870000000,
+            "tx_gain_lut":[
+                {"rf_power": -6, "pa_gain": 0, "dac_gain": 3, "mix_gain":  8, "dig_gain": 0},
+                {"rf_power": -3, "pa_gain": 0, "dac_gain": 3, "mix_gain": 10, "dig_gain": 0},
+                {"rf_power":  0, "pa_gain": 0, "dac_gain": 3, "mix_gain": 12, "dig_gain": 0},
+                {"rf_power":  3, "pa_gain": 1, "dac_gain": 3, "mix_gain":  8, "dig_gain": 0},
+                {"rf_power":  6, "pa_gain": 1, "dac_gain": 3, "mix_gain": 10, "dig_gain": 0},
+                {"rf_power": 10, "pa_gain": 1, "dac_gain": 3, "mix_gain": 12, "dig_gain": 0},
+                {"rf_power": 11, "pa_gain": 1, "dac_gain": 3, "mix_gain": 13, "dig_gain": 0},
+                {"rf_power": 12, "pa_gain": 2, "dac_gain": 3, "mix_gain":  9, "dig_gain": 0},
+                {"rf_power": 13, "pa_gain": 1, "dac_gain": 3, "mix_gain": 15, "dig_gain": 0},
+                {"rf_power": 14, "pa_gain": 2, "dac_gain": 3, "mix_gain": 10, "dig_gain": 0},
+                {"rf_power": 16, "pa_gain": 2, "dac_gain": 3, "mix_gain": 11, "dig_gain": 0},
+                {"rf_power": 20, "pa_gain": 3, "dac_gain": 3, "mix_gain":  9, "dig_gain": 0},
+                {"rf_power": 23, "pa_gain": 3, "dac_gain": 3, "mix_gain": 10, "dig_gain": 0},
+                {"rf_power": 25, "pa_gain": 3, "dac_gain": 3, "mix_gain": 11, "dig_gain": 0},
+                {"rf_power": 26, "pa_gain": 3, "dac_gain": 3, "mix_gain": 12, "dig_gain": 0},
+                {"rf_power": 27, "pa_gain": 3, "dac_gain": 3, "mix_gain": 14, "dig_gain": 0}
+            ]
+        },
+        "radio_1": {
+            "enable": true,
+            "type": "SX1257",
+            "freq": 868500000,
+            "rssi_offset": -196.0,
+            "rssi_tcomp": {"coeff_a": -0.006, "coeff_b": 0.789, "coeff_c": -14.992, "coeff_d": 1988.572, "coeff_e": 105236.996},
+            "tx_enable": false
+        },
+        "chan_multiSF_All": {"spreading_factor_enable": [ 5, 6, 7, 8, 9, 10, 11, 12 ]},
+        "chan_multiSF_0": {"enable": true, "radio": 1, "if": -400000},
+        "chan_multiSF_1": {"enable": true, "radio": 1, "if": -200000},
+        "chan_multiSF_2": {"enable": true, "radio": 1, "if":  0},
+        "chan_multiSF_3": {"enable": true, "radio": 0, "if": -400000},
+        "chan_multiSF_4": {"enable": true, "radio": 0, "if": -200000},
+        "chan_multiSF_5": {"enable": true, "radio": 0, "if":  0},
+        "chan_multiSF_6": {"enable": true, "radio": 0, "if":  200000},
+        "chan_multiSF_7": {"enable": true, "radio": 0, "if":  400000},
+        "chan_Lora_std":  {"enable": true, "radio": 1, "if": -200000, "bandwidth": 250000, "spread_factor": 7,
+                           "implicit_hdr": false, "implicit_payload_length": 17, "implicit_crc_en": false, "implicit_coderate": 1},
+        "chan_FSK":       {"enable": true, "radio": 1, "if":  300000, "bandwidth": 125000, "datarate": 50000}
+    },
+
+    "gateway_conf": {
+        "gateway_ID": "AA555A0000000000",
+        /* change with default server address/ports */
+        "server_address": "router.eu.thethings.network",
+        "serv_port_up": 1700,
+        "serv_port_down": 1700,
+        /* adjust the following parameters for your network */
+        "keepalive_interval": 10,
+        "stat_interval": 30,
+        "push_timeout_ms": 100,
+        /* forward only valid packets */
+        "forward_crc_valid": true,
+        "forward_crc_error": false,
+        "forward_crc_disabled": false,
+        /* GPS configuration */
+        "gps_tty_path": "/dev/ttyAMA0",
+        /* GPS reference coordinates */
+        "ref_latitude": 0.0,
+        "ref_longitude": 0.0,
+        "ref_altitude": 0,
+        /* Beaconing parameters */
+        "beacon_period": 0,
+        "beacon_freq_hz": 869525000,
+        "beacon_freq_nb": 1,
+        "beacon_freq_step": 0,
+        "beacon_datarate": 9,
+        "beacon_bw_hz": 125000,
+        "beacon_power": 27
+    },
+
+    "debug_conf": {
+        "ref_payload":[
+            {"id": "0xCAFE1234"},
+            {"id": "0xCAFE2345"}
+        ],
+        "log_file": "loragw_hal.log"
+    }
+}

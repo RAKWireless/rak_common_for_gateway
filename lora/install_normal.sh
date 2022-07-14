@@ -22,66 +22,81 @@ mkdir /opt/ttn-gateway -p
 
 
 if [ "${RAK_GW_MODEL}" = "RAK2247" ]; then
-	if [ "${LORA_SPI}" = "1" ]; then
-		pushd rak2247_spi
-		./install.sh
-		LORA_DIR_TMP=rak2247_spi
-	else
-		pushd rak2247_usb
-		./install.sh
-		LORA_DIR_TMP=rak2247_usb
-	fi
-	popd
+    if [ "${LORA_SPI}" = "1" ]; then
+        pushd rak2247_spi
+        ./install.sh
+        LORA_DIR_TMP=rak2247_spi
+    else
+        pushd rak2247_usb
+        ./install.sh
+        LORA_DIR_TMP=rak2247_usb
+    fi
+    popd
 elif [ "${RAK_GW_MODEL}" = "RAK2287" ] || [ "${RAK_GW_MODEL}" = "RAK7248" ] ; then
-	pushd rak2287
-	if [ "${LORA_SPI}" = "1" ]; then
-		if [ "${INSTALL_LTE}" = "1" ]; then
-			cp global_conf_i2c global_conf -rf
-		else
-			cp global_conf_uart global_conf -rf
-		fi
-	else
-		cp global_conf_usb global_conf -rf
-	fi
-	./install.sh
-	LORA_DIR_TMP=rak2287
-	popd
+    pushd rak2287
+    if [ "${LORA_SPI}" = "1" ]; then
+        if [ "${INSTALL_LTE}" = "1" ]; then
+            cp global_conf_i2c global_conf -rf
+        else
+            cp global_conf_uart global_conf -rf
+        fi
+    else
+        cp global_conf_usb global_conf -rf
+    fi
+    ./install.sh
+    LORA_DIR_TMP=rak2287
+    popd
 elif [ "${RAK_GW_MODEL}" = "RAK5146" ]; then
-	pushd rak5146
-	if [ "${LORA_SPI}" = "1" ]; then
-		if [ "${INSTALL_LTE}" = "1" ]; then
-			cp global_conf_i2c global_conf -rf
-		else
-			cp global_conf_uart global_conf -rf
-		fi
-	else
-		cp global_conf_usb global_conf -rf
-	fi
-	./install.sh
-	LORA_DIR_TMP=rak5146
-	popd
+    pushd rak5146
+    if [ "${LORA_SPI}" = "1" ]; then
+        if [ "${INSTALL_LTE}" = "1" ]; then
+            cp global_conf_i2c global_conf -rf
+        else
+            cp global_conf_uart global_conf -rf
+        fi
+    else
+        cp global_conf_usb global_conf -rf
+    fi
+    ./install.sh
+    LORA_DIR_TMP=rak5146
+    popd
+elif [ "${RAK_GW_MODEL}" = "RAK5147" ]; then
+    pushd rak5147
+    if [ "${LORA_SPI}" = "1" ]; then
+        if [ "${INSTALL_LTE}" = "1" ]; then
+            cp global_conf_i2c global_conf -rf
+        else
+            cp global_conf_uart global_conf -rf
+        fi
+    else
+        cp global_conf_usb global_conf -rf
+    fi
+        ./install.sh
+        LORA_DIR_TMP=rak5147
+    popd
 elif [ "${RAK_GW_MODEL}" = "RAK7243" ] || [ "${RAK_GW_MODEL}" = "RAK7244" ] || [ "${RAK_GW_MODEL}" = "RAK7243/RAK7244" ]; then
-	pushd rak7243
-	if [ "${INSTALL_LTE}" = "1" ]; then
-		cp global_conf_i2c global_conf -rf
-	else
-		cp global_conf_uart global_conf -rf
-	fi
-	./install.sh
-	LORA_DIR_TMP=rak7243
-	popd
+    pushd rak7243
+        if [ "${INSTALL_LTE}" = "1" ]; then
+            cp global_conf_i2c global_conf -rf
+        else
+            cp global_conf_uart global_conf -rf
+        fi
+        ./install.sh
+        LORA_DIR_TMP=rak7243
+    popd
 else
-	if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
-		pushd rak2246
-		./install.sh
-		LORA_DIR_TMP=rak2246
-	else
-		pushd rak7243
-		cp global_conf_uart global_conf -rf
-		./install.sh
-		LORA_DIR_TMP=rak7243
-	fi
-	popd
+    if [ "${RAK_GW_MODEL}" = "RAK2246" ]; then
+        pushd rak2246
+        ./install.sh
+        LORA_DIR_TMP=rak2246
+        popd
+    else
+        pushd rak7243
+        cp global_conf_uart global_conf -rf
+        ./install.sh
+        LORA_DIR_TMP=rak7243
+        popd
+    fi
 fi
 
 
@@ -96,13 +111,13 @@ cp ./start.sh  /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/start.sh
 cp ./set_eui.sh  /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/set_eui.sh
 cp ttn-gateway.service /lib/systemd/system/ttn-gateway.service
 cp /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf/global_conf.eu_863_870.json \
-	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
-	
-rpi_model=`do_get_rpi_model`
-if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
+    /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
+
+# rpi_model=`do_get_rpi_model`
+# if [ $rpi_model -eq 3 ] || [ $rpi_model -eq 4 ]; then
     sed -i "s/^.*server_address.*$/\t\"server_address\": \"127.0.0.1\",/" \
-	/opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
-fi
+        /opt/ttn-gateway/packet_forwarder/lora_pkt_fwd/global_conf.json
+# fi
 
 systemctl enable ttn-gateway.service
 systemctl restart ttn-gateway.service

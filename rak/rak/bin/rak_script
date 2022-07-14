@@ -19,21 +19,21 @@ fi
 
 # first boot, add gateway_id to loraserver
 if [ -f "/usr/local/rak/first_boot/init_loraserver_db" ]; then
-        rpi_model=`do_get_rpi_model`
-        if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
-            echo_warn "ChirpStack is not support for this rpi model."
-            systemctl disable chirpstack-application-server
-            systemctl disable chirpstack-gateway-bridge
-            systemctl disable chirpstack-network-server
-            systemctl disable postgresql
-            systemctl disable redis-server
-            systemctl disable mosquitto
-            write_json_chirpstack_install 0
-            #exit 0
-        else
+        # rpi_model=`do_get_rpi_model`
+        # if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+        #     echo_warn "ChirpStack is not support for this rpi model."
+        #     systemctl disable chirpstack-application-server
+        #     systemctl disable chirpstack-gateway-bridge
+        #     systemctl disable chirpstack-network-server
+        #     systemctl disable postgresql
+        #     systemctl disable redis-server
+        #     systemctl disable mosquitto
+        #     write_json_chirpstack_install 0
+        #     #exit 0
+        # else
             cd /usr/local/rak/first_boot
             sudo ./init_loraserver_db
-        fi
+        # fi
 
         mv /usr/local/rak/first_boot/init_loraserver_db /usr/local/rak/first_boot/init_loraserver_db_bak
 fi

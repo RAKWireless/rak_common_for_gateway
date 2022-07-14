@@ -11,7 +11,7 @@ fi
 SCRIPT_COMMON_FILE=$(pwd)/rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
-#rpi_model=`do_get_rpi_model`
+# rpi_model=`do_get_rpi_model`
 
 function echo_yellow()
 {
@@ -45,8 +45,8 @@ function echo_model_info()
     echo_yellow "*\t 4.RAK2247(USB)"
     echo_yellow "*\t 5.RAK2247(SPI)"
     echo_yellow "*\t 6.RAK2246"
-    echo_yellow "*\t 7.RAK7248(SPI) no LTE (RAK2287(SPI) + raspberry pi)"
-    echo_yellow "*\t 8.RAK7248(SPI) with LTE (RAK2287(SPI) + LTE + raspberry pi)"
+    echo_yellow "*\t 7.RAK7248 no LTE (RAK2287 SPI + raspberry pi)"
+    echo_yellow "*\t 8.RAK7248 with LTE (RAK2287 SPI + LTE + raspberry pi)"
     echo_yellow "*\t 9.RAK2287(USB)"
     echo_yellow "*\t 10.RAK5146(USB)"
     echo_yellow "*\t 11.RAK5146(SPI)"
@@ -64,18 +64,18 @@ function do_set_model_to_json()
         GW_MODEL=RAK2245
         do_set_spi_to_json 1
     elif [ $1 -eq 2 ]; then
-#        if [ $rpi_model -eq 4 ]; then
+        # if [ $rpi_model -eq "4" ]; then
             GW_MODEL=RAK7243/RAK7244
-#        else
-#            GW_MODEL=RAK7243
-#        fi
+        # else
+        #     GW_MODEL=RAK7243
+        # fi
         do_set_spi_to_json 1
     elif [ $1 -eq 3 ]; then
-#        if [ $rpi_model -eq 4 ]; then
+        # if [ $rpi_model -eq "4" ]; then
             GW_MODEL=RAK7243/RAK7244
-#        else
-#            GW_MODEL=RAK7243
-#        fi
+        # else
+        #     GW_MODEL=RAK7243
+        # fi
         INSTALL_LTE=1
         do_set_spi_to_json 1
     elif [ $1 -eq 4 ]; then
@@ -93,22 +93,23 @@ function do_set_model_to_json()
     elif [ $1 -eq 8 ]; then
         GW_MODEL=RAK7248
         do_set_spi_to_json 1
-		INSTALL_LTE=1
-	elif [ $1 -eq 9 ]; then
+        INSTALL_LTE=1
+    elif [ $1 -eq 9 ]; then
         GW_MODEL=RAK2287
         do_set_spi_to_json 0
-	elif [ $1 -eq 10 ]; then
+    elif [ $1 -eq 10 ]; then
         GW_MODEL=RAK5146
         do_set_spi_to_json 0
-	elif [ $1 -eq 11 ]; then
+    elif [ $1 -eq 11 ]; then
         GW_MODEL=RAK5146
         do_set_spi_to_json 1
-	elif [ $1 -eq 12 ]; then
+    elif [ $1 -eq 12 ]; then
         GW_MODEL=RAK5146
         do_set_spi_to_json 1
         INSTALL_LTE=1
     elif [ $1 -eq 13 ]; then
         GW_MODEL=RAK5147
+        do_set_spi_to_json 0
     else
         # Never come here
         echo "error"

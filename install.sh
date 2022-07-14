@@ -21,7 +21,7 @@ print_help()
     exit
 }
 
-rpi_model=`do_get_rpi_model`
+# rpi_model=`do_get_rpi_model`
 
 ARGS=`getopt -o "" -l "help,img,chirpstack:" -- "$@"`
 
@@ -55,9 +55,9 @@ while true; do
                 exit
             fi
 
-            if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
-                INSTALL_CHIRPSTACK=1
-            fi
+            # if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+            #     INSTALL_CHIRPSTACK=0
+            # fi
             shift;
         fi
         ;;
@@ -70,7 +70,7 @@ while true; do
 done
 
 if [[ $CREATE_IMG != "create_img" ]]; then
-	# select gw model
+    # select gw model
     ./choose_model.sh
 fi
 
