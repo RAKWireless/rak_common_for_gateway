@@ -10,7 +10,7 @@ set -e
 SCRIPT_COMMON_FILE=$(pwd)/../rak/rak/shell_script/rak_common.sh
 source $SCRIPT_COMMON_FILE
 
-apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq -y
+apt-get install util-linux procps hostapd iproute2 iw haveged dnsmasq iptables -y
 
 if [ ! -d create_ap ]; then
     git clone https://github.com/oblique/create_ap
