@@ -10,7 +10,7 @@ if [ $(id -u) -ne 0 ]; then
 fi
 
 rpi_model=`do_get_rpi_model`
-if [ $rpi_model -ne 3 ] && [ $rpi_model -ne 4 ]; then
+if [ $rpi_model -eq "0" ]; then
     ./rak7246.sh
     exit 0
 fi

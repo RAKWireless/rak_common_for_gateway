@@ -104,7 +104,13 @@ pushd lora
 ./install.sh $CREATE_IMG
 sleep 1
 popd
+
 if [ "$CREATE_IMG" = "create_img" ]; then
+    pushd first_boot
+    ./install.sh
+    sleep 1
+    popd
+
     pushd /usr/local/rak
     mv bin bin_bak
     popd

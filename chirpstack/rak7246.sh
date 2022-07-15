@@ -29,14 +29,14 @@ rm -f /tmp/init_sql.sql
 
 #rm *.deb -f
 #3.2 download chirpstack packages
-wget https://artifacts.chirpstack.io/downloads/chirpstack-application-server/chirpstack-application-server_3.10.0_linux_armv6.deb
-wget https://artifacts.chirpstack.io/downloads/chirpstack-gateway-bridge/chirpstack-gateway-bridge_3.11.0_linux_armv6.deb
-wget https://artifacts.chirpstack.io/downloads/chirpstack-network-server/chirpstack-network-server_3.10.0_linux_armv6.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-application-server/chirpstack-application-server_3.17.6_linux_armv6.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-gateway-bridge/chirpstack-gateway-bridge_3.14.0_linux_armv6.deb
+wget https://artifacts.chirpstack.io/downloads/chirpstack-network-server/chirpstack-network-server_3.16.2_linux_armv6.deb
 
 #3.3 install chirpstack packages
-dpkg -i chirpstack-application-server_3.10.0_linux_armv6.deb
-dpkg -i chirpstack-gateway-bridge_3.11.0_linux_armv6.deb
-dpkg -i chirpstack-network-server_3.10.0_linux_armv6.deb
+dpkg -i chirpstack-application-server_3.17.6_linux_armv6.deb
+dpkg -i chirpstack-gateway-bridge_3.14.0_linux_armv6.deb
+dpkg -i chirpstack-network-server_3.16.2_linux_armv6.deb
 
 #4. configure lora
 # configure chirpstack Server
