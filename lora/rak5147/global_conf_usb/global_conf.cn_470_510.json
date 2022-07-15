@@ -12,10 +12,10 @@
         },
         "radio_0": {
             "enable": true,
-            "type": "SX1257",
+            "type": "SX1255",
             "single_input_mode": true,
             "freq": 486600000,
-            "rssi_offset": -207.0,
+            "rssi_offset": -196.0,
             "rssi_tcomp": {"coeff_a": -0.006, "coeff_b": 0.789, "coeff_c": -14.992, "coeff_d": 1988.572, "coeff_e": 105236.996},
             "tx_enable": true,
             "tx_freq_min": 470000000,
@@ -41,10 +41,10 @@
         },
         "radio_1": {
             "enable": true,
-            "type": "SX1257",
+            "type": "SX1255",
             "single_input_mode": true,
             "freq": 487400000,
-            "rssi_offset": -207.0,
+            "rssi_offset": -196.0,
             "rssi_tcomp": {"coeff_a": -0.006, "coeff_b": 0.789, "coeff_c": -14.992, "coeff_d": 1988.572, "coeff_e": 105236.996},
             "tx_enable": false
         },

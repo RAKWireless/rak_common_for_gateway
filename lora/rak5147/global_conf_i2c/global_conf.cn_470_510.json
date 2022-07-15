@@ -12,7 +12,7 @@
         },
         "radio_0": {
             "enable": true,
-            "type": "SX1257",
+            "type": "SX1255",
             "single_input_mode": true,
             "freq": 486600000,
             "rssi_offset": -196.0,
@@ -41,7 +41,7 @@
         },
         "radio_1": {
             "enable": true,
-            "type": "SX1257",
+            "type": "SX1255",
             "single_input_mode": true,
             "freq": 487400000,
             "rssi_offset": -196.0,
