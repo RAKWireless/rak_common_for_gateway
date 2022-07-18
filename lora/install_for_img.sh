@@ -85,7 +85,7 @@ cp ttn-gateway.service /lib/systemd/system/ttn-gateway.service
 systemctl enable ttn-gateway.service
 
 # add for dfu usb to spi chip of stm
-apt install git gcc make autoconf automake libusb-1.0-0-dev
+apt install git gcc make autoconf automake libusb-1.0-0-dev -y
 git clone git://git.code.sf.net/p/dfu-util/dfu-util
 pushd dfu-util
 ./autogen.sh
