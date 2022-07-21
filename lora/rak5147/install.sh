@@ -40,6 +40,11 @@ cp ../test_loragw_hal_tx.c libloragw/tst/ -f
 # cp ../test_loragw_cal_sx125x.c libloragw/tst/ -f
 cp ../Makefile libloragw/ -f
 
+# add for -40c bug: calibrate failed.
+cp ../loragw_sx125x.h libloragw/inc/
+cp ../loragw_cal.c libloragw/src/
+cp ../loragw_sx1302.c libloragw/src/
+
 #mkdir -p packet_forwarder/lora_pkt_fwd/
 #cp ../reset_lgw.sh packet_forwarder/lora_pkt_fwd/ -f
 
