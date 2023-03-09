@@ -55,9 +55,9 @@
         "chan_multiSF_5": {"enable": true, "radio": 1, "if": -200000},  /* Freq : 922.4 MHz*/
         "chan_multiSF_6": {"enable": true, "radio": 1, "if": 0},        /* Freq : 922.6 MHz*/
         "chan_multiSF_7": {"enable": true, "radio": 1, "if":  200000},  /* Freq : 922.8 MHz*/
-        "chan_Lora_std":  {"enable": true, "radio": 1, "if":  -100000, "bandwidth": 250000, "spread_factor": 7,						/* Freq : 904.6 MHz*/
+        "chan_Lora_std":  {"enable": true, "radio": 1, "if":  100000, "bandwidth": 250000, "spread_factor": 7,						/* Freq : 922.7 MHz*/
                            "implicit_hdr": false, "implicit_payload_length": 17, "implicit_crc_en": false, "implicit_coderate": 1},
-        "chan_FSK":       {"enable": true, "radio": 1, "if":  200000, "bandwidth": 125000, "datarate": 50000}						/* Freq : 924.8 MHz*/
+        "chan_FSK":       {"enable": true, "radio": 1, "if":  400000, "bandwidth": 125000, "datarate": 50000}						/* Freq : 923.0 MHz*/
     },
 
     "gateway_conf": {

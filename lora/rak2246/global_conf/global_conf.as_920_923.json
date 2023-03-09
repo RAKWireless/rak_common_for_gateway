@@ -62,14 +62,14 @@
         "chan_Lora_std":{
             "enable":true,
             "radio":1,
-            "if": -100000,
+            "if": 100000,
             "bandwidth":250000,
             "spread_factor":7
         },
         "chan_FSK":{
             "enable":true,
             "radio":1,
-            "if": 200000,
+            "if": 400000,
             "bandwidth":125000,
             "datarate":50000
         },
