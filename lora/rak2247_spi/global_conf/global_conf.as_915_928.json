@@ -73,7 +73,7 @@
             "desc": "Lora MAC, 250kHz, SF7, 924.5 MHz",
             "enable": true,
             "radio": 1,
-            "if": -100000,
+            "if": 100000,
             "bandwidth": 250000,
             "spread_factor": 7
         },
@@ -81,7 +81,7 @@
             "desc": "FSK 50kbps, 924.8 MHz",
             "enable": true,
             "radio": 1,
-            "if": 200000,
+            "if": 400000,
             "bandwidth": 125000,
             "datarate": 50000
         },
