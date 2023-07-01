@@ -75,7 +75,7 @@
         "forward_crc_error": false,
         "forward_crc_disabled": false,
         /* GPS configuration */
-        "gps_tty_path": "/dev/ttyAMA0",
+        "gps_tty_path": "/dev/ttyUSB2",
         /* GPS reference coordinates */
         "ref_latitude": 0.0,
         "ref_longitude": 0.0,
