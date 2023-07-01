@@ -175,11 +175,11 @@ static double xtal_correct = 1.0;
 /* GPS configuration and synchronization */
 static char gps_tty_path[64] = "\0"; /* path of the TTY port GPS is connected on */
 static int gps_tty_fd = -1; /* file descriptor of the GPS TTY port */
-static bool gps_enabled = false; /* is GPS enabled on that gateway ? */
+static bool gps_enabled = true; /* is GPS enabled on that gateway ? */
 
 /* GPS time reference */
 static pthread_mutex_t mx_timeref = PTHREAD_MUTEX_INITIALIZER; /* control access to GPS time reference */
-static bool gps_ref_valid; /* is GPS reference acceptable (ie. not too old) */
+static bool gps_ref_valid = true; /* is GPS reference acceptable (ie. not too old) */
 static struct tref time_reference_gps; /* time reference used for GPS <-> timestamp conversion */
 
 /* Reference coordinates, for broadcasting (beacon) */
