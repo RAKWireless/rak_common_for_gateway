@@ -25,7 +25,7 @@ if [[ $NEW_HOSTNAME != $CURRENT_HOSTNAME ]]; then
 fi
 
 if [ ! -f /etc/rc.local ]; then
-    touch /etc/rc.local
+    echo "exit 0" >> /etc/rc.local
     chmod 755 /etc/rc.local
 fi
 
