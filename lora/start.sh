@@ -17,7 +17,7 @@ LOCAL_CONF="./local_conf.json"
 
 # -------- GPIO & CHIP ADJUSTMENT BASED ON BOARD --------
 if echo "$MODEL" | grep -q "Raspberry Pi 5"; then
-    RESET_GPIO=27  # Example for Pi5, adjust based on your HAT/RAK concentrator
+    RESET_GPIO=17  # Example for Pi5, adjust based on your HAT/RAK concentrator
     GPIO_CHIP="gpiochip4"  # RP1 GPIO chip usually exposed as gpiochip4
     echo "[INFO] Pi 5 detected: Using GPIO $RESET_GPIO on $GPIO_CHIP"
 else
