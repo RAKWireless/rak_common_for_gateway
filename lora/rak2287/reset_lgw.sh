@@ -1,59 +1,59 @@
-#!/bin/sh
+#!/bin/bash
 
-# This script is intended to be used on SX1302 CoreCell platform, it performs
-# the following actions:
-#       - export/unpexort GPIO23 and GPIO18 used to reset the SX1302 chip and to enable the LDOs
-#
-# Usage examples:
-#       ./reset_lgw.sh stop
-#       ./reset_lgw.sh start
+# ------------------------------------------------------------
+# Universal reset_lgw.sh - Auto-detects Pi2/4/5, GPIOD + Sysfs
+# ------------------------------------------------------------
 
-# GPIO mapping has to be adapted with HW
-#
+# -------- BOARD DETECTION --------
+MODEL=$(tr -d '\0' < /proc/device-tree/model)
+echo "[INFO] Detected board: $MODEL"
 
-SX1302_RESET_PIN=17
+# -------- GPIO & CHIP CONFIG --------
+if echo "$MODEL" | grep -q "Raspberry Pi 5"; then
+    RESET_GPIO=17  # Example for Pi5 (adjust to match concentrator reset pin)
+    GPIO_CHIP="gpiochip4"  # RP1 GPIO typically gpiochip4
+    echo "[INFO] Pi 5 detected: Using GPIO $RESET_GPIO on $GPIO_CHIP"
+else
+    RESET_GPIO=17  # Default for Pi4 and earlier
+    GPIO_CHIP="gpiochip0"
+    echo "[INFO] Pi 4 or earlier detected: Using GPIO $RESET_GPIO on $GPIO_CHIP"
+fi
 
-WAIT_GPIO() {
+# -------- RESET SEQUENCE --------
+if command -v gpioset &> /dev/null; then
+    echo "[INFO] Using GPIOD (gpioset) for reset"
+
+    # Pull reset low -> high -> low (with delays)
+    gpioset ${GPIO_CHIP} ${RESET_GPIO}=0
     sleep 0.1
-}
+    gpioset ${GPIO_CHIP} ${RESET_GPIO}=1
+    sleep 0.1
+    gpioset ${GPIO_CHIP} ${RESET_GPIO}=0
+    sleep 0.1
 
-init() {
-    # setup GPIOs
-    echo "$SX1302_RESET_PIN" > /sys/class/gpio/export; WAIT_GPIO
+else
+    echo "[INFO] Using Sysfs GPIO for reset"
 
-    # set GPIOs as output
-    echo "out" > /sys/class/gpio/gpio$SX1302_RESET_PIN/direction; WAIT_GPIO
-}
+    GPIO_PATH="/sys/class/gpio/gpio${RESET_GPIO}"
 
-reset() {
-    echo "CoreCell reset through GPIO$SX1302_RESET_PIN..."
-
-    echo "1" > /sys/class/gpio/gpio$SX1302_RESET_PIN/value; WAIT_GPIO
-    echo "0" > /sys/class/gpio/gpio$SX1302_RESET_PIN/value; WAIT_GPIO
-}
-
-term() {
-    # cleanup all GPIOs
-    if [ -d /sys/class/gpio/gpio$SX1302_RESET_PIN ]
-    then
-        echo "$SX1302_RESET_PIN" > /sys/class/gpio/unexport; WAIT_GPIO
+    # Export GPIO if not already exported
+    if [ ! -d "$GPIO_PATH" ]; then
+        echo $RESET_GPIO > /sys/class/gpio/export
+        sleep 0.1
     fi
-}
 
-case "$1" in
-    start)
-    term # just in case
-    init
-    reset
-    ;;
-    stop)
-    reset
-    term
-    ;;
-    *)
-    echo "Usage: $0 {start|stop}"
-    exit 1
-    ;;
-esac
+    # Set direction and perform reset
+    echo "out" > ${GPIO_PATH}/direction
+    echo 0 > ${GPIO_PATH}/value
+    sleep 0.1
+    echo 1 > ${GPIO_PATH}/value
+    sleep 0.1
+    echo 0 > ${GPIO_PATH}/value
+    sleep 0.1
 
+    # Optional: unexport to release GPIO
+    echo $RESET_GPIO > /sys/class/gpio/unexport
+fi
+
+echo "[INFO] Reset sequence completed."
 exit 0
