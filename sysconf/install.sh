@@ -25,6 +25,12 @@ if [[ $NEW_HOSTNAME != $CURRENT_HOSTNAME ]]; then
 fi
 
 # add rak_script to rc.local
+# check if rc.local exists and create it if not
+if [ ! -f /etc/rc.local ]; then
+    echo -e "#!/bin/bash\nexit 0" | sudo tee /etc/rc.local > /dev/null
+    sudo chmod +x /etc/rc.local
+fi
+
 linenum=`sed -n '/rak_script/=' /etc/rc.local`
 if [ ! -n "$linenum" ]; then
         set -a line_array
