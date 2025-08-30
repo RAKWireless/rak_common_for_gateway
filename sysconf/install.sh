@@ -24,6 +24,11 @@ if [[ $NEW_HOSTNAME != $CURRENT_HOSTNAME ]]; then
     sed -i "s/$CURRENT_HOSTNAME/$NEW_HOSTNAME/" /etc/hosts
 fi
 
+if [ ! -f /etc/rc.local ]; then
+    echo "exit 0" >> /etc/rc.local
+    chmod 755 /etc/rc.local
+fi
+
 # add rak_script to rc.local
 # check if rc.local exists and create it if not
 if [ ! -f /etc/rc.local ]; then
